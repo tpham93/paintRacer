@@ -75,7 +75,7 @@ namespace paintRacer
                 this.Exit();
 
             //Writes FPS to title
-            this.Window.Title = "" + (int)(1 / (gameTime.ElapsedGameTime.TotalMilliseconds / 1000));
+            this.Window.Title = "" + (int)(1 / (gameTime.ElapsedGameTime.TotalSeconds));
 
             base.Update(gameTime);
         }
