@@ -23,6 +23,10 @@ namespace paintRacer
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            //Removes FPS lock and VSync
+            graphics.SynchronizeWithVerticalRetrace = false;
+            IsFixedTimeStep = false;
         }
 
         /// <summary>
@@ -70,7 +74,8 @@ namespace paintRacer
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            // TODO: Add your update logic here
+            //Writes FPS to title
+            this.Window.Title = "" + (int)(1 / (gameTime.ElapsedGameTime.TotalMilliseconds / 1000));
 
             base.Update(gameTime);
         }
