@@ -23,16 +23,18 @@ namespace paintRacer
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            //TODO: Get Player Position and Rotation
-
+            //TODO: Get Player Position, Rotation and Window Resolution
+            Vector2 position=new Vector2(0, 0);
             float rotation = 0.0f;
+            Vector2 resolution=new Vector2(800, 480);
 
             //Shortening the Draw call
             int width=texture.Bounds.Width;
             int height=texture.Bounds.Height;
 
             spriteBatch.Begin();
-            spriteBatch.Draw(texture, new Rectangle(0, 0, width, height), null, Color.White, rotation, new Vector2(width / 2, height / 2), SpriteEffects.None, 0);
+            //Positions texture in the middle of the screen with the Player Rotation set appropriately and the Player Position set as its origin
+            spriteBatch.Draw(texture, new Rectangle((int)(resolution.X / 2), (int)(resolution.Y / 2), width, height), null, Color.White, MathHelper.ToRadians(rotation), position, SpriteEffects.None, 0);
             spriteBatch.End();
         }
     }
