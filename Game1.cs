@@ -19,6 +19,9 @@ namespace paintRacer
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        Texture2D test;
+        Level level;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -50,6 +53,9 @@ namespace paintRacer
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            test = this.Content.Load<Texture2D>("test");
+            level = new Level(test);
 
             // TODO: use this.Content to load your game content here
         }
@@ -88,8 +94,9 @@ namespace paintRacer
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            level.Draw(gameTime, spriteBatch);
 
+            // TODO: Add your drawing code here
             base.Draw(gameTime);
         }
     }
