@@ -9,7 +9,7 @@ namespace paintRacer
     {
         Event[] possibleEvent;
 
-        public EventManager(String filename);
-        public void getEvent(short index);
+        //public EventManager(String filename)
+        //public void getEvent(short index)
     }
 }

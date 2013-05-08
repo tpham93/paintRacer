@@ -10,6 +10,6 @@ namespace paintRacer
         private float time;
         private String name;
 
-        public HighscoreElement(String highscoreElementData);
+        //public HighscoreElement(String highscoreElementData)
     }
 }

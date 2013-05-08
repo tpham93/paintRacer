@@ -25,7 +25,7 @@ namespace paintRacer
         {
             //TODO: Get Player Position, Rotation and Window Resolution
             Vector2 position=new Vector2(0, 0);
-            float rotation = 45;
+            float rotation = 0;
             Vector2 resolution=new Vector2(800, 480);
 
             //Shortening the Draw call

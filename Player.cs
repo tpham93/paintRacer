@@ -19,10 +19,10 @@ namespace paintRacer
         private Color color;
 
 
-        public Player(String filename, Color color);
-        public static void Init();
-        public void Update(GameTime gameTime);
-        public void Draw(SpriteBatch spriteBatch);
+        //public Player(String filename, Color color)
+        //public static void Init()
+        //public void Update(GameTime gameTime)
+        //public void Draw(SpriteBatch spriteBatch)
 
     }
 }

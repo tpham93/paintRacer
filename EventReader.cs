@@ -7,6 +7,6 @@ namespace paintRacer
 {
     class EventReader
     {
-        public static Event parseEventDescription(String filename);
+        //public static Event parseEventDescription(String filename)
     }
 }

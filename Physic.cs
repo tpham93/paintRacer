@@ -9,7 +9,7 @@ namespace paintRacer
 {
     class Physic
     {
-        public static Vector2 calculateAcceleration(Vector2 pos, Vector2 speed);
-        public static Vector2 hasCollision(bool[,] playerCollisionData, short[,] mapData);
+        //public static Vector2 calculateAcceleration(Vector2 pos, Vector2 speed)
+        //public static Vector2 hasCollision(bool[,] playerCollisionData, short[,] mapData)
     }
 }

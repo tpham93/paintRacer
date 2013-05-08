@@ -10,6 +10,6 @@ namespace paintRacer
         const int maxHighscoreCount=10;
         HighscoreElement[] highscoreEntries;
 
-        public Highscore(String filename);
+        //public Highscore(String filename)
     }
 }
