@@ -19,7 +19,6 @@ namespace paintRacer
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        Texture2D test;
         Level level;
 
         public Game1()
@@ -54,8 +53,7 @@ namespace paintRacer
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            test = this.Content.Load<Texture2D>("test");
-            level = new Level(test);
+            level = new Level("test.png", graphics.GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
         }

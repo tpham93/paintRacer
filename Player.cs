@@ -11,11 +11,14 @@ namespace paintRacer
     {
         private bool[,] collisiondata;
         private EventManager eventManager;
+
         private Vector2 position;
+        //In radian
         private float rotation;
-        private float speed;
+        private Vector2 speed;
+
         private Texture2D texture;
-        private Vector2 velocity;
+        //Going to be used to identify player in splitscreen/multiplayer play
         private Color color;
 
 

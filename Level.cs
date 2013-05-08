@@ -11,9 +11,10 @@ namespace paintRacer
     {
         private Texture2D texture;
 
-        public Level(Texture2D texture)
+        //GraphicsDevice parameter is subject to change
+        public Level(String filename, GraphicsDevice graphicsDevice)
         {
-            this.texture = texture;
+            texture = Helper.loadImage(filename, graphicsDevice);
         }
 
         public void Update(GameTime gameTime)
@@ -34,7 +35,7 @@ namespace paintRacer
 
             spriteBatch.Begin();
             //Positions texture in the middle of the screen with the Player Rotation set appropriately and the Player Position set as its origin
-            spriteBatch.Draw(texture, new Rectangle((int)(resolution.X / 2), (int)(resolution.Y / 2), width, height), null, Color.White, MathHelper.ToRadians(rotation), position, SpriteEffects.None, 0);
+            spriteBatch.Draw(texture, new Rectangle((int)(resolution.X / 2), (int)(resolution.Y / 2), width, height), null, Color.White, rotation, position, SpriteEffects.None, 0);
             spriteBatch.End();
         }
     }
