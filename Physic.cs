@@ -38,7 +38,7 @@ namespace paintRacer
          * returns :
          * new Vector2
          */
-        public static Vector2 calculateSpeed(Vector2 speed, Vector2 dirverInput);
+        //public static Vector2 calculateSpeed(Vector2 speed, Vector2 dirverInput)
 
         /*returns if there is an collosion
          * 
@@ -55,6 +55,6 @@ namespace paintRacer
          * returns :
          * bool
          */
-        private static bool hasCollision(bool[,] playerCollisionData, float rotation, short[,] mapData);
+        //private static bool hasCollision(bool[,] playerCollisionData, float rotation, short[,] mapData)
     }
 }
