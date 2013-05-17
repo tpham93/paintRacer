@@ -14,7 +14,7 @@ namespace paintRacer
         //GraphicsDevice parameter is subject to change
         public Level(String filename, GraphicsDevice graphicsDevice)
         {
-            texture = Helper.loadImage(filename, graphicsDevice);
+            texture = Helper.loadImage(filename);
         }
 
         public void Update(GameTime gameTime)

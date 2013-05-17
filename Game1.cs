@@ -41,6 +41,8 @@ namespace paintRacer
         {
             // TODO: Add your initialization logic here
 
+            //set static graphicsdevice in Helper
+            Helper.Init(GraphicsDevice);
             base.Initialize();
         }
 

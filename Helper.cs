@@ -9,7 +9,15 @@ namespace paintRacer
 {
     class Helper
     {
-        public static Texture2D loadImage(String filename, GraphicsDevice graphicsDevice)
+        private static GraphicsDevice graphicsDevice;
+
+        // set graphicsDevice
+        public static void Init(GraphicsDevice graphicsDevice)
+        {
+            Helper.graphicsDevice = graphicsDevice;
+        }
+
+        public static Texture2D loadImage(String filename)
         {
             //Might throw FileNotFoundException
             FileStream fileStream = new FileStream(filename, FileMode.Open);
