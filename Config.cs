@@ -10,7 +10,7 @@ namespace paintRacer
     {
         private static Point screenResolution;
 
-        // available Keys
+        // available Keys (Restructure as enum/map? Make more abstract to fit multiplayer?)
         private static Keys keyUp;
         private static Keys keyDown;
         private static Keys keyLeft;

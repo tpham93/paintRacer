@@ -22,6 +22,7 @@ namespace paintRacer
 
         }
 
+        //Splitscreen: Draw calls have to depend on viewports
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             //TODO: Get Player Position, Rotation and Window Resolution

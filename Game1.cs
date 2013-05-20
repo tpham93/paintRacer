@@ -20,6 +20,7 @@ namespace paintRacer
         SpriteBatch spriteBatch;
 
         Level level;
+        Player player;
 
         public Game1()
         {
@@ -56,6 +57,8 @@ namespace paintRacer
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             level = new Level("test.png", graphics.GraphicsDevice);
+            player = new Player("testcar.png", new Rectangle(0, 0, 256, 64), Color.White);
+
 
             // TODO: use this.Content to load your game content here
         }
@@ -95,6 +98,7 @@ namespace paintRacer
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             level.Draw(gameTime, spriteBatch);
+            player.Draw(spriteBatch);
 
             // TODO: Add your drawing code here
             base.Draw(gameTime);

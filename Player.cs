@@ -18,7 +18,10 @@ namespace paintRacer
         private Vector2 speed;
         //Player texture
         private Texture2D texture;
+
+        //What is the point of this Rectangle?! (Player is supposed to be drawn in the middle of the screen anyways, only width and height are required)
         private Rectangle textureRectangle;
+
         //Going to be used to identify player in splitscreen/multiplayer play
         private Color color;
 
@@ -30,9 +33,13 @@ namespace paintRacer
         }
         //public static void Init()
         //public void Update(GameTime gameTime)
+
+        //Splitscreen: Draw calls have to depend on viewports
         public void Draw(SpriteBatch spriteBatch)
         {
+            spriteBatch.Begin();
             spriteBatch.Draw(texture, textureRectangle, color);
+            spriteBatch.End();
         }
 
     }
