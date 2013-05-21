@@ -19,8 +19,14 @@ namespace paintRacer
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        //Test Level and Player
         Level level;
         Player player;
+
+        //Test Viewports to be put someplace else in the future
+        Viewport defaultView;
+        Viewport lView;
+        Viewport rView;
 
         public Game1()
         {
@@ -44,6 +50,7 @@ namespace paintRacer
 
             //set static graphicsdevice in Helper
             Helper.Init(GraphicsDevice);
+
             base.Initialize();
         }
 
@@ -56,8 +63,17 @@ namespace paintRacer
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            level = new Level("test.png", graphics.GraphicsDevice);
-            player = new Player("testcar.png", new Rectangle(0, 0, 256, 64), Color.White);
+            //Initializes Level and Player with test textures
+            level = new Level("test.png");
+            player = new Player("testcar.png", Color.White);
+
+            //Initializes the Viewports
+            defaultView = GraphicsDevice.Viewport;
+            lView = defaultView;
+            rView = defaultView;
+            lView.Width /= 2;
+            rView.Width /= 2;
+            rView.X = lView.Width;
 
 
             // TODO: use this.Content to load your game content here
@@ -97,8 +113,10 @@ namespace paintRacer
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            level.Draw(gameTime, spriteBatch);
-            player.Draw(spriteBatch);
+            //Drawing the Level on the left and the right screen
+            level.Draw(spriteBatch, GraphicsDevice, lView);
+            level.Draw(spriteBatch, GraphicsDevice, rView);
+            //player.Draw(spriteBatch);
 
             // TODO: Add your drawing code here
             base.Draw(gameTime);

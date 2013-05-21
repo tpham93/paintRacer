@@ -11,8 +11,7 @@ namespace paintRacer
     {
         private Texture2D texture;
 
-        //GraphicsDevice parameter is subject to change
-        public Level(String filename, GraphicsDevice graphicsDevice)
+        public Level(String filename)
         {
             texture = Helper.loadImage(filename);
         }
@@ -22,22 +21,29 @@ namespace paintRacer
 
         }
 
-        //Splitscreen: Draw calls have to depend on viewports
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, GraphicsDevice GraphicsDevice, Viewport viewport)
         {
             //TODO: Get Player Position, Rotation and Window Resolution
             Vector2 position=new Vector2(0, 0);
             float rotation = 0;
-            Vector2 resolution=new Vector2(800, 480);
 
             //Shortening the Draw call
             int width=texture.Bounds.Width;
             int height=texture.Bounds.Height;
 
+            //Assumes GraphicsDevice previously contained default Viewport
+            Viewport defaultView = GraphicsDevice.Viewport;
+
+            //Switches to the given Viewport
+            GraphicsDevice.Viewport = viewport;
+
             spriteBatch.Begin();
             //Positions texture in the middle of the screen with the Player Rotation set appropriately and the Player Position set as its origin
-            spriteBatch.Draw(texture, new Rectangle((int)(resolution.X / 2), (int)(resolution.Y / 2), width, height), null, Color.White, rotation, position, SpriteEffects.None, 0);
+            spriteBatch.Draw(texture, new Rectangle((int)(viewport.Width / 2), (int)(viewport.Height / 2), width, height), null, Color.White, rotation, position, SpriteEffects.None, 0);
             spriteBatch.End();
+
+            //Restores previous Viewport
+            GraphicsDevice.Viewport = defaultView;
         }
     }
 }
