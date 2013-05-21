@@ -61,7 +61,7 @@ namespace paintRacer
                 //get the vector of the difference of bothe positions
                 Vector2 drawPosition =position-player.position;
                 //rotate the vector of the difference of both middlepoints by rotation of the other player
-                drawPosition = Helper.rotateVector2(drawPosition, player.getRotation());
+                drawPosition = Helper.rotateVector2(drawPosition, -player.getRotation());
                 // set drawposition relativly to the middle of the viewport
                 drawPosition += new Vector2(viewport.Width / 2, viewport.Height / 2);
                 

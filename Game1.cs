@@ -72,7 +72,7 @@ namespace paintRacer
             level = new Level("test.png");
             player = new Player("testcar.png", Color.Blue);
             player2 = new Player("testcar.png", Color.Red);
-            player2.setPosition(new Vector2(0, 0));
+            player2.setPosition(new Vector2(0, 128));
             player2.setRotation(MathHelper.ToRadians(90));
 
             //Initializes the Viewports
