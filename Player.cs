@@ -57,13 +57,16 @@ namespace paintRacer
             else
             {
                 //Player's draw position: center of the screen - other player's position (this is the point 0,0 on the map) + own position
-                Vector2 drawPosition = new Vector2((viewport.Width / 2 - player.getPosition().X + position.X), (viewport.Height / 2 - player.getPosition().Y + position.Y));
 
-                drawPosition.X = (float)(drawPosition.X * Math.Cos(player.getRotation()) - drawPosition.Y * Math.Sin(player.getRotation()));
-                drawPosition.Y = (float)(drawPosition.X * Math.Sin(-player.getRotation()) + drawPosition.Y * Math.Cos(player.getRotation()));
+                //get the vector of the difference of bothe positions
+                Vector2 drawPosition =position-player.position;
+                //rotate the vector of the difference of both middlepoints by rotation of the other player
+                drawPosition = Helper.rotateVector2(drawPosition, player.getRotation());
+                // set drawposition relativly to the middle of the viewport
+                drawPosition += new Vector2(viewport.Width / 2, viewport.Height / 2);
                 
-                //spriteBatch.Draw(texture, new Rectangle((int)drawPosition.X, (int)drawPosition.Y, texture.Width, texture.Height), null, color, rotation, new Vector2((float)texture.Width / 2, (float)texture.Height / 2), SpriteEffects.None, 0);
-                spriteBatch.Draw(texture, new Rectangle((int)drawPosition.X, (int)drawPosition.Y, texture.Width, texture.Height), null, color, rotation-player.getRotation(), new Vector2((float)texture.Width / 2, (float)texture.Height / 2), SpriteEffects.None, 0);
+                // draw in the viewport, relativley to the rotation of the player
+                spriteBatch.Draw(texture, new Rectangle((int)drawPosition.X, (int)drawPosition.Y, texture.Width, texture.Height), null, color,rotation-player.getRotation(), new Vector2((float)texture.Width / 2, (float)texture.Height / 2), SpriteEffects.None, 0);
             }
 
             spriteBatch.End();

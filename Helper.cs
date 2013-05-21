@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace paintRacer
@@ -24,6 +25,15 @@ namespace paintRacer
             Texture2D res = Texture2D.FromStream(graphicsDevice, fileStream);
             fileStream.Close();
             return res;
+        }
+
+        // rotates vector
+        public static Vector2 rotateVector2(Vector2 vector, float rotation)
+        {
+            // multplicate vector with rotationmatrix
+            // (cos(a) -sin(a))
+            // (sin(a)  cos(a))
+            return new Vector2((int)(0.5f+vector.X * Math.Cos(rotation) + vector.Y * -Math.Sin(rotation)), (int)(0.5f+vector.X * Math.Sin(rotation) + vector.Y * Math.Cos(rotation)));
         }
     }
 }
