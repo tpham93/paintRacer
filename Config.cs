@@ -11,12 +11,19 @@ namespace paintRacer
         private static Point screenResolution;
 
         // available Keys (Restructure as enum/map? Make more abstract to fit multiplayer?)
-        private static Keys keyUp;
-        private static Keys keyDown;
-        private static Keys keyLeft;
-        private static Keys keyRight;
-        private static Keys keyPause;
-        private static Keys keySelect;
-        private static Keys keysBack;
+
+        enum controlKeys
+        {
+            Up      =0,
+            Down    =1,
+            Left    =2,
+            Right   =3,
+            Pause   =4,
+            Select  =5,
+            Back    =6
+        }
+
+        // 1st dimension -> playerid , 2nd dimension -> controlKeys value
+        Keys[,] playerKeys;
     }
 }
