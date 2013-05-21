@@ -36,7 +36,6 @@ namespace paintRacer
             spriteBatch.Begin();
             //Positions texture in the middle of the screen with the Player Rotation set appropriately and the Player Position set as its origin
             spriteBatch.Draw(texture, new Rectangle((int)(viewport.Width / 2), (int)(viewport.Height / 2), width, height), null, Color.White, -player.getRotation(), player.getPosition(), SpriteEffects.None, 0);
-            //spriteBatch.Draw(texture, new Rectangle((int)(viewport.Width / 2), (int)(viewport.Height / 2), width, height), null, Color.White, 0.0f, player.getPosition(), SpriteEffects.None, 0);
             spriteBatch.End();
 
             //Restores previous Viewport

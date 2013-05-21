@@ -51,7 +51,6 @@ namespace paintRacer
             //Player's rectangle size based on his texture size and origin currently in the center
             if(player==null)
             {
-                //spriteBatch.Draw(texture, new Rectangle(viewport.Width / 2, viewport.Height / 2, texture.Width, texture.Height), null, color, rotation, new Vector2((float)texture.Width/2, (float)texture.Height/2), SpriteEffects.None, 0);
                 spriteBatch.Draw(texture, new Rectangle(viewport.Width / 2, viewport.Height / 2, texture.Width, texture.Height), null, color, 0.0f, new Vector2((float)texture.Width / 2, (float)texture.Height / 2), SpriteEffects.None, 0);
             }
             else
