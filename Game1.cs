@@ -31,6 +31,8 @@ namespace paintRacer
         Viewport lView;
         Viewport rView;
 
+        float rotation = 0;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -71,7 +73,7 @@ namespace paintRacer
             player = new Player("testcar.png", Color.Blue);
             player2 = new Player("testcar.png", Color.Red);
             player2.setPosition(new Vector2(0, 128));
-            player2.setRotation(MathHelper.ToRadians(30));
+            player2.setRotation(MathHelper.ToRadians(50));
 
             //Initializes the Viewports
             defaultView = GraphicsDevice.Viewport;
@@ -127,7 +129,9 @@ namespace paintRacer
             level.Draw(spriteBatch, GraphicsDevice, rView, player2);
             player.Draw(spriteBatch, GraphicsDevice, rView, player2);
             player2.Draw(spriteBatch, GraphicsDevice, rView);
-            
+
+            rotation += (float)0.0001;
+            player2.setRotation(rotation);
 
             base.Draw(gameTime);
         }
