@@ -19,9 +19,12 @@ namespace paintRacer
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        //Player and Viewports to be organized in a Collection (same as the keys in the Config)
+
         //Test Level and Player
         Level level;
         Player player;
+        Player player2;
 
         //Test Viewports to be put someplace else in the future
         Viewport defaultView;
@@ -65,7 +68,10 @@ namespace paintRacer
 
             //Initializes Level and Player with test textures
             level = new Level("test.png");
-            player = new Player("testcar.png", Color.White);
+            player = new Player("testcar.png", Color.Blue);
+            player2 = new Player("testcar.png", Color.Red);
+            player2.setPosition(new Vector2(0, 128));
+            player2.setRotation(MathHelper.ToRadians(30));
 
             //Initializes the Viewports
             defaultView = GraphicsDevice.Viewport;
@@ -113,12 +119,16 @@ namespace paintRacer
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            //Drawing the Level on the left and the right screen
-            level.Draw(spriteBatch, GraphicsDevice, lView);
-            level.Draw(spriteBatch, GraphicsDevice, rView);
-            //player.Draw(spriteBatch);
+            //Drawing everything on the left and the right screen (rotation is currently displayed by the players not the level, we will need to calculate the other player's position/rotation differently to do so)
+            level.Draw(spriteBatch, GraphicsDevice, lView, player);
+            player2.Draw(spriteBatch, GraphicsDevice, lView, player);
+            player.Draw(spriteBatch, GraphicsDevice, lView);
+            
+            level.Draw(spriteBatch, GraphicsDevice, rView, player2);
+            player.Draw(spriteBatch, GraphicsDevice, rView, player2);
+            player2.Draw(spriteBatch, GraphicsDevice, rView);
+            
 
-            // TODO: Add your drawing code here
             base.Draw(gameTime);
         }
     }
