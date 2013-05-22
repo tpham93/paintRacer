@@ -31,7 +31,7 @@ namespace paintRacer
         Viewport lView;
         Viewport rView;
 
-        float rotation = 0;
+        float rotation = MathHelper.Pi;
 
         public Game1()
         {
@@ -134,6 +134,7 @@ namespace paintRacer
 
             rotation += (float)0.0001;
             player2.setRotation(rotation);
+            //player.setRotation(rotation);
 
             base.Draw(gameTime);
         }

@@ -29,7 +29,7 @@ namespace paintRacer
         public Player(String filename, Color color)
         {
             position = new Vector2(0, 0);
-            rotation = 0.0f;
+            rotation = MathHelper.Pi;
 
             this.texture = Helper.loadImage(filename);
             this.color = color;
@@ -51,7 +51,7 @@ namespace paintRacer
             //Player's rectangle size based on his texture size and origin currently in the center
             if(player==null)
             {
-                spriteBatch.Draw(texture, new Rectangle(viewport.Width / 2, viewport.Height / 2, texture.Width, texture.Height), null, color, 0.0f, new Vector2((float)texture.Width / 2, (float)texture.Height / 2), SpriteEffects.None, 0);
+                spriteBatch.Draw(texture, new Rectangle(viewport.Width / 2, viewport.Height / 2, texture.Width, texture.Height), null, color, -MathHelper.Pi/2, new Vector2((float)texture.Width / 2, (float)texture.Height / 2), SpriteEffects.None, 0);
             }
             else
             {
@@ -65,7 +65,7 @@ namespace paintRacer
                 drawPosition += new Vector2(viewport.Width / 2, viewport.Height / 2);
                 
                 // draw in the viewport, relativley to the rotation of the player
-                spriteBatch.Draw(texture, new Rectangle((int)drawPosition.X, (int)drawPosition.Y, texture.Width, texture.Height), null, color,rotation-player.getRotation(), new Vector2((float)texture.Width / 2, (float)texture.Height / 2), SpriteEffects.None, 0);
+                spriteBatch.Draw(texture, new Rectangle((int)drawPosition.X, (int)drawPosition.Y, texture.Width, texture.Height), null, color,rotation-player.getRotation()-MathHelper.Pi/2, new Vector2((float)texture.Width / 2, (float)texture.Height / 2), SpriteEffects.None, 0);
             }
 
             spriteBatch.End();
