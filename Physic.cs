@@ -96,18 +96,7 @@ namespace paintRacer
             newSpeed.Normalize();
             newSpeed = new Vector2(newSpeed.X*absSpeed, newSpeed.Y*absSpeed);
 
-            //calculate radus
-            //        r  = (           x²                 +         y²                         ) / (2*     |y|         )
-            float radius = (speed.Length()*speed.Length() + sideMove.Length()*sideMove.Length()) / (2*sideMove.Length());
-
-            ////calculate force
-            //float staticFrictionForce = MASS * G * STATIC_FRICTION_STREET;
-            //float radialForce = -(MASS * absSpeed * absSpeed) / radius;
-            ////test if car stay in curve
-            //if (radialForce < staticFrictionForce)
-            speed = newSpeed;
-
-            return speed;
+            return newSpeed;
         }
 
         /**
