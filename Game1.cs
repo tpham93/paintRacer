@@ -70,7 +70,7 @@ namespace paintRacer
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             //Initializes Level and Player with test textures
-            level = new Level("testMax.png",Level.MapType.rawImage);
+            level = new Level("test.png",Level.MapType.rawImage);
             level.setPlayers(new String[] { "testcar.png", "testcar.png" }, new Color[] { Color.Blue, Color.Red });
             //player = new Player("testcar.png", Color.Blue);
             //player2 = new Player("testcar.png", Color.Red);

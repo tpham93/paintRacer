@@ -38,7 +38,7 @@ namespace paintRacer
                 // load a raw image
                 case MapType.rawImage:
                     texture = Helper.loadImage(filename);
-                    mapData = mapReader.getRawImageInformation(texture, Color.Black);
+                    mapData = MapReader.getRawImageInformation(texture, Color.Black);
                     break;
                 // load a custom map
                 case MapType.customMap:
@@ -75,7 +75,7 @@ namespace paintRacer
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch, GraphicsDevice GraphicsDevice, Viewport[] viewports/*, Player player*/)
+        public void Draw(SpriteBatch spriteBatch, GraphicsDevice GraphicsDevice, Viewport[] viewports)
         {
             // check the viewport's number
             if (viewports.Length != allPlayers.Length)

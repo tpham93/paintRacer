@@ -115,7 +115,7 @@ namespace paintRacer
          * returns :
          * bool
          */
-        private static bool hasCollision(Vector2 position, bool[,] playerCollisionData, float rotation, short[,] mapData)
+        private static bool hasCollision(Vector2 position, bool[,] playerCollisionData, float rotation, sbyte[,] mapData)
         {
             // save cos & sin of rotation, to save redundance calculations
             double rotationCos = Math.Cos(rotation);
