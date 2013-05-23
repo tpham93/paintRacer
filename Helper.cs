@@ -33,7 +33,16 @@ namespace paintRacer
             // multplicate vector with rotationmatrix
             // (cos(a) -sin(a))
             // (sin(a)  cos(a))
-            return new Vector2((int)(0.5f+vector.X * Math.Cos(rotation) + vector.Y * -Math.Sin(rotation)), (int)(0.5f+vector.X * Math.Sin(rotation) + vector.Y * Math.Cos(rotation)));
+            //return new Vector2((int)(0.5f + vector.X * Math.Cos(rotation) + vector.Y * -Math.Sin(rotation)), (int)(0.5f + vector.X * Math.Sin(rotation) + vector.Y * Math.Cos(rotation)));
+            return rotateVector2(vector, Math.Cos(rotation), Math.Sin(rotation));
+        }
+        // rotates vector
+        public static Vector2 rotateVector2(Vector2 vector, double rotationCos, double rotationSin)
+        {
+            // multplicate vector with rotationmatrix
+            // (cos(a) -sin(a))
+            // (sin(a)  cos(a))
+            return new Vector2((int)(0.5f + vector.X * rotationCos + vector.Y * -rotationSin), (int)(0.5f + vector.X * rotationSin + vector.Y * rotationCos));
         }
     }
 }

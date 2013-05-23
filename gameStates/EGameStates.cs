@@ -5,7 +5,7 @@
         Nothing,
         Menue,
         Close,
-        SingelPlayer,
+        SinglePlayer,
         MultyPlayer,
         HightScore,
         Credits,

@@ -134,7 +134,6 @@ namespace paintRacer
 
             rotation += (float)0.0001;
             player2.setRotation(rotation);
-            //player.setRotation(rotation);
 
             base.Draw(gameTime);
         }

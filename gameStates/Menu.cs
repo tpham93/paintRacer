@@ -68,7 +68,7 @@ namespace paintRacer
                 }
                 if (keyboardState.IsKeyDown(SELECT_ENTRY))
                 {
-                    return EGameStates.InGame;
+                    return EGameStates.SinglePlayer;
                 }
             }
             else
@@ -84,7 +84,7 @@ namespace paintRacer
             // draw entries
             for (int i = 0; i < MENUENTRYNUM; i++)
             {
-                spriteBatch.Draw(menuEntrieTexture, tmpVect, MENUENTRYCOLOR);
+                spriteBatch.Draw(menuEntrieTexture[i], tmpVect, MENUENTRYCOLOR);
                 tmpVect.Y += MENUENTRYSIZE_Y + MENUENTRYSPACE;
             }
 
@@ -94,8 +94,8 @@ namespace paintRacer
             spriteBatch.Draw(selectionPointerTexture, tmpVect, Color.White);
 
             // draw caption
-            spriteBatch.DrawString(spriteFont, "Menue", Vector2.Zero, Color.Black);
-            spriteBatch.DrawString(spriteFont, "Arrows to change selection, Enter to select", new Vector2(0, 20), Color.Black);
+            //spriteBatch.DrawString(spriteFont, "Menue", Vector2.Zero, Color.Black);
+            //spriteBatch.DrawString(spriteFont, "Arrows to change selection, Enter to select", new Vector2(0, 20), Color.Black);
         }
 
         public void Unload()
