@@ -18,13 +18,43 @@ namespace paintRacer
             Helper.graphicsDevice = graphicsDevice;
         }
 
-        public static Texture2D loadImage(String filename)
+
+        public static Texture2D loadImage(String filename,Rectangle rect = new Rectangle(), Color color =new Color())
         {
             //Might throw FileNotFoundException
             FileStream fileStream = new FileStream(filename, FileMode.Open);
-            Texture2D res = Texture2D.FromStream(graphicsDevice, fileStream);
+            Texture2D texture = Texture2D.FromStream(graphicsDevice, fileStream);
             fileStream.Close();
-            return res;
+            // returns original car if the rectangle has no size
+            if (rect.X <= 0 || rect.Y <= 0)
+            {
+                return texture;
+            }
+            else
+            {
+                // rendertarget to save the resized image
+                RenderTarget2D renderTarget = new RenderTarget2D(graphicsDevice,rect.Width,rect.Height);
+                // create  spriteBatch to draw the resized image
+                SpriteBatch spriteBatch = new SpriteBatch(graphicsDevice);
+                // save the earlier rendertargets
+                RenderTargetBinding[] tmpRenderTargets = graphicsDevice.GetRenderTargets();
+                graphicsDevice.SetRenderTarget(renderTarget);
+                // draw the resized image on the rendertarget
+                spriteBatch.Begin();
+                if (color.Equals(new Color()))
+                {
+                    spriteBatch.Draw(texture, rect, Color.White);
+                }
+                else
+                {
+                    spriteBatch.Draw(texture, rect, color);
+                }
+                spriteBatch.End();
+                // set back the saved rendertargets
+                graphicsDevice.SetRenderTargets(tmpRenderTargets);
+                // return the resized drawn Iimage
+                return renderTarget;
+            }
         }
 
         // rotates vector
@@ -33,7 +63,6 @@ namespace paintRacer
             // multplicate vector with rotationmatrix
             // (cos(a) -sin(a))
             // (sin(a)  cos(a))
-            //return new Vector2((int)(0.5f + vector.X * Math.Cos(rotation) + vector.Y * -Math.Sin(rotation)), (int)(0.5f + vector.X * Math.Sin(rotation) + vector.Y * Math.Cos(rotation)));
             return rotateVector2(vector, Math.Cos(rotation), Math.Sin(rotation));
         }
         // rotates vector

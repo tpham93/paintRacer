@@ -57,7 +57,7 @@ namespace paintRacer
         {
             Vector2 accelaration = new Vector2(speed.X, speed.Y);
             accelaration.Normalize();
-            
+
             Vector2 sideMove;
             if (driverInput.X < 0)
             {
@@ -85,16 +85,16 @@ namespace paintRacer
                 accelerationForce = MAX_FORCE_BARK;
 
             //enrgie of car (1/2 *  m   *         v²                   ) + ((     F           -  Fr             )* v/t    {t=1} )
-            float energie = (1/2 * MASS * speed.Length()*speed.Length()) + ((accelerationForce-rollFrictionForce)*speed.Length());
+            float energie = (1 / 2 * MASS * speed.Length() * speed.Length()) + ((accelerationForce - rollFrictionForce) * speed.Length());
             if (energie < 0)
                 energie = 0;
             //       |v|   =      WURZEL(      2  *  E     *   m  )
             float absSpeed = (float)Math.Sqrt((2 * energie * MASS));
 
             //calculate new speed
-            Vector2 newSpeed = new Vector2(speed.X + sideMove.X*STEARING, speed.Y + sideMove.Y*STEARING); 
+            Vector2 newSpeed = new Vector2(speed.X + sideMove.X * STEARING, speed.Y + sideMove.Y * STEARING);
             newSpeed.Normalize();
-            newSpeed = new Vector2(newSpeed.X*absSpeed, newSpeed.Y*absSpeed);
+            newSpeed = new Vector2(newSpeed.X * absSpeed, newSpeed.Y * absSpeed);
 
             return newSpeed;
         }
@@ -115,11 +115,11 @@ namespace paintRacer
          * returns :
          * bool
          */
-        private static bool hasCollision(Vector2 position ,bool[,] playerCollisionData, float rotation, short[,] mapData)
+        private static bool hasCollision(Vector2 position, bool[,] playerCollisionData, float rotation, short[,] mapData)
         {
             // save cos & sin of rotation, to save redundance calculations
-            double rotationCos = Math.Cos(-rotation);
-            double rotationSin = Math.Cos(-rotation);
+            double rotationCos = Math.Cos(rotation);
+            double rotationSin = Math.Cos(rotation);
 
             // width & height of the player's car
             int playerWidth = playerCollisionData.GetUpperBound(0);
@@ -138,7 +138,7 @@ namespace paintRacer
                     if (playerCollisionData[x, y])
                     {
                         // calculate the pos on the map
-                        Vector2 mapPosition = Helper.rotateVector2(tmpVect, rotationCos, rotationSin);
+                        Vector2 mapPosition = Helper.rotateVector2(tmpVect, rotationCos, rotationSin) + position - middlePoint;
                         if (mapData[(int)mapPosition.X, (int)mapPosition.Y] == -1)
                         {
                             return true;
