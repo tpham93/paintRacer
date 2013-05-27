@@ -24,8 +24,7 @@ namespace paintRacer
         }
         private Texture2D texture;
         private sbyte[,] mapData;
-       
-        private Player[] allPlayers;
+
 
         // shows whether this map is a custom map or just an image
         private MapType mapType;
@@ -49,8 +48,11 @@ namespace paintRacer
             this.mapType = mapType;
         }
 
-        public void setPlayers(string[] filename, Color[] playerColor)
+        //Future member of Scene.cs
+        /*public void setPlayers(string[] filename, Color[] playerColor)
         {
+            //Alternative solution: create arrays with smallest size
+
             // throw exception if the number of arrays aren't the same
             if (filename.Length != playerColor.Length)
             {
@@ -64,42 +66,34 @@ namespace paintRacer
                 // create all players with their specific color
                 allPlayers[i] = new Player(Helper.loadImage(filename[i]), playerColor[i], this);
             }
-        }
+        }*/
 
         public void Update(GameTime gameTime)
         {
-            // change the rotations (test)
-            for (int i = 0; i < allPlayers.Length; i++)
-            {
-                allPlayers[i].setRotation(allPlayers[i].getRotation() + (i + 1) * 0.0002f);
-            }
+
         }
 
-        public void Draw(SpriteBatch spriteBatch, GraphicsDevice GraphicsDevice, Viewport[] viewports)
+        public void Draw(SpriteBatch spriteBatch, GraphicsDevice GraphicsDevice, Viewport viewport, Player player)
         {
-            // check the viewport's number
-            if (viewports.Length != allPlayers.Length)
+            //About to be checked on Scene creation (see setPlayers())
+            /*if (viewports.Length != allPlayers.Length)
             {
-                throw new Exception("number of viewports is too "+((viewports.Length < allPlayers.Length)?"low":"high")+"!");
-            }
+                throw new Exception("number of viewports is too " + ((viewports.Length < allPlayers.Length) ? "low" : "high") + "!");
+            }*/
+
             //Shortening the Draw call
             int width = texture.Bounds.Width;
             int height = texture.Bounds.Height;
 
             //Assumes GraphicsDevice previously contained default Viewport
             Viewport defaultView = GraphicsDevice.Viewport;
-            // draw the level
-            for (int i = 0; i < allPlayers.Length; i++)
+
+            //Switches to the given Viewport
+            GraphicsDevice.Viewport = viewport;
+
+            //Part of Scene
+            /*for (int i = 0; i < allPlayers.Length; i++)
             {
-                spriteBatch.Begin();
-                // set viewport
-                GraphicsDevice.Viewport = viewports[i];
-
-                //Positions texture in the middle of the screen with the Player Rotation set appropriately and the Player Position set as its origin
-                spriteBatch.Draw(texture, new Rectangle((int)(viewports[i].Width / 2), (int)(viewports[i].Height / 2), width, height), null, Color.White, -allPlayers[i].getRotation(), allPlayers[i].getPosition(), SpriteEffects.None, 0);
-
-                spriteBatch.End();
-
                 // draw cars
                 for (int j = 0; j < allPlayers.Length; j++)
                 {
@@ -109,9 +103,20 @@ namespace paintRacer
                 }
                 // draw the i-th players car
                 allPlayers[i].Draw(spriteBatch, spriteBatch.GraphicsDevice, viewports[i]);
-            }
+            }*/
+
+            spriteBatch.Begin();
+            //Positions texture in the middle of the screen with the Player Rotation set appropriately and the Player Position set as its origin
+            spriteBatch.Draw(texture, new Rectangle((int)(viewport.Width / 2), (int)(viewport.Height / 2), width, height), null, Color.White, -player.getRotation(), player.getPosition(), SpriteEffects.None, 0);
+            spriteBatch.End();
+
             //Restores previous Viewport
             GraphicsDevice.Viewport = defaultView;
+        }
+
+        public void Draw(SpriteBatch spriteBatch, GraphicsDevice GraphicsDevice, Viewport[] viewports)
+        {
+            
         }
     }
 }
