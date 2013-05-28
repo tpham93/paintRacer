@@ -36,9 +36,33 @@ namespace paintRacer
 
             this.texture = texture;
             this.color = color;
+
+            collisiondata = getCollisionData(texture);
         }
         //public static void Init()
         //public void Update(GameTime gameTime)
+        
+        // get the pixels, which are used for the collision
+        // if they aren't transparent then they will be marked as true in the 2-dimensional bool array
+        private static bool[,] getCollisionData(Texture2D texture)
+        {
+            // get the color information of the player
+            Color[] pixels = new Color[texture.Width * texture.Height];
+            texture.GetData<Color>(pixels);
+            // create the 2-dimensional array for the collisionData
+            bool[,] collisionData = new bool[texture.Width, texture.Height];
+
+            // iterate through the whole color information
+            for (int x = 0, pixelCounter=0; x < texture.Width; x++)
+            {
+                for (int y = 0; y < texture.Height; y++, pixelCounter++)
+                {
+                    // set true if the color isn't fully transparent
+                    collisionData[x, y] = pixels[pixelCounter].A !=0;
+                }
+            }
+            return null;
+        }
 
         //If player is left null we consider this to be the protagonist of the current viewport, otherwise player is the position this is to be aligned on
         public void Draw(SpriteBatch spriteBatch, GraphicsDevice GraphicsDevice, Viewport viewport, Player player=null)
