@@ -12,7 +12,7 @@ namespace paintRacer
 
         // available Keys (Restructure as enum/map? Make more abstract to fit multiplayer?)
 
-        enum controlKeys
+        public enum controlKeys
         {
             Up      =0,
             Down    =1,
@@ -24,6 +24,23 @@ namespace paintRacer
         }
 
         // List -> playerid , 2nd dimension -> controlKeys value
-        Keys[,] playerKeys;
+        private static Keys[,] playerKeys;
+
+        public static Keys[,] getKeys()
+        {
+            return playerKeys;
+        }
+
+        public static void setKeys(Keys[,] keys)
+        {
+            playerKeys=new Keys[keys.GetLength(0), keys.GetLength(1)];
+            for (int i = 0; i < keys.GetLength(0); i++)
+            {
+                for (int j = 0; j < keys.GetLength(1); j++)
+                {
+                    playerKeys[i, j] = keys[i, j];
+                }
+            }
+        }
     }
 }

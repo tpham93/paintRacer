@@ -31,17 +31,40 @@ namespace paintRacer
         //Inconsistency with Level (create with string or texture?)
         public Player(Texture2D texture, Color color)
         {
-            position = new Vector2(0, 0);
+            position = Vector2.Zero;
             rotation = 0.0f;
+            speed = Vector2.Zero;
 
             this.texture = texture;
             this.color = color;
-
-            collisiondata = getCollisionData(texture);
         }
         //public static void Init()
-        //public void Update(GameTime gameTime)
-        
+
+        public void Update(GameTime gameTime, bool[] pressedKeys)
+        {
+            Vector2 driverInput=Vector2.Zero;
+            if (pressedKeys[(int)Config.controlKeys.Up])
+            {
+                driverInput.Y++;
+            }
+            else if (pressedKeys[(int)Config.controlKeys.Down])
+            {
+                driverInput.Y--;
+            }
+            else if (pressedKeys[(int)Config.controlKeys.Left])
+            {
+                driverInput.X--;
+            }
+            else if (pressedKeys[(int)Config.controlKeys.Right])
+            {
+                driverInput.X++;
+            }
+            Console.WriteLine("Driver input: " +driverInput);
+            Console.WriteLine("Calculated speed: " +speed);
+            speed = Physic.calculateSpeed(speed, driverInput);
+            position = Physic.calculateNextPos(position, speed);
+        }
+
         // get the pixels, which are used for the collision
         // if they aren't transparent then they will be marked as true in the 2-dimensional bool array
         private static bool[,] getCollisionData(Texture2D texture)
@@ -53,12 +76,12 @@ namespace paintRacer
             bool[,] collisionData = new bool[texture.Width, texture.Height];
 
             // iterate through the whole color information
-            for (int x = 0, pixelCounter=0; x < texture.Width; x++)
+            for (int x = 0, pixelCounter = 0; x < texture.Width; x++)
             {
                 for (int y = 0; y < texture.Height; y++, pixelCounter++)
                 {
                     // set true if the color isn't fully transparent
-                    collisionData[x, y] = pixels[pixelCounter].A !=0;
+                    collisionData[x, y] = pixels[pixelCounter].A != 0;
                 }
             }
             return null;

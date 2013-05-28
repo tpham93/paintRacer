@@ -80,7 +80,11 @@ namespace paintRacer
             viewports[1].Width /= 2;
             viewports[1].X = viewports[0].Width;
 
-            scene = new Scene(level, players, viewports);
+            Keys[,] keys = { { Keys.W, Keys.S, Keys.A, Keys.D, Keys.Q, Keys.E, Keys.F }, { Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Escape, Keys.Enter, Keys.Back } };
+            Config.setKeys(keys);
+
+            scene = new Scene(level, players, viewports, Config.getKeys());
+            
 
 
             // TODO: use this.Content to load your game content here
@@ -108,6 +112,8 @@ namespace paintRacer
 
             //Writes FPS to title
             this.Window.Title = "" + (int)(1 / (gameTime.ElapsedGameTime.TotalSeconds));
+
+            scene.Update(gameTime, Keyboard.GetState());
 
             base.Update(gameTime);
         }

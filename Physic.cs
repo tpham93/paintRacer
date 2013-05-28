@@ -46,9 +46,9 @@ namespace paintRacer
          * speed of the car
          * 
          * driverInput - Vector2 :
-         * direction witch is givven by the driver
-         * x: left(&st;0) strate on(0) right(&gt;0)
-         * y: accelorate(&gt;0) roll(0) bark(&st;0)
+         * direction witch is given by the driver
+         * x: left(&st;0) straight on(0) right(&gt;0)
+         * y: accelerate(&gt;0) roll(0) bark(&st;0)
          * 
          * returns :
          * new Vector2
