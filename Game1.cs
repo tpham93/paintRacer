@@ -19,13 +19,13 @@ namespace paintRacer
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        //Player and Viewports to be organized in a Collection (same as the keys in the Config)
-
-        //Future member of Scene.cs
+        //Member of Scene.cs
         Level level;
-        private Player[] allPlayers;
+        private Player[] players;
         Viewport defaultView;
-        Viewport[] viewPorts;
+        Viewport[] viewports;
+
+        Scene scene;
 
         float rotation = 0.0f;
 
@@ -66,19 +66,21 @@ namespace paintRacer
 
             //Initializes Level and Player with test textures
             level = new Level("test.png",Level.MapType.rawImage);
-            allPlayers = new Player[2];
-            allPlayers[0] = new Player(Helper.loadImage("testcar.png"), Color.Blue);
-            allPlayers[1] = new Player(Helper.loadImage("testcar.png"), Color.Red);
-            allPlayers[1].setPosition(new Vector2(0.0f, 128.0f));
+            players = new Player[2];
+            players[0] = new Player(Helper.loadImage("testcar.png"), Color.Blue);
+            players[1] = new Player(Helper.loadImage("testcar.png"), Color.Red);
+            players[1].setPosition(new Vector2(0.0f, 128.0f));
 
             //Initializes the Viewports
             defaultView = GraphicsDevice.Viewport;
-            viewPorts = new Viewport[2];
-            viewPorts[0] = defaultView;
-            viewPorts[1] = defaultView;
-            viewPorts[0].Width /= 2;
-            viewPorts[1].Width /= 2;
-            viewPorts[1].X = viewPorts[0].Width;
+            viewports = new Viewport[2];
+            viewports[0] = defaultView;
+            viewports[1] = defaultView;
+            viewports[0].Width /= 2;
+            viewports[1].Width /= 2;
+            viewports[1].X = viewports[0].Width;
+
+            scene = new Scene(level, players, viewports);
 
 
             // TODO: use this.Content to load your game content here
@@ -107,7 +109,6 @@ namespace paintRacer
             //Writes FPS to title
             this.Window.Title = "" + (int)(1 / (gameTime.ElapsedGameTime.TotalSeconds));
 
-            level.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -119,17 +120,7 @@ namespace paintRacer
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            //Drawing everything on the left and the right screen (rotation is currently displayed by the players not the level, we will need to calculate the other player's position/rotation differently to do so)
-            level.Draw(spriteBatch, GraphicsDevice, viewPorts[0], allPlayers[0]);
-            allPlayers[0].Draw(spriteBatch, GraphicsDevice, viewPorts[0]);
-            allPlayers[1].Draw(spriteBatch, GraphicsDevice, viewPorts[0], allPlayers[0]);
-
-            level.Draw(spriteBatch, GraphicsDevice, viewPorts[1], allPlayers[1]);
-            allPlayers[1].Draw(spriteBatch, GraphicsDevice, viewPorts[1]);
-            allPlayers[0].Draw(spriteBatch, GraphicsDevice, viewPorts[1], allPlayers[1]);
-
-            rotation += (float)0.0001;
-            allPlayers[1].setRotation(rotation);
+            scene.Draw(spriteBatch, GraphicsDevice);
 
             base.Draw(gameTime);
         }

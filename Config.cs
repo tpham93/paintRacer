@@ -24,6 +24,6 @@ namespace paintRacer
         }
 
         // List -> playerid , 2nd dimension -> controlKeys value
-        List<Keys[]> playerKeys;
+        Keys[,] playerKeys;
     }
 }
