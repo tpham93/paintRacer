@@ -37,6 +37,8 @@ namespace paintRacer
 
             this.texture = texture;
             this.color = color;
+
+            collisiondata = getCollisionData(texture);
         }
         //public static void Init()
 
