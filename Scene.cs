@@ -23,9 +23,11 @@ namespace paintRacer
             playerCount = Math.Min(players.Length, viewports.Length);
             playerCount = Math.Min(playerCount, keys.GetLength(0));
 
+            //If the viewport count is smaller than our playerCount we need to resize/renew the viewports
+
             if (playerCount == 0)
             {
-
+                throw new Exception("Couldn't create Scene, playerCount is 0.");
             }
             else
             {

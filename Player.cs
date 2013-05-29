@@ -65,6 +65,7 @@ namespace paintRacer
             Console.WriteLine("Calculated speed: " +speed);
             speed = Physic.calculateSpeed(speed, driverInput);
             position = Physic.calculateNextPos(position, speed);
+            //TODO: calculate rotation from speed Vector?
         }
 
         // get the pixels, which are used for the collision
