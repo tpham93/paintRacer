@@ -16,14 +16,11 @@ namespace paintRacer
         private Keys[,] keys;
         private int playerCount;
 
-        public Scene(Level level, Player[] players, Viewport[] viewports, Keys[,] keys)
+        public Scene(Level level, Player[] players, Viewport defaultView, Keys[,] keys)
         {
             this.level = level;
 
-            playerCount = Math.Min(players.Length, viewports.Length);
-            playerCount = Math.Min(playerCount, keys.GetLength(0));
-
-            //If the viewport count is smaller than our playerCount we need to resize/renew the viewports
+            playerCount = Math.Min(players.Length, keys.GetLength(0));            
 
             if (playerCount == 0)
             {
@@ -33,6 +30,7 @@ namespace paintRacer
             {
                 this.players = new Player[playerCount];
                 this.viewports = new Viewport[playerCount];
+                viewports = Helper.createViewports(playerCount, defaultView);
                 this.keys = new Keys[playerCount, keys.GetLength(1)];
                 for (int i = 0; i < playerCount; i++)
                 {

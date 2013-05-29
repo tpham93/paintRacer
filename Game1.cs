@@ -71,19 +71,10 @@ namespace paintRacer
             players[1] = new Player(Helper.loadImage("testcar.png"), Color.Red);
             players[1].setPosition(new Vector2(0.0f, 128.0f));
 
-            //Initializes the Viewports
-            defaultView = GraphicsDevice.Viewport;
-            viewports = new Viewport[2];
-            viewports[0] = defaultView;
-            viewports[1] = defaultView;
-            viewports[0].Width /= 2;
-            viewports[1].Width /= 2;
-            viewports[1].X = viewports[0].Width;
-
             Keys[,] keys = { { Keys.W, Keys.S, Keys.A, Keys.D, Keys.Q, Keys.E, Keys.F }, { Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Escape, Keys.Enter, Keys.Back } };
             Config.setKeys(keys);
 
-            scene = new Scene(level, players, viewports, Config.getKeys());
+            scene = new Scene(level, players, GraphicsDevice.Viewport, Config.getKeys());
             
 
 

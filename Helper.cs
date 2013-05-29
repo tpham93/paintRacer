@@ -73,5 +73,32 @@ namespace paintRacer
             // (sin(a)  cos(a))
             return new Vector2((int)(0.5f + vector.X * rotationCos + vector.Y * -rotationSin), (int)(0.5f + vector.X * rotationSin + vector.Y * rotationCos));
         }
+
+        //Creates playerCount amounts of viewports (appropriately stretched and positioned). Will throw Exceptions in case the user request 0 or less/3 or more viewports
+        public static Viewport[] createViewports(int playerCount, Viewport defaultView)
+        {
+            Viewport[] viewports = new Viewport[playerCount];
+            if(playerCount<=0)
+            {
+                throw new Exception("Couldn't create viewports, playerCount is smaller than (or equal to) 0.");
+            }
+            else if (playerCount == 1)
+            {
+                viewports[0] = defaultView;
+            }
+            else if (playerCount == 2)
+            {
+                viewports[0] = defaultView;
+                viewports[1] = defaultView;
+                viewports[0].Width /= 2;
+                viewports[1].Width /= 2;
+                viewports[1].X = viewports[0].Width;
+            }
+            else
+            {
+                throw new Exception("Couldn't create viewports, playerCount is too big (bigger than 2).");
+            }
+            return viewports;
+        }
     }
 }
