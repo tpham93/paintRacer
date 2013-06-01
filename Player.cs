@@ -15,7 +15,8 @@ namespace paintRacer
         private Vector2 position;
         //In radian
         private float rotation;
-        private Vector2 speed;
+        private Vector2 direction;
+        private float speed;
         //Player texture
         private Texture2D texture;
 
@@ -33,7 +34,8 @@ namespace paintRacer
         {
             position = Vector2.Zero;
             rotation = 0.0f;
-            speed = Vector2.Zero;
+            speed = 0f;
+            direction = new Vector2(0f, -1f);
 
             this.texture = texture;
             this.color = color;
@@ -63,9 +65,13 @@ namespace paintRacer
             }
             Console.WriteLine("Driver input: " +driverInput);
             Console.WriteLine("Calculated speed: " +speed);
-            speed = Physic.calculateSpeed(speed, driverInput);
-            position = Physic.calculateNextPos(position, speed);
-            //TODO: calculate rotation from speed Vector?
+            Console.WriteLine("Calculated Direction: " + direction);
+            Vector2 newDirection = Physic.calculateSpeed(gameTime, direction, speed, driverInput);
+            speed = newDirection.Length();          //extract speed from direction
+            if (speed != 0)                         //!! don't use direction if speed is zero !!
+                direction = newDirection;
+            position = Physic.calculateNextPos(gameTime, position, direction, speed);
+            rotation = Physic.calculateRotation(direction); //not implemented jet
         }
 
         // get the pixels, which are used for the collision
