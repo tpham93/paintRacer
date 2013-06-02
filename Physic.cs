@@ -10,14 +10,14 @@ namespace paintRacer
     class Physic
     {
         //const VAR
-        private const float MASS = 1000; //mass of the car in kg
-        private const float MAX_FORCE_ACCELERAT = 5000f; //max force of the car in N = kg*m/s²
-        private const float MAX_FORCE_BARK = -2 * MAX_FORCE_ACCELERAT; //max force by barking in N = kg*m/s²
+        private const float MASS = 800; //mass of the car in kg
+        private const float MAX_FORCE_ACCELERAT = 50000f; //max force of the car in N = kg*m/s²
+        private const float MAX_FORCE_BARK = -4 * MAX_FORCE_ACCELERAT; //max force by barking in N = kg*m/s²
         private const float WHEEL_RADIUS = 0.25f; //radius of wheels in m
-        private const float STEARING = 1f; //if you stear left or right
+        private const float STEARING = 0.001f; //if you stear left or right
 
-        private const float ROLL_FRICTION_STREET = 0.00002f; //roll-friction stops the car in m
-        private const float ROLL_FRICTION_GRASS = 0.00006f; //roll-friction stops the car in m
+        private const float ROLL_FRICTION_STREET = 400f; //roll-friction stops the car in m
+        private const float ROLL_FRICTION_GRASS = 1200f; //roll-friction stops the car in m
         private const float STATIC_FRICTION_STREET = 0.9f; //helps the car to stay on road in 1
         private const float STATIC_FRICTION_GRASS = 0.6f; //helps the car to stay on road in 1
         private const float G = 9.81f; //gravitational acceleration in m/s²
@@ -34,11 +34,11 @@ namespace paintRacer
          * returns :
          * new Vector2
          */
-        public static Vector2 calculateNextPos(GameTime gameTime, Vector2 pos, Vector2 direction, float speed)
+        public static Vector2 calculateNextPos(GameTime gameTime, Vector2 pos, Speed speed)
         {
-            direction.Normalize();
-            float time = 1;// (float)gameTime.ElapsedGameTime.TotalSeconds;
-            return new Vector2(pos.X + (direction.X)*speed*time, pos.Y + (direction.Y)*speed*time);
+            speed.direction.Normalize();
+            float time = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            return new Vector2(pos.X + (speed.direction.X) * speed.abs * time, pos.Y + (speed.direction.Y) * speed.abs * time);
         }
 
         /**
@@ -55,9 +55,9 @@ namespace paintRacer
          * returns :
          * new Vector2
          */
-        public static Vector2 calculateSpeed(GameTime gameTime, Vector2 direction, float speed, Vector2 driverInput)
+        public static Speed calculateSpeed(GameTime gameTime, Speed speed, Vector2 driverInput)
         {
-            Vector2 accelaration = new Vector2(direction.X, direction.Y);
+            Vector2 accelaration = new Vector2(speed.direction.X, speed.direction.Y);
             accelaration.Normalize();
 
             Vector2 sideMove;
@@ -81,49 +81,51 @@ namespace paintRacer
 
             //set acceleration force
             float accelerationForce = 0f;
-            if ((driverInput.Y > 0) && (speed >= 0))
-                accelerationForce = MAX_FORCE_ACCELERAT;
-            else if ((driverInput.Y > 0) && (speed < 0))
+            if ((driverInput.Y > 0) && (speed.abs >= 0))
+                accelerationForce = MAX_FORCE_ACCELERAT / (speed.abs/100 + 1);
+            else if ((driverInput.Y > 0) && (speed.abs < 0))
+                accelerationForce = -MAX_FORCE_BARK;
+            else if ((driverInput.Y < 0) && (speed.abs > 0))
                 accelerationForce = MAX_FORCE_BARK;
-            else if ((driverInput.Y < 0) && (speed > 0))
-                accelerationForce = MAX_FORCE_BARK;
-            else if ((driverInput.Y < 0) && (speed <= 0))
-                accelerationForce = MAX_FORCE_ACCELERAT;
+            else if ((driverInput.Y < 0) && (speed.abs <= 0))
+                accelerationForce = -MAX_FORCE_ACCELERAT / (Math.Abs(speed.abs) / 100 + 1);
 
             //                                         a
-            //        v       =  v    +  ((      F         / m  )*                    t                       )
-            float absNewSpeed = speed + ((accelerationForce/MASS)*(float)gameTime.ElapsedGameTime.TotalSeconds);
+            //        v       =  v        +  ((      F         / m  )*                    t                       )
+            float absNewSpeed = speed.abs + ((accelerationForce / MASS) * (float)gameTime.ElapsedGameTime.TotalSeconds);
 
-            //Console.WriteLine("speed: " +speed);
-            //Console.WriteLine("speed+: " + ((accelerationForce/MASS)*(float)gameTime.ElapsedGameTime.TotalSeconds));
-            //Console.WriteLine("Newspeed: " + absNewSpeed);
+            Console.WriteLine("speed: " +speed.abs);
+            Console.WriteLine("speed+: " + ((accelerationForce/MASS)*(float)gameTime.ElapsedGameTime.TotalSeconds));
+            Console.WriteLine("Newspeed: " + absNewSpeed);
 
-            rollFrictionForce = 0;
+            //rollFrictionForce = 0;
             //enrgie of car ( 1/2  *  m   *             v²           ) - (      F           *     v       *      t                                      )
-            float energie = (1 / 2 * MASS * absNewSpeed * absNewSpeed) - (rollFrictionForce * absNewSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
-            //Console.WriteLine("energie: " + energie);
+            float energie = (1f / 2f * MASS * absNewSpeed * absNewSpeed) -(rollFrictionForce * Math.Abs(absNewSpeed) * (float)gameTime.ElapsedGameTime.TotalSeconds);
+            Console.WriteLine("energie: " + energie);
 
-            //test if energie and old speed have the same direction if not -> stop the car
-            if (((energie > 0) && (speed < 0)) || ((energie < 0) && (speed > 0)))
-                energie = 0;
+            if (energie < 0f)
+                energie = 0f;
 
-            // |v|      =      WURZEL(      2  *  E     *   m  )
-            //absNewSpeed = (float)Math.Sqrt((2 * Math.Abs(energie) * MASS));
-            if (energie < 0)
-                absNewSpeed *= -1;
+            //save direction of speed
+            int richtung = 1;
+                if (absNewSpeed < 0)
+                    richtung = -1;
+            // |v|      =                      WURZEL( 2 *  E     *   m  )
+            absNewSpeed = richtung * (float)Math.Sqrt((2 * energie / MASS));
 
-            //calculate new speed
-            Vector2 newSpeed = new Vector2(direction.X + sideMove.X * STEARING, direction.Y + sideMove.Y * STEARING);
-            newSpeed.Normalize();
-            newSpeed = new Vector2(newSpeed.X * absNewSpeed, newSpeed.Y * absNewSpeed);
-            
-            return newSpeed;
+            //calculate new direction
+            Vector2 newDirection = new Vector2(speed.direction.X + sideMove.X * STEARING, speed.direction.Y + sideMove.Y * STEARING);
+            newDirection.Normalize();
+
+            return new Speed(newDirection, absNewSpeed);
         }
 
-        //TODO implement
+        /**
+         * returns the roation in radiant by the direction of the car
+         **/
         public static float calculateRotation(Vector2 direction)
         {
-            return 0f;
+            return (float) (Math.Atan(direction.Y/direction.X) + Math.PI/2);
         }
 
         /**
