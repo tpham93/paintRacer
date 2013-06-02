@@ -94,14 +94,14 @@ namespace paintRacer
             //        v       =  v    +  ((      F         / m  )*                    t                       )
             float absNewSpeed = speed + ((accelerationForce/MASS)*(float)gameTime.ElapsedGameTime.TotalSeconds);
 
-            Console.WriteLine("speed: " +speed);
-            Console.WriteLine("speed+: " + ((accelerationForce/MASS)*(float)gameTime.ElapsedGameTime.TotalSeconds));
-            Console.WriteLine("Newspeed: " + absNewSpeed);
+            //Console.WriteLine("speed: " +speed);
+            //Console.WriteLine("speed+: " + ((accelerationForce/MASS)*(float)gameTime.ElapsedGameTime.TotalSeconds));
+            //Console.WriteLine("Newspeed: " + absNewSpeed);
 
             rollFrictionForce = 0;
             //enrgie of car ( 1/2  *  m   *             v²           ) - (      F           *     v       *      t                                      )
             float energie = (1 / 2 * MASS * absNewSpeed * absNewSpeed) - (rollFrictionForce * absNewSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
-            Console.WriteLine("energie: " + energie);
+            //Console.WriteLine("energie: " + energie);
 
             //test if energie and old speed have the same direction if not -> stop the car
             if (((energie > 0) && (speed < 0)) || ((energie < 0) && (speed > 0)))

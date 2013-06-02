@@ -63,9 +63,9 @@ namespace paintRacer
             {
                 driverInput.X++;
             }
-            Console.WriteLine("Driver input: " +driverInput);
-            Console.WriteLine("Calculated speed: " +speed);
-            Console.WriteLine("Calculated Direction: " + direction);
+            //Console.WriteLine("Driver input: " +driverInput);
+            //Console.WriteLine("Calculated speed: " +speed);
+            //Console.WriteLine("Calculated Direction: " + direction);
             Vector2 newDirection = Physic.calculateSpeed(gameTime, direction, speed, driverInput);
             speed = newDirection.Length();          //extract speed from direction
             if (speed != 0)                         //!! don't use direction if speed is zero !!
