@@ -94,14 +94,14 @@ namespace paintRacer
             //        v       =  v        +  ((      F         / m  )*                    t                       )
             float absNewSpeed = speed.abs + ((accelerationForce / MASS) * (float)gameTime.ElapsedGameTime.TotalSeconds);
 
-            Console.WriteLine("speed: " +speed.abs);
-            Console.WriteLine("speed+: " + ((accelerationForce/MASS)*(float)gameTime.ElapsedGameTime.TotalSeconds));
-            Console.WriteLine("Newspeed: " + absNewSpeed);
+            //Console.WriteLine("speed: " +speed.abs);
+            //Console.WriteLine("speed+: " + ((accelerationForce/MASS)*(float)gameTime.ElapsedGameTime.TotalSeconds));
+            //Console.WriteLine("Newspeed: " + absNewSpeed);
 
             //rollFrictionForce = 0;
             //enrgie of car ( 1/2  *  m   *             v²           ) - (      F           *     v       *      t                                      )
             float energie = (1f / 2f * MASS * absNewSpeed * absNewSpeed) -(rollFrictionForce * Math.Abs(absNewSpeed) * (float)gameTime.ElapsedGameTime.TotalSeconds);
-            Console.WriteLine("energie: " + energie);
+            //Console.WriteLine("energie: " + energie);
 
             if (energie < 0f)
                 energie = 0f;
@@ -125,7 +125,8 @@ namespace paintRacer
          **/
         public static float calculateRotation(Vector2 direction)
         {
-            return (float) (Math.Atan(direction.Y/direction.X) + Math.PI/2);
+            //return (float) (Math.Atan(direction.Y/direction.X) + Math.PI/2);
+            return (float) Math.Atan2(direction.X,-direction.Y);
         }
 
         /**

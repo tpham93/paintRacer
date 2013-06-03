@@ -67,17 +67,14 @@ namespace paintRacer
                 // draw cars
                 for (int j = 0; j < players.Length; j++)
                 {
-                    if (i == j)
-                    {
-                        // draw the i-th players car
-                        players[j].Draw(spriteBatch, spriteBatch.GraphicsDevice, viewports[i]);
-                    }
-                    else
+                    if (i != j)
                     {
                         // draw the other car on the viewport
                         players[j].Draw(spriteBatch, spriteBatch.GraphicsDevice, viewports[i], players[i]);
                     }
                 }
+                // draw the protaginist on top
+                players[i].Draw(spriteBatch, spriteBatch.GraphicsDevice, viewports[i], players[i]);
             }
         }
     }
