@@ -12,12 +12,13 @@ namespace paintRacer
         //const VAR
         private const float MASS = 800; //mass of the car in kg
         private const float MAX_FORCE_ACCELERAT = 50000f; //max force of the car in N = kg*m/s²
-        private const float MAX_FORCE_BARK = -4 * MAX_FORCE_ACCELERAT; //max force by barking in N = kg*m/s²
+        private const float MAX_FORCE_BARK = -3.5f * MAX_FORCE_ACCELERAT; //max force by barking in N = kg*m/s²
         private const float WHEEL_RADIUS = 0.25f; //radius of wheels in m
-        private const float STEARING = 0.001f; //if you stear left or right
+        private const float STEARING = 0.01f; //if you stear left or right
+        private const float MAX_STEARING =100f; //the function is doing funny things for spacial values ;)
 
-        private const float ROLL_FRICTION_STREET = 400f; //roll-friction stops the car in m
-        private const float ROLL_FRICTION_GRASS = 1200f; //roll-friction stops the car in m
+        private const float ROLL_FRICTION_STREET = 200f; //roll-friction stops the car in m
+        private const float ROLL_FRICTION_GRASS = 600f; //roll-friction stops the car in m
         private const float STATIC_FRICTION_STREET = 0.9f; //helps the car to stay on road in 1
         private const float STATIC_FRICTION_GRASS = 0.6f; //helps the car to stay on road in 1
         private const float G = 9.81f; //gravitational acceleration in m/s²
@@ -57,16 +58,18 @@ namespace paintRacer
          */
         public static Speed calculateSpeed(GameTime gameTime, Speed speed, Vector2 driverInput)
         {
+            //Console.WriteLine("driverInput: [" + driverInput.X + ";" + driverInput.Y + "]"); 
+            
             Vector2 accelaration = new Vector2(speed.direction.X, speed.direction.Y);
             accelaration.Normalize();
 
             Vector2 sideMove;
-            if (driverInput.X < 0)
+            if (driverInput.X > 0)
             {
                 sideMove = new Vector2(-accelaration.Y, accelaration.X);
                 sideMove.Normalize();
             }
-            else if (driverInput.X > 0)
+            else if (driverInput.X < 0)
             {
                 sideMove = new Vector2(accelaration.Y, -accelaration.X);
                 sideMove.Normalize();
@@ -114,7 +117,9 @@ namespace paintRacer
             absNewSpeed = richtung * (float)Math.Sqrt((2 * energie / MASS));
 
             //calculate new direction
-            Vector2 newDirection = new Vector2(speed.direction.X + sideMove.X * STEARING, speed.direction.Y + sideMove.Y * STEARING);
+            float totalStearingFactor = STEARING * absNewSpeed / ((absNewSpeed * absNewSpeed / 5) + 1);
+            totalStearingFactor = Math.Min(totalStearingFactor, MAX_STEARING);
+            Vector2 newDirection = new Vector2(speed.direction.X + sideMove.X * totalStearingFactor, speed.direction.Y + sideMove.Y * totalStearingFactor);
             newDirection.Normalize();
 
             return new Speed(newDirection, absNewSpeed);

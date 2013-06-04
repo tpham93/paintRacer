@@ -54,6 +54,7 @@ namespace paintRacer
                 for (int j = 0; j < keys.GetLength(1); j++)
                 {
                     pressedKeys[j] = keyboardState.IsKeyDown(keys[i, j]);
+                    //Console.WriteLine("pressedKeys " + j + " " + pressedKeys[j]); cecked
                 }
                 players[i].Update(gameTime, pressedKeys);
             }

@@ -49,15 +49,15 @@ namespace paintRacer
             {
                 driverInput.Y++;
             }
-            else if (pressedKeys[(int)Config.controlKeys.Down])
+            if (pressedKeys[(int)Config.controlKeys.Down])
             {
                 driverInput.Y--;
             }
-            else if (pressedKeys[(int)Config.controlKeys.Left])
+            if (pressedKeys[(int)Config.controlKeys.Left])
             {
                 driverInput.X--;
             }
-            else if (pressedKeys[(int)Config.controlKeys.Right])
+            if (pressedKeys[(int)Config.controlKeys.Right])
             {
                 driverInput.X++;
             }
