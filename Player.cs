@@ -88,7 +88,7 @@ namespace paintRacer
                     collisionData[x, y] = pixels[pixelCounter].A != 0;
                 }
             }
-            return null;
+            return collisionData;
         }
 
         //If player is left null we consider this to be the protagonist of the current viewport, otherwise player is the position this is to be aligned on
@@ -147,5 +147,11 @@ namespace paintRacer
         {
             this.rotation=rotation;
         }
+
+        public bool[,] getCollisionData()
+        {
+            return collisiondata;
+        }
+
     }
 }

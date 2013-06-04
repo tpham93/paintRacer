@@ -150,11 +150,11 @@ namespace paintRacer
          * returns :
          * bool
          */
-        private static bool hasCollision(Vector2 position, bool[,] playerCollisionData, float rotation, sbyte[,] mapData)
+        public static bool hasCollision(Vector2 position, bool[,] playerCollisionData, float rotation, sbyte[,] mapData)
         {
             // save cos & sin of rotation, to save redundance calculations
             double rotationCos = Math.Cos(rotation);
-            double rotationSin = Math.Cos(rotation);
+            double rotationSin = Math.Sin(rotation);
 
             // width & height of the player's car
             int playerWidth = playerCollisionData.GetUpperBound(0);
@@ -165,7 +165,7 @@ namespace paintRacer
 
             //Vector of the current position
             Vector2 tmpVect = Vector2.Zero;
-
+            Vector2 mapPosition = Vector2.Zero;
             for (int x = 0; x < playerWidth; x++)
             {
                 for (int y = 0; y < playerHeight; y++)
@@ -173,8 +173,11 @@ namespace paintRacer
                     if (playerCollisionData[x, y])
                     {
                         // calculate the pos on the map
-                        Vector2 mapPosition = Helper.rotateVector2(tmpVect, rotationCos, rotationSin) + position - middlePoint;
-                        if (mapData[(int)mapPosition.X, (int)mapPosition.Y] == -1)
+                        tmpVect.X = x-middlePoint.X;
+                        tmpVect.Y = y-middlePoint.Y;
+                        mapPosition = Helper.rotateVector2(tmpVect, rotationCos, rotationSin) + position;
+                        if (mapPosition.X >= 0 && mapPosition.Y <= mapData.GetUpperBound(0) && mapPosition.Y >= 0 && mapPosition.Y <= mapData.GetUpperBound(1))
+                        if (mapData[(int)mapPosition.X, (int)mapPosition.Y] == -2)
                         {
                             return true;
                         }

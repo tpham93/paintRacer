@@ -20,7 +20,7 @@ namespace paintRacer
         {
             this.level = level;
 
-            playerCount = Math.Min(players.Length, keys.GetLength(0));            
+            playerCount = Math.Min(players.Length, keys.GetLength(0));
 
             if (playerCount == 0)
             {
@@ -46,7 +46,7 @@ namespace paintRacer
 
         public void Update(GameTime gameTime, KeyboardState keyboardState)
         {
-            
+
             for (int i = 0; i < playerCount; i++)
             {
                 //Splits up keys Array into separate Arrays for each player which contain whether a key was pressed or not (this is done to simplify the Update of each player)

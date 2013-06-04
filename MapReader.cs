@@ -18,13 +18,15 @@ namespace paintRacer
             Color[] colorData = new Color[map.Width * map.Height];
             map.GetData<Color>(colorData);
             //go through the whole texture
-            for (int x = 0, colordataCounter = 0; x < map.Width; x++)
+            for (int y = 0, colordataCounter = 0; y < map.Height; y++)
             {
-                for (int y = 0; y < map.Height; y++, colordataCounter++)
+                for (int x = 0; x < map.Width; x++, colordataCounter++)
                 {
                     // check if it has collision
                     mapData[x, y] = (colorData[colordataCounter].Equals(collisionColour)) ? (sbyte)Level.specialEventValues.collision : (sbyte)Level.specialEventValues.nothing;
+
                 }
+                Console.WriteLine();
             }
             return mapData;
         }

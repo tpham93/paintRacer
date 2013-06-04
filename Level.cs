@@ -73,5 +73,10 @@ namespace paintRacer
             //Restores previous Viewport
             GraphicsDevice.Viewport = defaultView;
         }
+
+        public sbyte[,] getMapData()
+        {
+            return mapData;
+        }
     }
 }
