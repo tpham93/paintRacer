@@ -19,6 +19,8 @@ namespace paintRacer
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        EGameStates gameStates;
+
         //Member of Scene.cs
         Level level;
         private Player[] players;
@@ -37,6 +39,8 @@ namespace paintRacer
             //Removes FPS lock and VSync
             graphics.SynchronizeWithVerticalRetrace = false;
             IsFixedTimeStep = false;
+
+            gameStates = EGameStates.Menue;
         }
 
         /// <summary>
@@ -98,6 +102,40 @@ namespace paintRacer
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
+            switch (gameStates)
+            {
+                case EGameStates.Close :
+                    //do something
+                    break;
+                case EGameStates.Credits :
+                    //do something
+                    break;
+                case EGameStates.HightScore :
+                    //do something
+                    break;
+                case EGameStates.Menue :
+                    Menu menu = new Menu();
+                    menu.Load();
+                    menu.Draw();
+                    gameStates = menu.Update();
+                    break;
+                case EGameStates.MultyPlayer :
+                    //do something
+                    break;
+                case EGameStates.Nothing :
+                    //do something
+                    break;
+                case EGameStates.Pause :
+                    //do something
+                    break;
+                case EGameStates.SinglePlayer :
+                    //do something
+                    break;
+                default :
+                    Console.WriteLine("This shuld never happens!");
+                    break;
+            }
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 

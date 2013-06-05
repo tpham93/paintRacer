@@ -25,10 +25,10 @@ namespace paintRacer
 
         // constants___________________________________________
         const int SELECTIONPOINTERSIZE = 20;
-        const int MENUENTRYSIZE_X = 100;
-        const int MENUENTRYSIZE_Y = 40;
+        const int MENUENTRYSIZE_X = 125;
+        const int MENUENTRYSIZE_Y = 50;
         const int MENUENTRYSPACE = 10;
-        const int MENUENTRYNUM = 3;
+        const int MENUENTRYNUM = 5;
 
         // variables used as constants
         Vector2 MENUSTARTPOS = new Vector2(400 - MENUENTRYSIZE_X / 2, 240 - MENUENTRYSIZE_Y);   //"pointer" on first menuentry
@@ -45,8 +45,12 @@ namespace paintRacer
         {
             // geneart all rectangles
             selectionPointerTexture = Helper.loadImage("testcar.png");
-            menuEntrieTexture = new Texture2D[1];                       //array-size shuld be 5
-            menuEntrieTexture[0] = Helper.loadImage("test.png");        //first menuentry
+            menuEntrieTexture = new Texture2D[5];                            //array-size shuld be 5
+            menuEntrieTexture[0] = Helper.loadImage("menu/singlePlayer.png");//first menuentry
+            menuEntrieTexture[1] = Helper.loadImage("menu/multyPlayer.png"); //2nd menuentry
+            menuEntrieTexture[2] = Helper.loadImage("menu/highscore.png");   //3rd menuentry
+            menuEntrieTexture[3] = Helper.loadImage("menu/credits.png");     //4th menuentry
+            menuEntrieTexture[4] = Helper.loadImage("menu/beenden.png");     //5th menuentry
             //load font
             //spriteFont = content.Load<SpriteFont>("Arial");
         }
@@ -91,7 +95,7 @@ namespace paintRacer
             // draw menuentrypointer
             tmpVect.X -= MENUENTRYSPACE + SELECTIONPOINTERSIZE;
             tmpVect.Y = MENUSTARTPOS.Y + (MENUENTRYSPACE + MENUENTRYSIZE_Y) * selectedEntry;
-            spriteBatch.Draw(selectionPointerTexture, tmpVect, Color.White);
+            spriteBatch.Draw(selectionPointerTexture, tmpVect, Color.Red);
 
             // draw caption
             //spriteBatch.DrawString(spriteFont, "Menue", Vector2.Zero, Color.Black);
