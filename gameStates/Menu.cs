@@ -24,14 +24,14 @@ namespace paintRacer
         int timeBetweenKeyPress;
 
         // constants___________________________________________
-        const int SELECTIONPOINTERSIZE = 20;
+        const int SELECTIONPOINTERSIZE = 20;    //size of marker
         const int MENUENTRYSIZE_X = 125;
         const int MENUENTRYSIZE_Y = 50;
-        const int MENUENTRYSPACE = 10;
+        const int MENUENTRYSPACE = 30;
         const int MENUENTRYNUM = 5;
 
         // variables used as constants
-        Vector2 MENUSTARTPOS = new Vector2(400 - MENUENTRYSIZE_X / 2, 240 - MENUENTRYSIZE_Y);   //"pointer" on first menuentry
+        Vector2 MENUSTARTPOS = new Vector2(500 - MENUENTRYSIZE_X / 2, MENUENTRYSPACE);   //"pointer" on first menuentry
         Color MENUENTRYCOLOR = Color.Gray;  //menuentrycolor
 
         const int MINTIMEKEYPRESS = 150;
@@ -44,13 +44,13 @@ namespace paintRacer
         public void Load(Microsoft.Xna.Framework.Content.ContentManager content)
         {
             // geneart all rectangles
-            selectionPointerTexture = Helper.loadImage("testcar.png");
+            selectionPointerTexture = Helper.loadImage("testcar.png", new Rectangle(0,0,20,40));
             menuEntrieTexture = new Texture2D[5];                            //array-size shuld be 5
-            menuEntrieTexture[0] = Helper.loadImage("menu/singlePlayer.png");//first menuentry
-            menuEntrieTexture[1] = Helper.loadImage("menu/multyPlayer.png"); //2nd menuentry
-            menuEntrieTexture[2] = Helper.loadImage("menu/highscore.png");   //3rd menuentry
-            menuEntrieTexture[3] = Helper.loadImage("menu/credits.png");     //4th menuentry
-            menuEntrieTexture[4] = Helper.loadImage("menu/beenden.png");     //5th menuentry
+            menuEntrieTexture[0] = Helper.loadImage("menu/singlePlayer.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));//first menuentry
+            menuEntrieTexture[1] = Helper.loadImage("menu/multyPlayer.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y)); //2nd menuentry
+            menuEntrieTexture[2] = Helper.loadImage("menu/highscore.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));   //3rd menuentry
+            menuEntrieTexture[3] = Helper.loadImage("menu/credits.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));     //4th menuentry
+            menuEntrieTexture[4] = Helper.loadImage("menu/beenden.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));     //5th menuentry
             //load font
             //spriteFont = content.Load<SpriteFont>("Arial");
         }
@@ -62,12 +62,12 @@ namespace paintRacer
                 KeyboardState keyboardState = Keyboard.GetState();
                 if (keyboardState.IsKeyDown(SELECT_UP))
                 {
-                    selectedEntry = (selectedEntry + 2) % MENUENTRYNUM;
+                    selectedEntry = (selectedEntry + MENUENTRYNUM -1) % MENUENTRYNUM;
                     timeBetweenKeyPress = 0;
                 }
                 if (keyboardState.IsKeyDown(SELECT_DOWN))
                 {
-                    selectedEntry = ++selectedEntry % MENUENTRYNUM;
+                    selectedEntry = (selectedEntry + 1) % MENUENTRYNUM;
                     timeBetweenKeyPress = 0;
                 }
                 if (keyboardState.IsKeyDown(SELECT_ENTRY))
@@ -84,6 +84,8 @@ namespace paintRacer
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            spriteBatch.Begin();
+            
             Vector2 tmpVect = new Vector2(MENUSTARTPOS.X, MENUSTARTPOS.Y);
             // draw entries
             for (int i = 0; i < MENUENTRYNUM; i++)
@@ -100,6 +102,8 @@ namespace paintRacer
             // draw caption
             //spriteBatch.DrawString(spriteFont, "Menue", Vector2.Zero, Color.Black);
             //spriteBatch.DrawString(spriteFont, "Arrows to change selection, Enter to select", new Vector2(0, 20), Color.Black);
+
+            spriteBatch.End();
         }
 
         public void Unload()

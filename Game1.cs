@@ -19,7 +19,10 @@ namespace paintRacer
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        EGameStates gameStates;
+        EGameStates gameState;
+
+        IGameStateElements gameStateElement;
+        IGameStateElements tmpGameStateElement;
 
         //Member of Scene.cs
         Level level;
@@ -40,7 +43,6 @@ namespace paintRacer
             graphics.SynchronizeWithVerticalRetrace = false;
             IsFixedTimeStep = false;
 
-            gameStates = EGameStates.Menue;
         }
 
         /// <summary>
@@ -68,6 +70,7 @@ namespace paintRacer
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            GameState = EGameStates.Menue;
             //Initializes Level and Player with test textures
             level = new Level("test.png",Level.MapType.rawImage);
             players = new Player[2];
@@ -102,47 +105,18 @@ namespace paintRacer
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
-            switch (gameStates)
-            {
-                case EGameStates.Close :
-                    //do something
-                    break;
-                case EGameStates.Credits :
-                    //do something
-                    break;
-                case EGameStates.HightScore :
-                    //do something
-                    break;
-                case EGameStates.Menue :
-                    Menu menu = new Menu();
-                    menu.Load();
-                    menu.Draw();
-                    gameStates = menu.Update();
-                    break;
-                case EGameStates.MultyPlayer :
-                    //do something
-                    break;
-                case EGameStates.Nothing :
-                    //do something
-                    break;
-                case EGameStates.Pause :
-                    //do something
-                    break;
-                case EGameStates.SinglePlayer :
-                    //do something
-                    break;
-                default :
-                    Console.WriteLine("This shuld never happens!");
-                    break;
-            }
-
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
             //Writes FPS to title
             this.Window.Title = "" + (int)(1 / (gameTime.ElapsedGameTime.TotalSeconds));
 
-            scene.Update(gameTime, Keyboard.GetState());
+            EGameStates tmpGameState = gameStateElement.Update(gameTime);
+
+            if (tmpGameState != gameState)
+                GameState = tmpGameState;
+
+            //scene.Update(gameTime, Keyboard.GetState());
 
             base.Update(gameTime);
         }
@@ -155,9 +129,62 @@ namespace paintRacer
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            scene.Draw(spriteBatch, GraphicsDevice);
+            //scene.Draw(spriteBatch, GraphicsDevice);
+
+            gameStateElement.Draw(gameTime, spriteBatch);
 
             base.Draw(gameTime);
+        }
+
+        
+
+        internal EGameStates GameState
+        {
+            get { return gameState; }
+            set
+            {
+                // changes value of gameState and changes type/object of gameStateElement
+                switch (value)
+                {
+                    case EGameStates.Menue:
+                        gameStateElement = new Menu();
+                        tmpGameStateElement = null;
+                        gameStateElement.Load(Content);
+                        break;
+                    case EGameStates.SinglePlayer:
+                        // if gemstate was EGameStates.Pause then load paused game, otherwise create a new one
+                        if (gameState == EGameStates.Pause)
+                        {
+                            gameStateElement = tmpGameStateElement;
+                        }
+                        else
+                        {
+                            //gameStateElement = new ActualGame();
+                            //gameStateElement.Load(Content);
+                        }
+                        tmpGameStateElement = null;
+                        break;
+                    case EGameStates.MultyPlayer:
+                        // if gemstate was EGameStates.Pause then load paused game, otherwise create a new one
+                        if (gameState == EGameStates.Pause)
+                        {
+                            gameStateElement = tmpGameStateElement;
+                        }
+                        else
+                        {
+                            //gameStateElement = new ActualGame();
+                            //gameStateElement.Load(Content);
+                        }
+                        tmpGameStateElement = null;
+                        break;
+                    case EGameStates.Pause:
+                        tmpGameStateElement = gameStateElement;
+                        //gameStateElement = new Pause();
+                        //gameStateElement.Load(Content);
+                        break;
+                }
+                gameState = value;
+            }
         }
     }
 }

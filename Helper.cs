@@ -26,14 +26,14 @@ namespace paintRacer
             Texture2D texture = Texture2D.FromStream(graphicsDevice, fileStream);
             fileStream.Close();
             // returns original car if the rectangle has no size
-            if (rect.X <= 0 || rect.Y <= 0)
+            if (rect.Width <= 0 || rect.Height <= 0)
             {
                 return texture;
             }
             else
             {
                 // rendertarget to save the resized image
-                RenderTarget2D renderTarget = new RenderTarget2D(graphicsDevice,rect.Width,rect.Height);
+                RenderTarget2D renderTarget = new RenderTarget2D(graphicsDevice,rect.Width,rect.Height,false,SurfaceFormat.Alpha8,DepthFormat.Depth24);
                 // create  spriteBatch to draw the resized image
                 SpriteBatch spriteBatch = new SpriteBatch(graphicsDevice);
                 // save the earlier rendertargets
