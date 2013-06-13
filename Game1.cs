@@ -111,13 +111,25 @@ namespace paintRacer
             //Writes FPS to title
             this.Window.Title = "" + (int)(1 / (gameTime.ElapsedGameTime.TotalSeconds));
 
-            /*
+            //*
             EGameStates tmpGameState = gameStateElement.Update(gameTime);
 
             if (tmpGameState != gameState)
+            {
                 GameState = tmpGameState;
-            */
-            scene.Update(gameTime, Keyboard.GetState());
+
+                switch (GameState)
+                {
+                    case EGameStates.Menue :
+                        gameStateElement = new Menu();
+                        break;
+                    default :
+                        Console.WriteLine("PGH");
+                        break;
+                }
+            }
+            //*/
+            //scene.Update(gameTime, Keyboard.GetState());
 
             base.Update(gameTime);
         }
@@ -130,9 +142,9 @@ namespace paintRacer
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            scene.Draw(spriteBatch, GraphicsDevice);
+            //scene.Draw(spriteBatch, GraphicsDevice);
 
-            //gameStateElement.Draw(gameTime, spriteBatch);
+            gameStateElement.Draw(gameTime, spriteBatch);
 
             base.Draw(gameTime);
         }

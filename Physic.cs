@@ -120,7 +120,8 @@ namespace paintRacer
             absNewSpeed = richtung * (float)Math.Sqrt((2 * energie / MASS));
 
             //calculate new direction
-            float totalStearingFactor = (float)(STEARING * (-0.0000000005 * Math.Pow(absNewSpeed / richtung, 5) + 0.0000002602 * Math.Pow(absNewSpeed, 4) - 0.0000468578 * Math.Pow(absNewSpeed / richtung, 3) + 0.0031319378 * Math.Pow(absNewSpeed, 2) - 0.0529897925 * absNewSpeed / richtung));
+            float xStreaching = 1.25f;
+            float totalStearingFactor = (float)(0.0004 * STEARING * (0.00005 * Math.Pow(absNewSpeed / xStreaching, 4) + 0.0157 * Math.Pow(absNewSpeed / xStreaching / richtung, 3) + 1.14208 * Math.Pow(absNewSpeed / xStreaching, 2) - 14.4 * absNewSpeed / xStreaching / richtung));
             totalStearingFactor = Math.Min(totalStearingFactor, MAX_STEARING);
             Vector2 newDirection = new Vector2(speed.direction.X + sideMove.X * totalStearingFactor, speed.direction.Y + sideMove.Y * totalStearingFactor);
             newDirection.Normalize();
