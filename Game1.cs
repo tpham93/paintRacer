@@ -16,6 +16,11 @@ namespace paintRacer
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+        //Must be in Loadfunction
+        String MAP_PIC = "test2.png";
+        Vector2 START_POS = new Vector2(1535, 550);
+
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
@@ -72,11 +77,12 @@ namespace paintRacer
 
             GameState = EGameStates.Menue;
             //Initializes Level and Player with test textures
-            level = new Level("test.png",Level.MapType.rawImage);
+            level = new Level(MAP_PIC, Level.MapType.rawImage);
             players = new Player[2];
             players[0] = new Player(Helper.loadImage("testcar.png"), Color.Blue);
             players[1] = new Player(Helper.loadImage("testcar.png"), Color.Red);
-            players[1].setPosition(new Vector2(0.0f, 128.0f));
+            players[0].setPosition(new Vector2(START_POS.X - 40, START_POS.Y));
+            players[1].setPosition(new Vector2(START_POS.X + 40, START_POS.Y));
 
             Keys[,] keys = { { Keys.W, Keys.S, Keys.A, Keys.D, Keys.Q, Keys.E, Keys.F }, { Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Escape, Keys.Enter, Keys.Back } };
             Config.setKeys(keys);
@@ -111,7 +117,7 @@ namespace paintRacer
             //Writes FPS to title
             this.Window.Title = "" + (int)(1 / (gameTime.ElapsedGameTime.TotalSeconds));
 
-            //*
+            /*
             EGameStates tmpGameState = gameStateElement.Update(gameTime);
 
             if (tmpGameState != gameState)
@@ -129,7 +135,7 @@ namespace paintRacer
                 }
             }
             //*/
-            //scene.Update(gameTime, Keyboard.GetState());
+            scene.Update(gameTime, Keyboard.GetState());
 
             base.Update(gameTime);
         }
@@ -142,9 +148,9 @@ namespace paintRacer
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            //scene.Draw(spriteBatch, GraphicsDevice);
+            scene.Draw(spriteBatch, GraphicsDevice);
 
-            gameStateElement.Draw(gameTime, spriteBatch);
+            //gameStateElement.Draw(gameTime, spriteBatch);
 
             base.Draw(gameTime);
         }

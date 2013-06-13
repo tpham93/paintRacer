@@ -10,12 +10,11 @@ namespace paintRacer
     class Physic
     {
         //const VAR
-        private const float MASS = 800; //mass of the car in kg
-        private const float MAX_FORCE_ACCELERAT = 50000f; //max force of the car in N = kg*m/s²
-        private const float MAX_FORCE_BARK = -2f * MAX_FORCE_ACCELERAT; //max force by barking in N = kg*m/s²
+        private const float MASS = 750; //mass of the car in kg
+        private const float MAX_FORCE_ACCELERAT = 150000f; //max force of the car in N = kg*m/s²
+        private const float MAX_FORCE_BARK = -1.5f * MAX_FORCE_ACCELERAT; //max force by barking in N = kg*m/s²
         private const float WHEEL_RADIUS = 0.25f; //radius of wheels in m
-        private const float STEARING = 0.01f; //if you stear left or right
-        private const float MAX_STEARING =0.001f; //the function is doing funny things for spacial values ;)
+        private const float STEARING = 0.0004f; //if you stear left or right
 
         private const float ROLL_FRICTION_STREET = 200f; //roll-friction stops the car in m
         private const float ROLL_FRICTION_GRASS = 600f; //roll-friction stops the car in m
@@ -82,19 +81,16 @@ namespace paintRacer
             //frictions Fr =          µrr           * g  /     r
             float rollFrictionForce = (ROLL_FRICTION_STREET * G / WHEEL_RADIUS);
 
-            //konvergenzfactor for speed
-            float konvergenzfactor = 2.5f;
-
             //set acceleration force
             float accelerationForce = 0f;
             if ((driverInput.Y > 0) && (speed.abs >= 0))
-                accelerationForce = MAX_FORCE_ACCELERAT / (float)(Math.Pow(speed.abs/100, konvergenzfactor) + 1);
+                accelerationForce = MAX_FORCE_ACCELERAT / (float)((Math.Abs(speed.abs) / 100) + 1);
             else if ((driverInput.Y > 0) && (speed.abs < 0))
                 accelerationForce = -MAX_FORCE_BARK;
             else if ((driverInput.Y < 0) && (speed.abs > 0))
                 accelerationForce = MAX_FORCE_BARK;
             else if ((driverInput.Y < 0) && (speed.abs <= 0))
-                accelerationForce = -MAX_FORCE_ACCELERAT / (float)(Math.Pow(speed.abs / 100, konvergenzfactor) + 1);
+                accelerationForce = -MAX_FORCE_ACCELERAT / (float)((Math.Abs(speed.abs) / 100) + 1);
 
             //                                         a
             //        v       =  v        +  ((      F         / m  )*                    t                       )
@@ -120,9 +116,7 @@ namespace paintRacer
             absNewSpeed = richtung * (float)Math.Sqrt((2 * energie / MASS));
 
             //calculate new direction
-            float xStreaching = 1.25f;
-            float totalStearingFactor = (float)(0.0004 * STEARING * (0.00005 * Math.Pow(absNewSpeed / xStreaching, 4) + 0.0157 * Math.Pow(absNewSpeed / xStreaching / richtung, 3) + 1.14208 * Math.Pow(absNewSpeed / xStreaching, 2) - 14.4 * absNewSpeed / xStreaching / richtung));
-            totalStearingFactor = Math.Min(totalStearingFactor, MAX_STEARING);
+            float totalStearingFactor = (float)(richtung * STEARING * Math.Log(Math.Abs(absNewSpeed)+1));
             Vector2 newDirection = new Vector2(speed.direction.X + sideMove.X * totalStearingFactor, speed.direction.Y + sideMove.Y * totalStearingFactor);
             newDirection.Normalize();
 
@@ -136,7 +130,6 @@ namespace paintRacer
          **/
         public static float calculateRotation(Vector2 direction)
         {
-            //return (float) (Math.Atan(direction.Y/direction.X) + Math.PI/2);
             return (float) Math.Atan2(direction.X,-direction.Y);
         }
 
