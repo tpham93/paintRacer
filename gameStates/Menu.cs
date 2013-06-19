@@ -67,7 +67,7 @@ namespace paintRacer
                 KeyboardState keyboardState = Keyboard.GetState();
                 if (keyboardState.IsKeyDown(SELECT_UP))
                 {
-                    selectedEntry = (selectedEntry + MENUENTRYNUM -1) % MENUENTRYNUM;
+                    selectedEntry = (selectedEntry + MENUENTRYNUM - 1) % MENUENTRYNUM;
                     timeBetweenKeyPress = 0;
                 }
                 if (keyboardState.IsKeyDown(SELECT_DOWN))
@@ -79,22 +79,22 @@ namespace paintRacer
                 {
                     switch (selectedEntry)
                     {
-                        case 0 :
+                        case 0:
                             //Singleplayer
                             break;
-                        case 1 :
+                        case 1:
                             //Multiplayer
-                            return EGameStates.MultyPlayer;
-                        case 2 :
+                            return EGameStates.MultiPlayer;
+                        case 2:
                             //Highscore
                             break;
-                        case 3 :
+                        case 3:
                             //Credits
                             break;
-                        case 4 :
+                        case 4:
                             //Exit
                             break;
-                        default :
+                        default:
                             Console.WriteLine("FOO!! This is bad. \ndefault in Menu-switch-case");
                             break;
                     }
@@ -111,8 +111,8 @@ namespace paintRacer
         {
             spriteBatch.Begin();
 
-            spriteBatch.Draw(backgound, new Rectangle(0, 0, 1000, 1000), Color.White);
-            
+            //spriteBatch.Draw(backgound, new Rectangle(0, 0, 1000, 1000), Color.White);
+
             Vector2 tmpVect = new Vector2(MENUSTARTPOS.X, MENUSTARTPOS.Y);
             // draw entries
             for (int i = 0; i < MENUENTRYNUM; i++)
@@ -123,7 +123,7 @@ namespace paintRacer
 
             // draw menuentrypointer
             tmpVect.X -= MENUENTRYSPACE + SELECTIONPOINTERSIZE_X + 5;
-            tmpVect.Y = MENUSTARTPOS.Y + (MENUENTRYSPACE + MENUENTRYSIZE_Y) * selectedEntry + (MENUENTRYSIZE_Y - SELECTIONPOINTERSIZE_Y)/2;
+            tmpVect.Y = MENUSTARTPOS.Y + (MENUENTRYSPACE + MENUENTRYSIZE_Y) * selectedEntry + (MENUENTRYSIZE_Y - SELECTIONPOINTERSIZE_Y) / 2;
             spriteBatch.Draw(selectionPointerTexture, tmpVect, MENUSELECTIONPOINTERCOLOR);
 
 

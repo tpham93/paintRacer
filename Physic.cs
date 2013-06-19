@@ -175,7 +175,7 @@ namespace paintRacer
                         tmpVect.X = x-middlePoint.X;
                         tmpVect.Y = y-middlePoint.Y;
                         mapPosition = Helper.rotateVector2(tmpVect, rotationCos, rotationSin) + position;
-                        if (mapPosition.X >= 0 && mapPosition.Y <= mapData.GetUpperBound(0) && mapPosition.Y >= 0 && mapPosition.Y <= mapData.GetUpperBound(1))
+                        if (mapPosition.X >= 0 && mapPosition.Y < mapData.GetUpperBound(0) && mapPosition.Y >= 0 && mapPosition.Y < mapData.GetUpperBound(1))
                         if (mapData[(int)mapPosition.X, (int)mapPosition.Y] == -2)
                         {
                             return true;

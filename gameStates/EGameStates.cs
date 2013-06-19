@@ -6,7 +6,7 @@
         Menue,
         Close,
         SinglePlayer,
-        MultyPlayer,
+        MultiPlayer,
         HightScore,
         Credits,
         Pause
