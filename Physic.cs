@@ -134,6 +134,40 @@ namespace paintRacer
         }
 
         /**
+         * returns if the car passed a checkpoint
+         * 
+         * pointA & pointB - Vector2 :
+         * left and right of the checkpoint, the line will be between both
+         * 
+         * mid - Vector2 :
+         * middelpoint of the player
+         */
+        public static bool checkPoint(Vector2 pointA, Vector2 pointB, Vector2 mid)
+        {
+            float diff = 1.5f;
+
+            Vector2 ab = new Vector2(Math.Abs(pointA.X - pointB.X), Math.Abs(pointA.Y - pointB.Y));
+            Vector2 am = new Vector2(Math.Abs(pointA.X - mid.X), Math.Abs(pointA.Y - mid.Y));
+            Vector2 bm = new Vector2(Math.Abs(mid.X - pointB.X), Math.Abs(mid.Y - pointB.Y));
+
+            if (ab.LengthSquared() * diff < am.LengthSquared() + bm.LengthSquared())
+                return false;
+            return true;
+        }
+
+        /**
+         * returns a ROUNDED integer from a double (or float)
+         * 
+         * value - double :
+         * cast this value to integer by rounding
+         */
+        public static int roundCast(double value)
+        {
+            return (value > 0) ? ((int)(value * 10 + 5) / 10) : ((int)(value * 10 - 5) / 10);
+        }
+
+
+        /**
          * returns if there is an collosion
          * 
          * playerCollisionData - bool[,] :
