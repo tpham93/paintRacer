@@ -16,10 +16,6 @@ namespace paintRacer
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        //Must be in Loadfunction
-        String MAP_PIC = "test2.png";
-        Vector2 START_POS = new Vector2(1535, 550);
-
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -28,16 +24,6 @@ namespace paintRacer
 
         IGameStateElements gameStateElement;
         IGameStateElements tmpGameStateElement;
-
-        //Member of Scene.cs
-        Level level;
-        private Player[] players;
-        Viewport defaultView;
-        Viewport[] viewports;
-
-        Scene scene;
-
-        float rotation = 0.0f;
 
         public Game1()
         {
@@ -77,17 +63,17 @@ namespace paintRacer
 
             GameState = EGameStates.Menue;
             //Initializes Level and Player with test textures
-            level = new Level(MAP_PIC, Level.MapType.rawImage);
-            players = new Player[2];
-            players[0] = new Player(Helper.loadImage("testcar.png"), Color.Blue);
-            players[1] = new Player(Helper.loadImage("testcar.png"), Color.Red);
-            players[0].setPosition(new Vector2(START_POS.X - 40, START_POS.Y));
-            players[1].setPosition(new Vector2(START_POS.X + 40, START_POS.Y));
+            //level = new Level(MAP_PIC, Level.MapType.rawImage);
+            //players = new Player[2];
+            //players[0] = new Player(Helper.loadImage("testcar.png"), Color.Blue);
+            //players[1] = new Player(Helper.loadImage("testcar.png"), Color.Red);
+            //players[0].setPosition(new Vector2(START_POS.X - 40, START_POS.Y));
+            //players[1].setPosition(new Vector2(START_POS.X + 40, START_POS.Y));
 
             Keys[,] keys = { { Keys.W, Keys.S, Keys.A, Keys.D, Keys.Q, Keys.E, Keys.F }, { Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Escape, Keys.Enter, Keys.Back } };
             Config.setKeys(keys);
 
-            scene = new Scene(level, players, GraphicsDevice.Viewport, Config.getKeys());
+            //scene = new Scene(level, players, GraphicsDevice.Viewport, Config.getKeys());
             
 
 
@@ -117,25 +103,24 @@ namespace paintRacer
             //Writes FPS to title
             this.Window.Title = "" + (int)(1 / (gameTime.ElapsedGameTime.TotalSeconds));
 
-            /*
+            ///*
             EGameStates tmpGameState = gameStateElement.Update(gameTime);
 
             if (tmpGameState != gameState)
             {
                 GameState = tmpGameState;
 
-                switch (GameState)
-                {
-                    case EGameStates.Menue :
-                        gameStateElement = new Menu();
-                        break;
-                    default :
-                        Console.WriteLine("PGH");
-                        break;
-                }
+                //switch (GameState)
+                //{
+                //    case EGameStates.Menue :
+                //        gameStateElement = new Menu();
+                //        break;
+                //    default :
+                //        Console.WriteLine("PGH");
+                //        break;
+                //}
             }
             //*/
-            scene.Update(gameTime, Keyboard.GetState());
 
             base.Update(gameTime);
         }
@@ -148,9 +133,9 @@ namespace paintRacer
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            scene.Draw(spriteBatch, GraphicsDevice);
+            //scene.Draw(spriteBatch, GraphicsDevice);
 
-            //gameStateElement.Draw(gameTime, spriteBatch);
+            gameStateElement.Draw(gameTime, spriteBatch);
 
             base.Draw(gameTime);
         }
@@ -183,7 +168,7 @@ namespace paintRacer
                         }
                         tmpGameStateElement = null;
                         break;
-                    case EGameStates.MultyPlayer:
+                    case EGameStates.MultiPlayer:
                         // if gemstate was EGameStates.Pause then load paused game, otherwise create a new one
                         if (gameState == EGameStates.Pause)
                         {
@@ -191,8 +176,8 @@ namespace paintRacer
                         }
                         else
                         {
-                            //gameStateElement = new ActualGame();
-                            //gameStateElement.Load(Content);
+                            gameStateElement = new ActualMultiplayer(GraphicsDevice);
+                            gameStateElement.Load(Content);
                         }
                         tmpGameStateElement = null;
                         break;

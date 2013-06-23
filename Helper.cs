@@ -33,13 +33,14 @@ namespace paintRacer
             else
             {
                 // rendertarget to save the resized image
-                RenderTarget2D renderTarget = new RenderTarget2D(graphicsDevice,rect.Width,rect.Height,false,SurfaceFormat.Alpha8,DepthFormat.Depth24);
+                RenderTarget2D renderTarget = new RenderTarget2D(graphicsDevice,rect.Width,rect.Height,false,SurfaceFormat.Color,DepthFormat.Depth24Stencil8);
                 // create  spriteBatch to draw the resized image
                 SpriteBatch spriteBatch = new SpriteBatch(graphicsDevice);
                 // save the earlier rendertargets
                 RenderTargetBinding[] tmpRenderTargets = graphicsDevice.GetRenderTargets();
                 graphicsDevice.SetRenderTarget(renderTarget);
                 // draw the resized image on the rendertarget
+                graphicsDevice.Clear(Color.Transparent);
                 spriteBatch.Begin();
                 if (color.Equals(new Color()))
                 {
