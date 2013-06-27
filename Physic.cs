@@ -14,7 +14,7 @@ namespace paintRacer
         private const float MAX_FORCE_ACCELERAT = 150000f; //max force of the car in N = kg*m/s²
         private const float MAX_FORCE_BARK = -1.5f * MAX_FORCE_ACCELERAT; //max force by barking in N = kg*m/s²
         private const float WHEEL_RADIUS = 0.25f; //radius of wheels in m
-        private const float STEARING = 0.0004f; //if you stear left or right
+        private const float STEARING = 0.0015f; //if you stear left or right
 
         private const float ROLL_FRICTION_STREET = 200f; //roll-friction stops the car in m
         private const float ROLL_FRICTION_GRASS = 600f; //roll-friction stops the car in m
