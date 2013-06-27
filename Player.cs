@@ -64,13 +64,15 @@ namespace paintRacer
             //Console.WriteLine("Driver input: " +driverInput);
             //Console.WriteLine("Calculated speed: " +speed);
             //Console.WriteLine("Calculated Direction: " + direction);
-            speed = Physic.calculateSpeed(gameTime, speed, driverInput);
+
+            ///TODO: read the MapState out of the map and give it here in the function
+            speed = Physic.calculateSpeed(gameTime, speed, driverInput, EMapStates.Road);
             position = Physic.calculateNextPos(gameTime, position, speed);
             rotation = Physic.calculateRotation(speed.direction);
         }
 
-        // get the pixels, which are used for the collision
-        // if they aren't transparent then they will be marked as true in the 2-dimensional bool array
+        /// get the pixels, which are used for the collision
+        /// if they aren't transparent then they will be marked as true in the 2-dimensional bool array
         private static bool[,] getCollisionData(Texture2D texture)
         {
             // get the color information of the player
@@ -91,7 +93,7 @@ namespace paintRacer
             return collisionData;
         }
 
-        //If player is left null we consider this to be the protagonist of the current viewport, otherwise player is the position this is to be aligned on
+        ///If player is left null we consider this to be the protagonist of the current viewport, otherwise player is the position this is to be aligned on
         public void Draw(SpriteBatch spriteBatch, GraphicsDevice GraphicsDevice, Viewport viewport, Player player=null)
         {
             //Assumes GraphicsDevice previously contained default Viewport

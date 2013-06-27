@@ -17,9 +17,9 @@ namespace paintRacer
         private const float STEARING = 0.0015f; //if you stear left or right
 
         private const float ROLL_FRICTION_STREET = 200f; //roll-friction stops the car in m
-        private const float ROLL_FRICTION_GRASS = 600f; //roll-friction stops the car in m
-        private const float STATIC_FRICTION_STREET = 0.9f; //helps the car to stay on road in 1
-        private const float STATIC_FRICTION_GRASS = 0.6f; //helps the car to stay on road in 1
+        private const float ROLL_FRICTION_GRASS = 1400f; //roll-friction stops the car in m
+        //private const float STATIC_FRICTION_STREET = 0.9f; //helps the car to stay on road in 1
+        //private const float STATIC_FRICTION_GRASS = 0.6f; //helps the car to stay on road in 1
         private const float G = 9.81f; //gravitational acceleration in m/s²
 
         /**
@@ -41,21 +41,32 @@ namespace paintRacer
             return new Vector2(pos.X + (speed.direction.X) * speed.abs * time, pos.Y + (speed.direction.Y) * speed.abs * time);
         }
 
-        /**
-         * returns the updated speed of the car
-         * 
-         * speed - Vector2 :
-         * speed of the car
-         * 
-         * driverInput - Vector2 :
-         * direction witch is given by the driver
-         * x: left(&st;0) straight on(0) right(&gt;0)
-         * y: accelerate(&gt;0) roll(0) bark(&st;0)
-         * 
-         * returns :
-         * new Vector2
-         */
-        public static Speed calculateSpeed(GameTime gameTime, Speed speed, Vector2 driverInput)
+        
+        /// <summary>
+        /// returns the updated speed of the car
+        /// </summary>
+        ///
+        /// <param name="gameTime"> - GameTime :
+        /// the game time
+        /// </param>
+        ///
+        /// <param name="speed"> - Vector2 :
+        /// speed of the car
+        /// </param>
+        ///
+        /// <param name="driverInput"> - Vector2 :
+        /// direction witch is given by the driver
+        /// x: left(&lt;0) straight on(0) right(&gt;0)
+        /// y: accelerate(&gt;0) roll(0) bark(&lt;0)
+        /// </param>
+        ///
+        /// <param name="mapState"> - EMapStates :
+        /// the type of undergound the mid of the car is on
+        /// </param>
+        ///
+        /// <returns> new Vector2
+        /// </returns>
+        public static Speed calculateSpeed(GameTime gameTime, Speed speed, Vector2 driverInput, EMapStates mapState)
         {
             //Console.WriteLine("driverInput: [" + driverInput.X + ";" + driverInput.Y + "]"); 
             
@@ -79,7 +90,7 @@ namespace paintRacer
             }
 
             //frictions Fr =          µrr           * g  /     r
-            float rollFrictionForce = (ROLL_FRICTION_STREET * G / WHEEL_RADIUS);
+            float rollFrictionForce = (((mapState == EMapStates.Road) ? ROLL_FRICTION_STREET : ROLL_FRICTION_GRASS) * G / WHEEL_RADIUS);
 
             //set acceleration force
             float accelerationForce = 0f;
