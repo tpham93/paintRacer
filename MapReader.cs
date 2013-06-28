@@ -10,6 +10,10 @@ namespace paintRacer
 {
     class MapReader
     {
+        private const Vector2 ROAD_COLOR = new Vector2(200, 250);
+        private const Vector2 OFFROAD_COLOR = new Vector2(100, 199);
+        private const Vector2 OBJECT_COLOR = new Vector2(0, 99);
+
         public static sbyte[,] getRawImageInformation(Texture2D map, Color collisionColour)
         {
             // initializes vector
@@ -30,5 +34,87 @@ namespace paintRacer
             }
             return mapData;
         }
+
+        /// <summary>
+        /// static function to load new map
+        /// </summary>
+        /// 
+        /// <param name="imageFile">
+        /// the file of the showen map
+        /// </param>
+        /// 
+        /// <param name="swImageForData">
+        /// the file of the map to readout data
+        /// </param>
+        /// 
+        /// <param name="checkPoints">
+        /// the checkpoints selected by the user
+        /// </param>
+        /// 
+        /// <param name="startPoint">
+        /// the point were the cars start
+        /// </param>
+        /// 
+        /// <param name="startDirection">
+        /// the direction (as vector) in which the cars start
+        /// </param>
+        /// 
+        /// <returns>
+        /// a new map to play on
+        /// </returns>
+        /// 
+        public static Map createMap(string imageFile, string swImageForData, Vector2[] checkPoints, Vector2 startPoint, Vector2 startDirection)
+        {
+            Texture2D image = Helper.loadImage(imageFile);
+            EMapStates[,] data = createDataFromSWImage(Helper.loadImage(swImageForData));
+            float rotation = Physic.calculateRotation(startDirection);
+            return new Map(image, data, checkPoints, startPoint, rotation);
+        }
+
+        /// <summary>
+        /// create a 2D-Array of EMapStates from an sw image
+        /// </summary>
+        /// 
+        /// <param name="image">
+        /// an sw image to read the data
+        /// </param>
+        /// 
+        /// <returns>
+        /// an 2D-Array of EMapStates
+        /// </returns>
+        /// 
+        private static EMapStates[,] createDataFromSWImage(Texture2D image)
+        {
+            int width = image.Width;
+            int height = image.Height;
+            EMapStates[,] result = new EMapStates[width, height];
+
+            Color[] colorData = new Color[image.Width * image.Height];
+            image.GetData<Color>(colorData);
+
+            for (int i = 0; i < colorData.Length; i++)
+            {
+                int d_color = (colorData[i].B + colorData[i].G + colorData[i].R) / 3;
+                if (d_color <= ROAD_COLOR.Y && d_color >= ROAD_COLOR.X)
+                    result[i % height, i / height] = EMapStates.Road;
+                else if (d_color <= OFFROAD_COLOR.Y && d_color >= OFFROAD_COLOR.X)
+                    result[i % height, i / height] = EMapStates.Offroad;
+                else if (d_color <= OBJECT_COLOR.Y && d_color >= OBJECT_COLOR.X)
+                    result[i % height, i / height] = EMapStates.Object;
+                else result[i % height, i / height] = EMapStates.Default;
+            }
+            return result;
+        }
+
+        /// TODO: implement a function to load maps from Files
+        /*public Map readMapFromFile(string filepath)
+        {
+            return null;
+        }*/
+
+        /// TODO: implement a function to save maps in Files
+        /*public void saveMapInFile(string filepath, Map map)
+        {
+        }*/
     }
 }

@@ -7,6 +7,8 @@
         Close,
         SinglePlayer,
         MultiPlayer,
+        LoadMenu,
+        Editor,
         HightScore,
         Credits,
         Pause
