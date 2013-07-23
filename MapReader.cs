@@ -10,9 +10,9 @@ namespace paintRacer
 {
     class MapReader
     {
-        private const Vector2 ROAD_COLOR = new Vector2(200, 250);
-        private const Vector2 OFFROAD_COLOR = new Vector2(100, 199);
-        private const Vector2 OBJECT_COLOR = new Vector2(0, 99);
+        private static Vector2 ROAD_COLOR = new Vector2(200, 250);
+        private static Vector2 OFFROAD_COLOR = new Vector2(100, 199);
+        private static Vector2 OBJECT_COLOR = new Vector2(0, 99);
 
         public static sbyte[,] getRawImageInformation(Texture2D map, Color collisionColour)
         {

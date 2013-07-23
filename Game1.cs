@@ -104,23 +104,7 @@ namespace paintRacer
             this.Window.Title = "" + (int)(1 / (gameTime.ElapsedGameTime.TotalSeconds));
 
             ///*
-            EGameStates tmpGameState = gameStateElement.Update(gameTime);
-
-            if (tmpGameState != gameState)
-            {
-                GameState = tmpGameState;
-
-                //switch (GameState)
-                //{
-                //    case EGameStates.Menue :
-                //        gameStateElement = new Menu();
-                //        break;
-                //    default :
-                //        Console.WriteLine("PGH");
-                //        break;
-                //}
-            }
-            //*/
+            GameState = gameStateElement.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -147,47 +131,51 @@ namespace paintRacer
             get { return gameState; }
             set
             {
-                // changes value of gameState and changes type/object of gameStateElement
-                switch (value)
+                // just change if the actual gamestate is being switched
+                if (gameState != value)
                 {
-                    case EGameStates.Menue:
-                        gameStateElement = new Menu();
-                        tmpGameStateElement = null;
-                        gameStateElement.Load(Content);
-                        break;
-                    case EGameStates.SinglePlayer:
-                        // if gemstate was EGameStates.Pause then load paused game, otherwise create a new one
-                        if (gameState == EGameStates.Pause)
-                        {
-                            gameStateElement = tmpGameStateElement;
-                        }
-                        else
-                        {
-                            //gameStateElement = new ActualGame();
-                            //gameStateElement.Load(Content);
-                        }
-                        tmpGameStateElement = null;
-                        break;
-                    case EGameStates.MultiPlayer:
-                        // if gemstate was EGameStates.Pause then load paused game, otherwise create a new one
-                        if (gameState == EGameStates.Pause)
-                        {
-                            gameStateElement = tmpGameStateElement;
-                        }
-                        else
-                        {
-                            gameStateElement = new ActualMultiplayer(GraphicsDevice);
+                    // changes value of gameState and changes type/object of gameStateElement
+                    switch (value)
+                    {
+                        case EGameStates.Menue:
+                            gameStateElement = new Menu();
+                            tmpGameStateElement = null;
                             gameStateElement.Load(Content);
-                        }
-                        tmpGameStateElement = null;
-                        break;
-                    case EGameStates.Pause:
-                        tmpGameStateElement = gameStateElement;
-                        //gameStateElement = new Pause();
-                        //gameStateElement.Load(Content);
-                        break;
+                            break;
+                        case EGameStates.SinglePlayer:
+                            // if gemstate was EGameStates.Pause then load paused game, otherwise create a new one
+                            if (gameState == EGameStates.Pause)
+                            {
+                                gameStateElement = tmpGameStateElement;
+                            }
+                            else
+                            {
+                                //gameStateElement = new ActualGame();
+                                //gameStateElement.Load(Content);
+                            }
+                            tmpGameStateElement = null;
+                            break;
+                        case EGameStates.MultiPlayer:
+                            // if gemstate was EGameStates.Pause then load paused game, otherwise create a new one
+                            if (gameState == EGameStates.Pause)
+                            {
+                                gameStateElement = tmpGameStateElement;
+                            }
+                            else
+                            {
+                                gameStateElement = new ActualMultiplayer(GraphicsDevice);
+                                gameStateElement.Load(Content);
+                            }
+                            tmpGameStateElement = null;
+                            break;
+                        case EGameStates.Pause:
+                            tmpGameStateElement = gameStateElement;
+                            //gameStateElement = new Pause();
+                            //gameStateElement.Load(Content);
+                            break;
+                    }
+                    gameState = value;
                 }
-                gameState = value;
             }
         }
     }

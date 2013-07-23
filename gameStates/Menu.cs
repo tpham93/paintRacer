@@ -23,7 +23,7 @@ namespace paintRacer
         // index of selected entry
         int selectedEntry;
         // time between keypress (max = MINTIMEKEYPRESS))
-        int timeBetweenKeyPress;
+        TimeSpan timeBetweenKeyPress;
 
         // constants___________________________________________
         const int SELECTIONPOINTERSIZE_X = 100;    //size of marker
@@ -38,7 +38,9 @@ namespace paintRacer
         Color MENUENTRYCOLOR = Color.White;  //menuentrycolor
         Color MENUSELECTIONPOINTERCOLOR = Color.Red;
 
-        const int MINTIMEKEYPRESS = 100;
+        //const int MINTIMEKEYPRESS = 100;
+
+        readonly TimeSpan MINTIMEKEYPRESS = new TimeSpan(0,0,0,0,200);
 
         const Keys SELECT_UP = Keys.Up;
         const Keys SELECT_DOWN = Keys.Down;
@@ -58,6 +60,9 @@ namespace paintRacer
             menuEntrieTexture[4] = Helper.loadImage("menu/beenden.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));     //5th menuentry
             //load font
             //spriteFont = content.Load<SpriteFont>("Arial");
+
+            //initialize timeBetweenKeyPress
+            timeBetweenKeyPress = MINTIMEKEYPRESS;
         }
 
         public EGameStates Update(GameTime gameTime)
@@ -68,12 +73,12 @@ namespace paintRacer
                 if (keyboardState.IsKeyDown(SELECT_UP))
                 {
                     selectedEntry = (selectedEntry + MENUENTRYNUM - 1) % MENUENTRYNUM;
-                    timeBetweenKeyPress = 0;
+                    timeBetweenKeyPress = new TimeSpan();
                 }
                 if (keyboardState.IsKeyDown(SELECT_DOWN))
                 {
                     selectedEntry = (selectedEntry + 1) % MENUENTRYNUM;
-                    timeBetweenKeyPress = 0;
+                    timeBetweenKeyPress = new TimeSpan();
                 }
                 if (keyboardState.IsKeyDown(SELECT_ENTRY))
                 {
@@ -102,7 +107,7 @@ namespace paintRacer
             }
             else
             {
-                timeBetweenKeyPress += gameTime.ElapsedGameTime.Milliseconds;
+                timeBetweenKeyPress += gameTime.ElapsedGameTime;
             }
             return EGameStates.Menue;
         }
