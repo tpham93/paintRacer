@@ -14,7 +14,8 @@ namespace paintRacer
 
         //Must be in Loadfunction
         String MAP_PIC = "test2.png";
-        Vector2 START_POS = new Vector2(1535, 550);
+        Vector2 start_pos = new Vector2(1535, 550);
+        Vector2[] check_points = new Vector2[1];
 
         //Member of Scene.cs
         Level level;
@@ -35,13 +36,14 @@ namespace paintRacer
 
         public void Load(ContentManager content)
         {
+
             //Initializes Level and Player with test textures
             level = new Level(MAP_PIC, Level.MapType.rawImage);
             players = new Player[2];
             players[0] = new Player(Helper.loadImage("testcar.png"), Color.Blue);
             players[1] = new Player(Helper.loadImage("testcar.png"), Color.Red);
-            players[0].setPosition(new Vector2(START_POS.X - 40, START_POS.Y));
-            players[1].setPosition(new Vector2(START_POS.X + 40, START_POS.Y));
+            players[0].setPosition(new Vector2(start_pos.X - 40, start_pos.Y));
+            players[1].setPosition(new Vector2(start_pos.X + 40, start_pos.Y));
 
             scene = new Scene(level, players, graphicsDevice.Viewport, Config.getKeys());
         }

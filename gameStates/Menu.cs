@@ -98,6 +98,7 @@ namespace paintRacer
                             break;
                         case 4:
                             //Exit
+                            return EGameStates.Close;
                             break;
                         default:
                             Console.WriteLine("FOO!! This is bad. \ndefault in Menu-switch-case");

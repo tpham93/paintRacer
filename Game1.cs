@@ -173,6 +173,9 @@ namespace paintRacer
                             //gameStateElement = new Pause();
                             //gameStateElement.Load(Content);
                             break;
+                        case EGameStates.Close:
+                            gameStateElement = new gameStates.Close();
+                            break;
                     }
                     gameState = value;
                 }
