@@ -83,7 +83,7 @@ namespace paintRacer
         /// an 2D-Array of EMapStates
         /// </returns>
         /// 
-        private static EMapStates[,] createDataFromSWImage(Texture2D image)
+        public static EMapStates[,] createDataFromSWImage(Texture2D image)
         {
             int width = image.Width;
             int height = image.Height;
@@ -107,10 +107,10 @@ namespace paintRacer
         }
 
         /// TODO: implement a function to load maps from Files
-        /*public Map readMapFromFile(string filepath)
+        public Map readMapFromFile(string filepath)
         {
-            return null;
-        }*/
+            return XmlLoad.parseMapConfig(filepath);
+        }
 
         /// TODO: implement a function to save maps in Files
         /*public void saveMapInFile(string filepath, Map map)
