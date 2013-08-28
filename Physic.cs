@@ -145,7 +145,13 @@ namespace paintRacer
 
             //Console.WriteLine(absNewSpeed);
 
-            return new Speed(newDirection, absNewSpeed);
+
+            Speed res = new Speed(newDirection, absNewSpeed);
+
+            if (hasCollision(calculateNextPos(gameTime,player.getPosition(),res), player.getCollisionData(), player.getRotation(), mapdata) || playerPosX < 0 || playerPosY < 0 || playerPosX > mapdata.GetUpperBound(0) || playerPosX > mapdata.GetUpperBound(1))
+                return new Speed(speed.direction, -0.5f*absNewSpeed);
+
+            return res;
         }
 
         /**
@@ -232,7 +238,7 @@ namespace paintRacer
                         tmpVect.X = x-middlePoint.X;
                         tmpVect.Y = y - middlePoint.Y;
                         mapPosition = Helper.rotateVector2(tmpVect, rotationCos, rotationSin) + position;
-                        if (mapPosition.X >= 0 && mapPosition.Y < mapData.GetUpperBound(0) && mapPosition.Y >= 0 && mapPosition.Y < mapData.GetUpperBound(1))
+                        if (mapPosition.X >= 0 && mapPosition.X < mapData.GetUpperBound(0) && mapPosition.Y >= 0 && mapPosition.Y < mapData.GetUpperBound(1))
                         {
                             if (mapData[(int)mapPosition.X, (int)mapPosition.Y] == EMapStates.Object)
                             {

@@ -30,9 +30,9 @@ namespace paintRacer
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             //Removes FPS lock and VSync
-            graphics.SynchronizeWithVerticalRetrace = false;
+            //graphics.SynchronizeWithVerticalRetrace = false;
             IsFixedTimeStep = false;
-
+            IsMouseVisible = true;
         }
 
         /// <summary>
