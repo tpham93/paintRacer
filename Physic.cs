@@ -14,7 +14,7 @@ namespace paintRacer
         private const float MAX_FORCE_ACCELERAT = 150000f; //max force of the car in N = kg*m/s²
         private const float MAX_FORCE_BARK = -1.5f * MAX_FORCE_ACCELERAT; //max force by barking in N = kg*m/s²
         private const float WHEEL_RADIUS = 0.25f; //radius of wheels in m
-        private const float STEARING = 0.0015f; //if you stear left or right
+        private const float STEARING = 0.0003f; //if you stear left or right
 
         private const float ROLL_FRICTION_STREET = 400f; //roll-friction stops the car in m
         private const float ROLL_FRICTION_GRASS = 1400f; //roll-friction stops the car in m
@@ -74,12 +74,8 @@ namespace paintRacer
 
             Speed speed = player.getSpeed();
 
-<<<<<<< HEAD
-            if (hasCollision(player.getPosition(), player.getCollisionData(), player.getRotation(), mapdata)) 
-=======
-            if (hasCollision(player.getPosition(), player.getCollisionData(), player.getRotation(), mapdata) || playerPosX < 0 || playerPosY < 0 || playerPosX > mapdata.GetUpperBound(0) || playerPosX > mapdata.GetUpperBound(1))
->>>>>>> 4bd61cdaf87d13c6797ccca51af608a17f9c2dfd
-                return new Speed(speed.direction, 0f);
+            //if (hasCollision(player.getPosition(), player.getCollisionData(), player.getRotation(), mapdata))
+              //  return new Speed(speed.direction, 0f);
             EMapStates mapState = mapdata[playerPosX, playerPosY];
 
             Vector2 accelaration = new Vector2(speed.direction.X, speed.direction.Y);
@@ -139,7 +135,7 @@ namespace paintRacer
             absNewSpeed = richtung * (float)Math.Sqrt((2 * energie / MASS));
 
             //calculate new direction
-            float totalStearingFactor = (float)(richtung * STEARING * Math.Log(Math.Abs(absNewSpeed)+1));
+            float totalStearingFactor = (float)(richtung * gameTime.ElapsedGameTime.Milliseconds * STEARING * Math.Log(Math.Abs(absNewSpeed)+1));
             Vector2 newDirection = new Vector2(speed.direction.X + sideMove.X * totalStearingFactor, speed.direction.Y + sideMove.Y * totalStearingFactor);
             newDirection.Normalize();
 
