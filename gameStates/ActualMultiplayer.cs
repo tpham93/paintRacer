@@ -13,7 +13,7 @@ namespace paintRacer
     {
 
         //Must be in Loadfunction
-        String MAP_PIC = "test2.png";
+        String MAP_PIC = "test2SW.png";
         Vector2 start_pos = new Vector2(1535, 550);
         Vector2[] check_points = new Vector2[1];
 

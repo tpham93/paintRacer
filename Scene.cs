@@ -35,6 +35,7 @@ namespace paintRacer
                 for (int i = 0; i < playerCount; i++)
                 {
                     this.players[i] = players[i];
+                    this.players[i].setScene(this);
                     this.viewports[i] = viewports[i];
                     for (int j = 0; j < keys.GetLength(1); j++)
                     {
@@ -79,6 +80,11 @@ namespace paintRacer
                 players[i].Draw(spriteBatch, spriteBatch.GraphicsDevice, viewports[i], players[i]);
                 //Physic.hasCollision(players[i].getPosition(), players[i].getCollisionData(), players[i].getRotation(), level.getMapData());
             }
+        }
+
+        public Level getLevel()
+        {
+            return level;
         }
     }
 }

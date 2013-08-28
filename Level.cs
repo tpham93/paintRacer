@@ -9,12 +9,12 @@ namespace paintRacer
 {
     class Level
     {
-        // enum for special values to save collision and air
-        public enum specialEventValues
-        {
-            nothing = -1,
-            collision = -2
-        }
+        //// enum for special values to save collision and air
+        //public enum specialEventValues
+        //{
+        //    nothing = -1,
+        //    collision = -2
+        //}
 
         // enum to select of which type to load
         public enum MapType
@@ -23,7 +23,7 @@ namespace paintRacer
             customMap
         }
         private Texture2D texture;
-        private sbyte[,] mapData;
+        private EMapStates[,] mapData;
 
 
         // shows whether this map is a custom map or just an image
@@ -37,7 +37,7 @@ namespace paintRacer
                 // load a raw image
                 case MapType.rawImage:
                     texture = Helper.loadImage(filename);
-                    mapData = MapReader.getRawImageInformation(texture, Color.Black);
+                    mapData = MapReader.createDataFromSWImage(texture);
                     break;
                 // load a custom map
                 case MapType.customMap:
@@ -74,7 +74,7 @@ namespace paintRacer
             GraphicsDevice.Viewport = defaultView;
         }
 
-        public sbyte[,] getMapData()
+        public EMapStates[,] getMapData()
         {
             return mapData;
         }

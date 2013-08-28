@@ -18,6 +18,7 @@ namespace paintRacer
         //Player texture
         private Texture2D texture;
 
+        private Scene scene;
 
         //What is the point of this Rectangle?! (Player is supposed to be drawn in the middle of the screen anyways, only width and height are required)
         //Commented out for the time being
@@ -44,6 +45,7 @@ namespace paintRacer
             this.color = color;
 
             collisiondata = getCollisionData(texture);
+            scene = null;
         }
         //public static void Init()
 
@@ -71,7 +73,7 @@ namespace paintRacer
             //Console.WriteLine("Calculated Direction: " + direction);
 
             ///TODO: read the MapState out of the map and give it here in the function
-            speed = Physic.calculateSpeed(gameTime, this, driverInput, );
+            speed = Physic.calculateSpeed(gameTime, this, driverInput, scene.getLevel().getMapData());
             position = Physic.calculateNextPos(gameTime, position, speed);
             rotation = Physic.calculateRotation(speed.direction);
         }
@@ -133,6 +135,11 @@ namespace paintRacer
 
             //Restores previous Viewport
             GraphicsDevice.Viewport = defaultView;
+        }
+
+        public void setScene(Scene scene)
+        {
+            this.scene = scene;
         }
 
         public Vector2 getPosition()
