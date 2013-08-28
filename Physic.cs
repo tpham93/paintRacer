@@ -72,7 +72,7 @@ namespace paintRacer
             EMapStates mapState = mapdata[(int)player.getPosition().X, (int)player.getPosition().Y];
             Speed speed = player.getSpeed();
 
-            if (hasCollision(player.getPosition(), player.getCollisionData(), player.getRotation(), mapdata) 
+            if (hasCollision(player.getPosition(), player.getCollisionData(), player.getRotation(), mapdata)) 
                 return new Speed(speed.direction, 0f);
 
             Vector2 accelaration = new Vector2(speed.direction.X, speed.direction.Y);
