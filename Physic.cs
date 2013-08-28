@@ -69,11 +69,14 @@ namespace paintRacer
         public static Speed calculateSpeed(GameTime gameTime, Player player, Vector2 driverInput, EMapStates[,] mapdata)
         {
             //Console.WriteLine("driverInput: [" + driverInput.X + ";" + driverInput.Y + "]"); 
-            EMapStates mapState = mapdata[(int)player.getPosition().X, (int)player.getPosition().Y];
+            int playerPosX = (int)player.getPosition().X;
+            int playerPosY = (int)player.getPosition().Y;
+
             Speed speed = player.getSpeed();
 
-            if (hasCollision(player.getPosition(), player.getCollisionData(), player.getRotation(), mapdata))
+            if (hasCollision(player.getPosition(), player.getCollisionData(), player.getRotation(), mapdata) || playerPosX < 0 || playerPosY < 0 || playerPosX > mapdata.GetUpperBound(0) || playerPosX > mapdata.GetUpperBound(1))
                 return new Speed(speed.direction, 0f);
+            EMapStates mapState = mapdata[playerPosX, playerPosY];
 
             Vector2 accelaration = new Vector2(speed.direction.X, speed.direction.Y);
             accelaration.Normalize();
@@ -223,13 +226,16 @@ namespace paintRacer
                     {
                         // calculate the pos on the map
                         tmpVect.X = x-middlePoint.X;
-                        tmpVect.Y = y-middlePoint.Y;
+                        tmpVect.Y = y - middlePoint.Y;
                         mapPosition = Helper.rotateVector2(tmpVect, rotationCos, rotationSin) + position;
                         if (mapPosition.X >= 0 && mapPosition.Y < mapData.GetUpperBound(0) && mapPosition.Y >= 0 && mapPosition.Y < mapData.GetUpperBound(1))
-                        if (mapData[(int)mapPosition.X, (int)mapPosition.Y] == EMapStates.Object)
                         {
-                            return true;
+                            if (mapData[(int)mapPosition.X, (int)mapPosition.Y] == EMapStates.Object)
+                            {
+                                return true;
+                            }
                         }
+                        else return true;
                     }
                 }
             }
