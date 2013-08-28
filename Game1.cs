@@ -29,7 +29,6 @@ namespace paintRacer
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-
             //Removes FPS lock and VSync
             graphics.SynchronizeWithVerticalRetrace = false;
             IsFixedTimeStep = false;
@@ -174,7 +173,7 @@ namespace paintRacer
                             //gameStateElement.Load(Content);
                             break;
                         case EGameStates.Close:
-                            gameStateElement = new gameStates.Close();
+                            Exit();
                             break;
                     }
                     gameState = value;

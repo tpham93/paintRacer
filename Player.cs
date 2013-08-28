@@ -10,7 +10,6 @@ namespace paintRacer
     class Player
     {
         private bool[,] collisiondata;
-        private EventManager eventManager;
 
         private Vector2 position;
         //In radian
