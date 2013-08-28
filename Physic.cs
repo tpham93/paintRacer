@@ -72,6 +72,9 @@ namespace paintRacer
             EMapStates mapState = mapdata[(int)player.getPosition().X, (int)player.getPosition().Y];
             Speed speed = player.getSpeed();
 
+            if (hasCollision(player.getPosition(), player.getCollisionData(), player.getRotation(), mapdata) 
+                return new Speed(speed.direction, 0f);
+
             Vector2 accelaration = new Vector2(speed.direction.X, speed.direction.Y);
             accelaration.Normalize();
 
@@ -196,7 +199,7 @@ namespace paintRacer
          * returns :
          * bool
          */
-        public static bool hasCollision(Vector2 position, bool[,] playerCollisionData, float rotation, sbyte[,] mapData)
+        public static bool hasCollision(Vector2 position, bool[,] playerCollisionData, float rotation, EMapStates[,] mapData)
         {
             // save cos & sin of rotation, to save redundance calculations
             double rotationCos = Math.Cos(rotation);
@@ -223,7 +226,7 @@ namespace paintRacer
                         tmpVect.Y = y-middlePoint.Y;
                         mapPosition = Helper.rotateVector2(tmpVect, rotationCos, rotationSin) + position;
                         if (mapPosition.X >= 0 && mapPosition.Y < mapData.GetUpperBound(0) && mapPosition.Y >= 0 && mapPosition.Y < mapData.GetUpperBound(1))
-                        if (mapData[(int)mapPosition.X, (int)mapPosition.Y] == -2)
+                        if (mapData[(int)mapPosition.X, (int)mapPosition.Y] == EMapStates.Object)
                         {
                             return true;
                         }

@@ -57,7 +57,7 @@ namespace paintRacer
                     //Console.WriteLine("pressedKeys " + j + " " + pressedKeys[j]); cecked
                 }
                 players[i].Update(gameTime, pressedKeys);
-                Physic.hasCollision(players[i].getPosition(), players[i].getCollisionData(), players[i].getRotation(), level.getMapData());
+                //Physic.hasCollision(players[i].getPosition(), players[i].getCollisionData(), players[i].getRotation(), level.getMapData());
             }
         }
 
@@ -77,7 +77,7 @@ namespace paintRacer
                 }
                 // draw the protaginist on top
                 players[i].Draw(spriteBatch, spriteBatch.GraphicsDevice, viewports[i], players[i]);
-                Physic.hasCollision(players[i].getPosition(), players[i].getCollisionData(), players[i].getRotation(), level.getMapData());
+                //Physic.hasCollision(players[i].getPosition(), players[i].getCollisionData(), players[i].getRotation(), level.getMapData());
             }
         }
     }
