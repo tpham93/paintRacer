@@ -29,25 +29,32 @@ namespace paintRacer
         // shows whether this map is a custom map or just an image
         private MapType mapType;
 
-        public Level(String filename, MapType mapType)
-        {
-            //look if the input is just an image or an customMap
-            switch (mapType)
-            {
-                // load a raw image
-                case MapType.rawImage:
-                    texture = Helper.loadImage(filename);
-                    mapData = MapReader.createDataFromSWImage(texture);
-                    break;
-                // load a custom map
-                case MapType.customMap:
-                    break;
-                default:
-                    break;
-            }
-            this.mapType = mapType;
-        }
+        //public Level(String filename, MapType mapType)
+        //{
+        //    //look if the input is just an image or an customMap
+        //    switch (mapType)
+        //    {
+        //        // load a raw image
+        //        case MapType.rawImage:
+        //            texture = Helper.loadImage(filename);
+        //            mapData = MapReader.createDataFromSWImage(texture);
+        //            break;
+        //        // load a custom map
+        //        case MapType.customMap:
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //    this.mapType = mapType;
+        //}
 
+
+        public Level(String swImage, string image)
+        {
+            texture = Helper.loadImage(image);
+            mapData = MapReader.createDataFromSWImage(Helper.loadImage(swImage));
+            this.mapType = MapType.rawImage;
+        }
         public void Update(GameTime gameTime)
         {
 

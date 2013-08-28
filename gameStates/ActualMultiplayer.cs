@@ -13,7 +13,8 @@ namespace paintRacer
     {
 
         //Must be in Loadfunction
-        String MAP_PIC = "test2SW.png";
+        String MAP_PIC = "test2.png";
+        String MAP_PIC_SW = "test2SW.png";
         Vector2 start_pos = new Vector2(1535, 550);
         Vector2[] check_points = new Vector2[1];
 
@@ -38,7 +39,7 @@ namespace paintRacer
         {
 
             //Initializes Level and Player with test textures
-            level = new Level(MAP_PIC, Level.MapType.rawImage);
+            level = new Level(MAP_PIC_SW, MAP_PIC);
             players = new Player[2];
             players[0] = new Player(Helper.loadImage("testcar.png"), Color.Blue);
             players[1] = new Player(Helper.loadImage("testcar.png"), Color.Red);
