@@ -28,6 +28,12 @@ namespace paintRacer
         //Going to be used to identify player in splitscreen/multiplayer play
         private Color color;
 
+        //Getter for Speed
+        public Speed getSpeed()
+        {
+            return speed;
+        }
+
         //Inconsistency with Level (create with string or texture?)
         public Player(Texture2D texture, Color color)
         {

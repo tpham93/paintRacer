@@ -66,10 +66,11 @@ namespace paintRacer
         ///
         /// <returns> new Vector2
         /// </returns>
-        public static Speed calculateSpeed(GameTime gameTime, Speed speed, Vector2 driverInput, EMapStates mapState)
+        public static Speed calculateSpeed(GameTime gameTime, Player player, Vector2 driverInput, EMapStates mapState, Map map)
         {
             //Console.WriteLine("driverInput: [" + driverInput.X + ";" + driverInput.Y + "]"); 
-            
+            Speed speed = player.getSpeed();
+
             Vector2 accelaration = new Vector2(speed.direction.X, speed.direction.Y);
             accelaration.Normalize();
 
