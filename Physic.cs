@@ -16,7 +16,7 @@ namespace paintRacer
         private const float WHEEL_RADIUS = 0.25f; //radius of wheels in m
         private const float STEARING = 0.0015f; //if you stear left or right
 
-        private const float ROLL_FRICTION_STREET = 200f; //roll-friction stops the car in m
+        private const float ROLL_FRICTION_STREET = 400f; //roll-friction stops the car in m
         private const float ROLL_FRICTION_GRASS = 1400f; //roll-friction stops the car in m
         //private const float STATIC_FRICTION_STREET = 0.9f; //helps the car to stay on road in 1
         //private const float STATIC_FRICTION_GRASS = 0.6f; //helps the car to stay on road in 1
