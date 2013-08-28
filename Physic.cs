@@ -14,7 +14,7 @@ namespace paintRacer
         private const float MAX_FORCE_ACCELERAT = 150000f; //max force of the car in N = kg*m/s²
         private const float MAX_FORCE_BARK = -1.5f * MAX_FORCE_ACCELERAT; //max force by barking in N = kg*m/s²
         private const float WHEEL_RADIUS = 0.25f; //radius of wheels in m
-        private const float STEARING = 0.0015f; //if you stear left or right
+        private const float STEARING = 0.003f; //if you stear left or right
 
         private const float ROLL_FRICTION_STREET = 400f; //roll-friction stops the car in m
         private const float ROLL_FRICTION_GRASS = 1400f; //roll-friction stops the car in m
@@ -74,8 +74,8 @@ namespace paintRacer
 
             Speed speed = player.getSpeed();
 
-            if (hasCollision(player.getPosition(), player.getCollisionData(), player.getRotation(), mapdata) || playerPosX < 0 || playerPosY < 0 || playerPosX > mapdata.GetUpperBound(0) || playerPosX > mapdata.GetUpperBound(1))
-                return new Speed(speed.direction, 0f);
+            if (playerPosX < 0 || playerPosY < 0 || playerPosX > mapdata.GetUpperBound(0) || playerPosX > mapdata.GetUpperBound(1))
+                return new Speed(speed.direction, 0);
             EMapStates mapState = mapdata[playerPosX, playerPosY];
 
             Vector2 accelaration = new Vector2(speed.direction.X, speed.direction.Y);
@@ -145,7 +145,7 @@ namespace paintRacer
             Speed res = new Speed(newDirection, absNewSpeed);
 
             if (hasCollision(calculateNextPos(gameTime,player.getPosition(),res), player.getCollisionData(), player.getRotation(), mapdata) || playerPosX < 0 || playerPosY < 0 || playerPosX > mapdata.GetUpperBound(0) || playerPosX > mapdata.GetUpperBound(1))
-                return new Speed(speed.direction, -0.5f*absNewSpeed);
+                return new Speed(newDirection, -1.5f*absNewSpeed);
 
             return res;
         }
