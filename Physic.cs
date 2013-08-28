@@ -74,8 +74,8 @@ namespace paintRacer
 
             Speed speed = player.getSpeed();
 
-            //if (hasCollision(player.getPosition(), player.getCollisionData(), player.getRotation(), mapdata))
-              //  return new Speed(speed.direction, 0f);
+            if (playerPosX < 0 || playerPosY < 0 || playerPosX > mapdata.GetUpperBound(0) || playerPosX > mapdata.GetUpperBound(1))
+                return new Speed(speed.direction, 0f);
             EMapStates mapState = mapdata[playerPosX, playerPosY];
 
             Vector2 accelaration = new Vector2(speed.direction.X, speed.direction.Y);
@@ -144,7 +144,7 @@ namespace paintRacer
 
             Speed res = new Speed(newDirection, absNewSpeed);
 
-            if (hasCollision(calculateNextPos(gameTime,player.getPosition(),res), player.getCollisionData(), player.getRotation(), mapdata) || playerPosX < 0 || playerPosY < 0 || playerPosX > mapdata.GetUpperBound(0) || playerPosX > mapdata.GetUpperBound(1))
+            if (hasCollision(calculateNextPos(gameTime,player.getPosition(),res), player.getCollisionData(), player.getRotation(), mapdata))
                 return new Speed(newDirection, -0.5f*absNewSpeed);
 
             return res;
