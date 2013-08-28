@@ -10,7 +10,7 @@ namespace paintRacer
 {
     class MapReader
     {
-        private static Vector2 ROAD_COLOR = new Vector2(200, 250);
+        private static Vector2 ROAD_COLOR = new Vector2(200, 255);
         private static Vector2 OFFROAD_COLOR = new Vector2(100, 199);
         private static Vector2 OBJECT_COLOR = new Vector2(0, 99);
 
