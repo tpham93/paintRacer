@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace paintRacer.gameStates
+namespace paintRacer
 {
     class LoadWindow : IGameStateElements
     {
@@ -145,7 +145,7 @@ namespace paintRacer.gameStates
         {
             mainState = EMainState.MainMenu;
 
-            //DEFAULT_FONT = content.Load<SpriteFont>("C:\\Windows\\Fonts\\Arial");
+            DEFAULT_FONT = content.Load<SpriteFont>(@"font");
 
             //load Textures
             whitePixel = Helper.loadImage("OneWithePixel.png");
