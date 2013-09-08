@@ -89,7 +89,7 @@ namespace paintRacer
                             break;
                         case 1:
                             //Multiplayer
-                            return EGameStates.MultiPlayer;
+                            return EGameStates.LoadMenu;
                         case 2:
                             //Highscore
                             break;
@@ -99,7 +99,6 @@ namespace paintRacer
                         case 4:
                             //Exit
                             return EGameStates.Close;
-                            break;
                         default:
                             Console.WriteLine("FOO!! This is bad. \ndefault in Menu-switch-case");
                             break;

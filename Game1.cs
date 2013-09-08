@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using paintRacer.gameStates;
 
 namespace paintRacer
 {
@@ -174,6 +175,11 @@ namespace paintRacer
                             break;
                         case EGameStates.Close:
                             Exit();
+                            break;
+                        case EGameStates.LoadMenu:
+                            gameStateElement = new LoadWindow(GraphicsDevice, EGameStates.MultiPlayer);
+                            tmpGameStateElement = null;
+                            gameStateElement.Load(Content);
                             break;
                     }
                     gameState = value;
