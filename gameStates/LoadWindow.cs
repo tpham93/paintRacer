@@ -208,7 +208,7 @@ namespace paintRacer
                     }
                     catch (Exception e)
                     {
-                        return EGameStates.LoadMenu;
+                        //return EGameStates.LoadMenu;
                     }
 
                     return nextState;
@@ -237,12 +237,12 @@ namespace paintRacer
 
                 else if ((mouse.X > LoadMapPos.X) && (mouse.X < LoadMapPos.X + MENUENTRYSIZE_X) && (mouse.Y > LoadMapPos.Y) && (mouse.Y < LoadMapPos.Y + MENUENTRYSIZE_Y))
                 {
-                    mainState = EMainState.LoadSavedMap;
+                    mainState = EMainState.LoadNewMap;
                 }
 
                 else if ((mouse.X > ChooseMapPos.X) && (mouse.X < ChooseMapPos.X + MENUENTRYSIZE_X) && (mouse.Y > ChooseMapPos.Y) && (mouse.Y < ChooseMapPos.Y + MENUENTRYSIZE_Y))
                 {
-                    mainState = EMainState.LoadNewMap;
+                    mainState = EMainState.LoadSavedMap;
                 }
             }
             
