@@ -177,9 +177,23 @@ namespace paintRacer
                             Exit();
                             break;
                         case EGameStates.LoadMenu:
+                            // not required if LoadMenuSinglePlayer or LoadMenuMultiplayer is set before
+                            if (gameState != EGameStates.LoadMenuMultiplayer && gameState != EGameStates.LoadMenuSinglePlayer)
+                            {
+                                throw new Exception("impossible state reached!");
+                            }
+                            break;
+                        case EGameStates.LoadMenuSinglePlayer:
+                            gameStateElement = new LoadWindow(GraphicsDevice, EGameStates.SinglePlayer);
+                            tmpGameStateElement = null;
+                            gameStateElement.Load(Content);
+                            value = EGameStates.LoadMenu;
+                            break;
+                        case EGameStates.LoadMenuMultiplayer:
                             gameStateElement = new LoadWindow(GraphicsDevice, EGameStates.MultiPlayer);
                             tmpGameStateElement = null;
                             gameStateElement.Load(Content);
+                            value = EGameStates.LoadMenu;
                             break;
                     }
                     gameState = value;

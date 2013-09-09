@@ -8,6 +8,8 @@
         SinglePlayer,
         MultiPlayer,
         LoadMenu,
+        LoadMenuMultiplayer,
+        LoadMenuSinglePlayer,
         Editor,
         HightScore,
         Credits,

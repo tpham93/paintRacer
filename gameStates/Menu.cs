@@ -86,10 +86,10 @@ namespace paintRacer
                     {
                         case 0:
                             //Singleplayer
-                            break;
+                            return EGameStates.LoadMenuSinglePlayer;
                         case 1:
                             //Multiplayer
-                            return EGameStates.LoadMenu;
+                            return EGameStates.LoadMenuMultiplayer;
                         case 2:
                             //Highscore
                             break;
