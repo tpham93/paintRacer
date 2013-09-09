@@ -10,13 +10,13 @@ namespace paintRacer
 {
     class Scene
     {
-        private Level level;
+        private Map level;
         private Player[] players;
         private Viewport[] viewports;
         private Keys[,] keys;
         private int playerCount;
 
-        public Scene(Level level, Player[] players, Viewport defaultView, Keys[,] keys)
+        public Scene(Map level, Player[] players, Viewport defaultView, Keys[,] keys)
         {
             this.level = level;
 
@@ -82,7 +82,7 @@ namespace paintRacer
             }
         }
 
-        public Level getLevel()
+        public Map getLevel()
         {
             return level;
         }

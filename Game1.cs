@@ -150,7 +150,7 @@ namespace paintRacer
                             }
                             else
                             {
-                                //gameStateElement = new ActualGame();
+                                //gameStateElement = new Singleplayer(GraphicsDevice);
                                 //gameStateElement.Load(Content);
                             }
                             tmpGameStateElement = null;
@@ -163,7 +163,7 @@ namespace paintRacer
                             }
                             else
                             {
-                                gameStateElement = new ActualMultiplayer(GraphicsDevice);
+                                gameStateElement = new Multiplayer(GraphicsDevice);
                                 gameStateElement.Load(Content);
                             }
                             tmpGameStateElement = null;

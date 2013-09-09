@@ -73,7 +73,7 @@ namespace paintRacer
             //Console.WriteLine("Calculated Direction: " + direction);
 
             ///TODO: read the MapState out of the map and give it here in the function
-            speed = Physic.calculateSpeed(gameTime, this, driverInput, scene.getLevel().getMapData());
+            speed = Physic.calculateSpeed(gameTime, this, driverInput, scene.getLevel().Data);
             position = Physic.calculateNextPos(gameTime, position, speed);
             rotation = Physic.calculateRotation(speed.direction);
         }
