@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -74,8 +75,12 @@ namespace paintRacer
         private EGameStates nextState;
         private ECreatState createState;
 
+        private string[] filearray;
         private string FileName = "";
         private string FileNameSW = "";
+
+        private int scrollpos = 0;
+        private int timeSpace = 0;
 
         //some textures and positions
         private Texture2D whitePixel;
@@ -95,16 +100,25 @@ namespace paintRacer
         private Vector2 FinishPos;
         private Texture2D remCheckPoint;
         private Vector2 remCheckPointPos;
+        private Texture2D Create;
+        private Vector2 CreatePos;
         private Texture2D MapPic;
         private Texture2D MapPicSW;
 
+        private Vector2 textArrayPos;
+        private Vector2 fileNamePos;
+        private Vector2 fileNameSWPos;
+
+        private Vector2[] checkPoints;
+        private Vector2[] StartPosDirection;
+
         //const
 
-        private const int MAPSIZE = 300;
-        private const int MAPLEFTBOUND = 100;
-        private const int MAINMENUBUTTONLEFTBOUND = 250;
+        private const int MAPSIZE = 350;
+        private const int MAPLEFTBOUND = 25;
+        private const int MAINMENUBUTTONLEFTBOUND = 100;
         private const int LOADMENUBUTTONLEFTBOUND = 200;
-        private const int CREATEMENUBUTTONLEFTBOUND = MAPSIZE + MAPLEFTBOUND + 100;
+        private const int CREATEMENUBUTTONLEFTBOUND = MAPSIZE + MAPLEFTBOUND + 25;
         private Color DEFAULT_COLOR = Color.Black;
         private SpriteFont DEFAULT_FONT;
 
@@ -116,11 +130,17 @@ namespace paintRacer
         const int MAINMENUENTRYSPACE = 15;
         const int MAINMENUENTRYNUM = 3;
 
-        const int MENUENTRYSIZE_X = 187;
-        const int MENUENTRYSIZE_Y = 75;
-        const int MENUENTRYSPACE = 15;
+        const int MENUENTRYSIZE_X = 125;
+        const int MENUENTRYSIZE_Y = 50;
+        const int MENUENTRYSPACE = 10;
         const int LOADMENUENTRYNUM = 5;
         const int CHOOSEMENUENTRYNUM = 5;
+
+        const int MENULINESIZE = 20;
+        const int MENULINESPACE = 5;
+
+        const int TIME_BETWEEN_KEY_PRESS = 150;
+        const int NUM_ENTRIES = 5;
 
 
         /// <summary>
@@ -144,6 +164,8 @@ namespace paintRacer
         public void Load(Microsoft.Xna.Framework.Content.ContentManager content)
         {
             mainState = EMainState.MainMenu;
+            
+            filearray = Directory.GetFiles("saved_maps");
 
             DEFAULT_FONT = content.Load<SpriteFont>(@"font");
 
@@ -157,6 +179,7 @@ namespace paintRacer
             Start = Helper.loadImage("loadMenu/Start.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));
             Finish = Helper.loadImage("loadMenu/Finish.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));
             remCheckPoint = Helper.loadImage("loadmenu/Remove.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));
+            Create = Helper.loadImage("loadmenu/Create.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));
         }
 
         /// <summary>
@@ -188,30 +211,49 @@ namespace paintRacer
         /// <returns>the next gamestate - EGameState</returns>
         private EGameStates UpdateLoadSavedMap(GameTime gameTime)
         {
-            KeyboardState keyboardState = Keyboard.GetState();
-            FileName += Helper.KeyToChar(keyboardState);
+            MouseState mouseState = Mouse.GetState();
 
-            MouseState mouse = Mouse.GetState();
-            if (mouse.LeftButton == ButtonState.Pressed) 
+            if (mouseState.LeftButton == ButtonState.Pressed)
             {
-                if ((mouse.X > BackPos.X) && (mouse.X < BackPos.X + MENUENTRYSIZE_X) && (mouse.Y > BackPos.Y) && (mouse.Y < BackPos.Y + MENUENTRYSIZE_Y))
+                if ((mouseState.X > BackPos.X) && (mouseState.X < BackPos.X + MENUENTRYSIZE_X) && (mouseState.Y > BackPos.Y) && (mouseState.Y < BackPos.Y + MENUENTRYSIZE_Y))
                 {
-                    FileName = "";
                     mainState = EMainState.MainMenu;
+                    scrollpos = 0;
                 }
-
-                if ((mouse.X > LoadMapPos.X) && (mouse.X < LoadMapPos.X + MENUENTRYSIZE_X) && (mouse.Y > LoadMapPos.Y) && (mouse.Y < LoadMapPos.Y + MENUENTRYSIZE_Y))
+                for (int count = 0; count < NUM_ENTRIES; ++count)
                 {
-                    try 
+                    int offset = count * (MENULINESIZE + MENULINESPACE);
+                    if ((mouseState.X > textArrayPos.X) && (mouseState.Y > textArrayPos.Y + offset) && (mouseState.Y < textArrayPos.Y + offset + MENULINESIZE))
                     {
-                        Global.map = XmlLoad.parseMapConfig(FileName);
+                        try
+                        {
+                            Global.map = XmlLoad.parseMapConfig(filearray[count + scrollpos]);
+                        }
+                        catch
+                        {
+                            //return EGameStates.LoadMenu;
+                        }
+                        scrollpos = 0;
+                        return nextState;
                     }
-                    catch (Exception e)
-                    {
-                        //return EGameStates.LoadMenu;
-                    }
+                }
+            }
 
-                    return nextState;
+            timeSpace += gameTime.ElapsedGameTime.Milliseconds;
+
+            if (timeSpace > TIME_BETWEEN_KEY_PRESS)
+            {
+                timeSpace = 0;
+                KeyboardState keyboartState = Keyboard.GetState();
+                if (keyboartState.IsKeyDown(Keys.Down))
+                {
+                    ++scrollpos;
+                    scrollpos = scrollpos >= filearray.Length ? filearray.Length-1 : scrollpos;
+                }
+                else if (keyboartState.IsKeyDown(Keys.Up))
+                {
+                    --scrollpos;
+                    scrollpos = scrollpos < 0 ? 0 : scrollpos;
                 }
             }
 
@@ -257,7 +299,55 @@ namespace paintRacer
         /// <returns>the next gamestate - EGameState</returns>
         private EGameStates UpdateLoadNewMap(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            MouseState mouseState = Mouse.GetState();
+
+            if (mouseState.LeftButton == ButtonState.Pressed)
+            {
+                if ((mouseState.X > fileNamePos.X) && (mouseState.Y > fileNamePos.Y) && (mouseState.Y < fileNamePos.Y + MENULINESIZE))
+                {
+                    createState = ECreatState.EditFileNameColor;
+                }
+                else if ((mouseState.X > fileNameSWPos.X) && (mouseState.Y > fileNameSWPos.Y) && (mouseState.Y < fileNameSWPos.Y + MENULINESIZE))
+                {
+                    createState = ECreatState.EditFileNameSW;
+                }
+                else if ((mouseState.X > LoadMapPos.X) && (mouseState.X < LoadMapPos.X + MENUENTRYSIZE_X) && (mouseState.Y > LoadMapPos.Y) && (mouseState.Y < LoadMapPos.Y + MENUENTRYSIZE_Y))
+                {
+                    createState = ECreatState.Nothing;
+                    try
+                    {
+                        MapPic = Helper.loadImage("map_pictures\\" + FileName);
+                        MapPicSW = Helper.loadImage("map_pictures\\" + FileNameSW);
+                    }
+                    catch
+                    {
+                        return EGameStates.LoadMenu;
+                    }
+                }
+                else if ((mouseState.X > CheckPointPos.X) && (mouseState.X < CheckPointPos.X + MENUENTRYSIZE_X) && (mouseState.Y > CheckPointPos.Y) && (mouseState.Y < CheckPointPos.Y + MENUENTRYSIZE_Y))
+                {
+                    createState = ECreatState.SetCheckPoint_I;
+                }
+                else if ((mouseState.X > remCheckPointPos.X) && (mouseState.X < remCheckPointPos.X + MENUENTRYSIZE_X) && (mouseState.Y > remCheckPointPos.Y) && (mouseState.Y < remCheckPointPos.Y + MENUENTRYSIZE_Y))
+                {
+                    createState = ECreatState.Nothing;
+                }
+                else if ((mouseState.X > StartPos.X) && (mouseState.X < StartPos.X + MENUENTRYSIZE_X) && (mouseState.Y > StartPos.Y) && (mouseState.Y < StartPos.Y + MENUENTRYSIZE_Y))
+                {
+                    createState = ECreatState.SetStartPoint_I;
+                }
+                else if ((mouseState.X > FinishPos.X) && (mouseState.X < FinishPos.X + MENUENTRYSIZE_X) && (mouseState.Y > FinishPos.Y) && (mouseState.Y < FinishPos.Y + MENUENTRYSIZE_Y))
+                {
+                    createState = ECreatState.SetFinish_I;
+                }
+                else if ((mouseState.X > CreatePos.X) && (mouseState.X < CreatePos.X + MENUENTRYSIZE_X) && (mouseState.Y > CreatePos.Y) && (mouseState.Y < CreatePos.Y + MENUENTRYSIZE_Y))
+                {
+                    Global.map = new Map(MapPic, MapReader.createDataFromSWImage(MapPicSW), checkPoints, StartPosDirection[0], Physic.calculateRotation(StartPosDirection[1]));
+                    return nextState;
+                }
+            }
+
+            return EGameStates.LoadMenu;
         }
 
 
@@ -325,11 +415,18 @@ namespace paintRacer
             spriteBatch.Begin();
 
             Vector2 pos = new Vector2(LOADMENUBUTTONLEFTBOUND, MENUENTRYSPACE);
-            spriteBatch.DrawString(DEFAULT_FONT, FileName, pos, DEFAULT_COLOR);
+            textArrayPos = new Vector2(pos.X, pos.Y);
+
+            if (filearray != null)
+                for (int count = scrollpos; (count < scrollpos + NUM_ENTRIES) && (count < filearray.Length); count++)
+                {
+                    pos.Y = (count - scrollpos) * (MENULINESIZE + MENULINESPACE) + MENUENTRYSPACE;
+                    spriteBatch.DrawString(DEFAULT_FONT, filearray[count].Substring(filearray[count].LastIndexOf('\\')+1), pos, DEFAULT_COLOR);
+                }
 
             pos.Y += MENUENTRYSPACE + MENUENTRYSIZE_Y;
-            spriteBatch.Draw(LoadMap, pos, Color.White);
-            LoadMapPos = new Vector2(pos.X, pos.Y);
+            spriteBatch.Draw(Back, pos, Color.White);
+            BackPos = new Vector2(pos.X, pos.Y);
 
             spriteBatch.End();
         }
@@ -365,12 +462,14 @@ namespace paintRacer
             //Text
             Vector2 pos = new Vector2(CREATEMENUBUTTONLEFTBOUND, MENUENTRYSPACE);
             spriteBatch.DrawString(DEFAULT_FONT, "Color-File: " + FileName, pos, DEFAULT_COLOR);
+            fileNamePos = new Vector2(pos.X, pos.Y);
 
-            pos.Y += MENUENTRYSIZE_Y + MENUENTRYSPACE;
+            pos.Y += MENULINESIZE + MENULINESPACE;
             spriteBatch.DrawString(DEFAULT_FONT, "SW-File: " + FileNameSW, pos, DEFAULT_COLOR);
+            fileNameSWPos = new Vector2(pos.X, pos.Y);
 
             //Buttons
-            pos.Y += MENUENTRYSIZE_Y + MENUENTRYSPACE;
+            pos.Y += MENULINESIZE + MENULINESPACE;
             spriteBatch.Draw(LoadMap, pos, Color.White);
             LoadMapPos = new Vector2(pos.X, pos.Y);
 
@@ -392,6 +491,11 @@ namespace paintRacer
 
             pos.Y += MENUENTRYSIZE_Y + MENUENTRYSPACE;
             spriteBatch.DrawString(DEFAULT_FONT, Info(), pos, DEFAULT_COLOR);
+
+            CreatePos = new Vector2(MAPLEFTBOUND, 2 * MAPLEFTBOUND + MAPSIZE);
+            spriteBatch.Draw(Create, CreatePos, Color.White);
+
+            spriteBatch.End();
         }
 
         private string Info()
@@ -399,35 +503,35 @@ namespace paintRacer
             switch (createState)
             {
                 case ECreatState.Nothing :
-                    return "Load a Map and its black-and-white-dublicate:\n" +
+                    return "Load a Map and its black-and-\nwhite-dublicate:\n" +
                             "black   - road\n" +
                             "greay   - offroad\n" +
                             "white   - object";
                 case ECreatState.EditFileNameColor :
-                    return "Enter the location of the color-picture.";
+                    return "Enter the location of the color-\npicture.";
                 case ECreatState.EditFileNameSW :
-                    return "Enter the location of the black-and-white-picture:\n" +
+                    return "Enter the location of the black-and-\nwhite-picture:\n" +
                             "black   - road\n" +
                             "greay   - offroad\n" +
                             "white   - object";
                 case ECreatState.SetCheckPoint_I :
                     return "Set a checkpoint:\n" +
-                            "A checkpoint are two points on both sides of the road.\n" +
-                            "Click in the map to set the first one.";
+                            "A checkpoint are two points on both \nsides of the road.\n" +
+                            "Click in the map to set the first \none.";
                 case ECreatState.SetCheckPoint_II :
                     return "Set a checkpoint:\n" +
-                            "A checkpoint are two points on both sides of the road.\n" +
-                            "Click in the map to set the second one.";
+                            "A checkpoint are two points on both \nsides of the road.\n" +
+                            "Click in the map to set the second \none.";
                 case ECreatState.SetStartPoint_I :
-                    return "Click in the map to set the point, were the cars start.";
+                    return "Click in the map to set the point, \nwere the cars start.";
                 case ECreatState.SetStartPoint_II :
-                    return "Click in the map to set the direction, the cars drive in.";
+                    return "Click in the map to set the direction, \nthe cars drive in.";
                 case ECreatState.SetFinish_I :
-                    return "The finish is defind by two points on both sides of the road:\n" +
-                            "Click in the map to set the first one.";
+                    return "The finish is defind by two points \non both sides of the road:\n" +
+                            "Click in the map to set the first \none.";
                 case ECreatState.SetFinish_II :
-                    return "The finish is defind by two points on both sides of the road:\n" +
-                            "Click in the map to set the second one.";
+                    return "The finish is defind by two points \non both sides of the road:\n" +
+                            "Click in the map to set the second \none.";
                 default :
                     return "I can't help you!";
             }

@@ -14,6 +14,8 @@ namespace paintRacer
     {
         private static GraphicsDevice graphicsDevice;
 
+        private static Keys lastKey;
+
         // set graphicsDevice
         public static void Init(GraphicsDevice graphicsDevice)
         {
@@ -104,11 +106,12 @@ namespace paintRacer
             return viewports;
         }
 
-        public static string KeyToChar(KeyboardState keyboardState)
+        public static string KeyToChar(KeyboardState keyboardState, GameTime gameTime)
         {
             //A
             if (keyboardState.IsKeyDown(Keys.A))
             {
+                lastKey = Keys.A;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "A";
                 else
@@ -118,6 +121,7 @@ namespace paintRacer
             //B
             else if (keyboardState.IsKeyDown(Keys.B))
             {
+                lastKey = Keys.B;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "B";
                 else
@@ -127,6 +131,7 @@ namespace paintRacer
             //C
             else if (keyboardState.IsKeyDown(Keys.C))
             {
+                lastKey = Keys.C;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "C";
                 else
@@ -136,6 +141,7 @@ namespace paintRacer
             //D
             else if (keyboardState.IsKeyDown(Keys.D))
             {
+                lastKey = Keys.D;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "D";
                 else
@@ -145,6 +151,7 @@ namespace paintRacer
             //E
             else if (keyboardState.IsKeyDown(Keys.E))
             {
+                lastKey = Keys.E;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "E";
                 else
@@ -154,6 +161,7 @@ namespace paintRacer
             //F
             else if (keyboardState.IsKeyDown(Keys.F))
             {
+                lastKey = Keys.F;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "F";
                 else
@@ -163,6 +171,7 @@ namespace paintRacer
             //G
             else if (keyboardState.IsKeyDown(Keys.G))
             {
+                lastKey = Keys.G;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "G";
                 else
@@ -172,6 +181,7 @@ namespace paintRacer
             //H
             else if (keyboardState.IsKeyDown(Keys.H))
             {
+                lastKey = Keys.H;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "H";
                 else
@@ -181,6 +191,7 @@ namespace paintRacer
             //I
             else if (keyboardState.IsKeyDown(Keys.I))
             {
+                lastKey = Keys.I;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "I";
                 else
@@ -190,6 +201,7 @@ namespace paintRacer
             //J
             else if (keyboardState.IsKeyDown(Keys.J))
             {
+                lastKey = Keys.J;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "J";
                 else
@@ -199,6 +211,7 @@ namespace paintRacer
             //K
             else if (keyboardState.IsKeyDown(Keys.K))
             {
+                lastKey = Keys.K;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "K";
                 else
@@ -208,6 +221,7 @@ namespace paintRacer
             //L
             else if (keyboardState.IsKeyDown(Keys.L))
             {
+                lastKey = Keys.L;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "L";
                 else
@@ -217,6 +231,7 @@ namespace paintRacer
             //M
             else if (keyboardState.IsKeyDown(Keys.M))
             {
+                lastKey = Keys.M;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "M";
                 else
@@ -226,6 +241,7 @@ namespace paintRacer
             //N
             else if (keyboardState.IsKeyDown(Keys.N))
             {
+                lastKey = Keys.N;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "N";
                 else
@@ -235,6 +251,7 @@ namespace paintRacer
             //O
             else if (keyboardState.IsKeyDown(Keys.O))
             {
+                lastKey = Keys.O;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "O";
                 else
@@ -244,6 +261,7 @@ namespace paintRacer
             //P
             else if (keyboardState.IsKeyDown(Keys.P))
             {
+                lastKey = Keys.P;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "P";
                 else
@@ -253,6 +271,7 @@ namespace paintRacer
             //Q
             else if (keyboardState.IsKeyDown(Keys.Q))
             {
+                lastKey = Keys.Q;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "Q";
                 else
@@ -262,6 +281,7 @@ namespace paintRacer
             //R
             else if (keyboardState.IsKeyDown(Keys.R))
             {
+                lastKey = Keys.R;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "R";
                 else
@@ -271,6 +291,7 @@ namespace paintRacer
             //S
             else if (keyboardState.IsKeyDown(Keys.S))
             {
+                lastKey = Keys.S;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "S";
                 else
@@ -280,6 +301,7 @@ namespace paintRacer
             //T
             else if (keyboardState.IsKeyDown(Keys.T))
             {
+                lastKey = Keys.T;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "T";
                 else
@@ -289,6 +311,7 @@ namespace paintRacer
             //B
             else if (keyboardState.IsKeyDown(Keys.B))
             {
+                lastKey = Keys.B;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "B";
                 else
@@ -298,6 +321,7 @@ namespace paintRacer
             //U
             else if (keyboardState.IsKeyDown(Keys.U))
             {
+                lastKey = Keys.U;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "U";
                 else
@@ -307,6 +331,7 @@ namespace paintRacer
             //V
             else if (keyboardState.IsKeyDown(Keys.V))
             {
+                lastKey = Keys.V;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "V";
                 else
@@ -316,6 +341,7 @@ namespace paintRacer
             //W
             else if (keyboardState.IsKeyDown(Keys.W))
             {
+                lastKey = Keys.W;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "W";
                 else
@@ -325,6 +351,7 @@ namespace paintRacer
             //X
             else if (keyboardState.IsKeyDown(Keys.X))
             {
+                lastKey = Keys.X;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "X";
                 else
@@ -334,6 +361,7 @@ namespace paintRacer
             //Y
             else if (keyboardState.IsKeyDown(Keys.Y))
             {
+                lastKey = Keys.Y;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "Y";
                 else
@@ -343,6 +371,7 @@ namespace paintRacer
             //Z
             else if (keyboardState.IsKeyDown(Keys.Z))
             {
+                lastKey = Keys.Z;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "Z";
                 else
@@ -350,8 +379,18 @@ namespace paintRacer
             }
 
             //0
-            else if (keyboardState.IsKeyDown(Keys.D0) || keyboardState.IsKeyDown(Keys.NumPad0))
+            else if (keyboardState.IsKeyDown(Keys.D0))
             {
+                lastKey = Keys.D0;
+                if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
+                    return "=";
+                else
+                    return "0";
+            }
+            //0
+            else if (keyboardState.IsKeyDown(Keys.NumPad0))
+            {
+                lastKey = Keys.NumPad0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "=";
                 else
