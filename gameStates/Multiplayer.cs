@@ -58,8 +58,6 @@ namespace paintRacer
             players[0].setRotation(map.StartRotation);
             players[1].setRotation(map.StartRotation);
 
-            Console.WriteLine(players[0].getRotation());
-
             level = map;
 
             this.graphicsDevice = graphicsDevice;
@@ -72,7 +70,6 @@ namespace paintRacer
 
         public EGameStates Update(GameTime gameTime)
         {
-            Console.WriteLine(players[0].getRotation());
             scene.Update(gameTime, Keyboard.GetState());
             return EGameStates.MultiPlayer;
         }

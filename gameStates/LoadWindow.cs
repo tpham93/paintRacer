@@ -80,7 +80,7 @@ namespace paintRacer
         private string FileNameSW = "";
 
         private int scrollpos = 0;
-        private int timeSpace = 0;
+        private TimeSpan timeSpace = new TimeSpan();
         private float scal;
 
         //some textures and positions
@@ -166,7 +166,7 @@ namespace paintRacer
         public void Load(Microsoft.Xna.Framework.Content.ContentManager content)
         {
             mainState = EMainState.MainMenu;
-            
+
             directoryarray = Directory.GetDirectories("saved_maps");
 
             DEFAULT_FONT = content.Load<SpriteFont>(@"font");
@@ -192,14 +192,15 @@ namespace paintRacer
         /// <returns>the next gamestate - EGameState</returns>
         public EGameStates Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            switch (mainState) {
-                case EMainState.LoadNewMap : 
+            switch (mainState)
+            {
+                case EMainState.LoadNewMap:
                     return UpdateLoadNewMap(gameTime);
-                case EMainState.LoadSavedMap :
+                case EMainState.LoadSavedMap:
                     return UpdateLoadSavedMap(gameTime);
-                case EMainState.MainMenu :
+                case EMainState.MainMenu:
                     return UpdateMainMenu(gameTime);
-                default :
+                default:
                     return UpdateMainMenu(gameTime);
             }
 
@@ -214,7 +215,6 @@ namespace paintRacer
         private EGameStates UpdateLoadSavedMap(GameTime gameTime)
         {
             MouseState mouseState = Mouse.GetState();
-
             if (mouseState.LeftButton == ButtonState.Pressed)
             {
                 if ((mouseState.X > BackPos.X) && (mouseState.X < BackPos.X + MENUENTRYSIZE_X) && (mouseState.Y > BackPos.Y) && (mouseState.Y < BackPos.Y + MENUENTRYSIZE_Y))
@@ -241,16 +241,16 @@ namespace paintRacer
                 }
             }
 
-            timeSpace += gameTime.ElapsedGameTime.Milliseconds;
+            timeSpace += gameTime.ElapsedGameTime;
 
             if (timeSpace > Helper.TIMEBETWEENKEYS)
             {
-                timeSpace = 0;
+                timeSpace = new TimeSpan();
                 KeyboardState keyboartState = Keyboard.GetState();
                 if (keyboartState.IsKeyDown(Keys.Down))
                 {
                     ++scrollpos;
-                    scrollpos = scrollpos >= directoryarray.Length ? directoryarray.Length-1 : scrollpos;
+                    scrollpos = scrollpos >= directoryarray.Length ? directoryarray.Length - 1 : scrollpos;
                 }
                 else if (keyboartState.IsKeyDown(Keys.Up))
                 {
@@ -271,25 +271,28 @@ namespace paintRacer
         private EGameStates UpdateMainMenu(GameTime gameTime)
         {
             MouseState mouse = Mouse.GetState();
-
-            if (mouse.LeftButton == ButtonState.Pressed)
+            timeSpace += gameTime.ElapsedGameTime;
+            if (mouse.LeftButton == ButtonState.Pressed && timeSpace > Helper.TIMEBETWEENKEYS)
             {
-                if ((mouse.X > BackPos.X) && (mouse.X < BackPos.X + MENUENTRYSIZE_X) && (mouse.Y > BackPos.Y) && (mouse.Y < BackPos.Y + MENUENTRYSIZE_Y))
+                if ((mouse.X > BackPos.X) && (mouse.X < BackPos.X + MAINMENUENTRYSIZE_X) && (mouse.Y > BackPos.Y) && (mouse.Y < BackPos.Y + MAINMENUENTRYSIZE_Y))
                 {
+                    timeSpace = new TimeSpan();
                     return EGameStates.Menue;
                 }
 
-                else if ((mouse.X > LoadMapPos.X) && (mouse.X < LoadMapPos.X + MENUENTRYSIZE_X) && (mouse.Y > LoadMapPos.Y) && (mouse.Y < LoadMapPos.Y + MENUENTRYSIZE_Y))
+                else if ((mouse.X > LoadMapPos.X) && (mouse.X < LoadMapPos.X + MAINMENUENTRYSIZE_X) && (mouse.Y > LoadMapPos.Y) && (mouse.Y < LoadMapPos.Y + MAINMENUENTRYSIZE_Y))
                 {
+                    timeSpace = new TimeSpan();
                     mainState = EMainState.LoadNewMap;
                 }
 
-                else if ((mouse.X > ChooseMapPos.X) && (mouse.X < ChooseMapPos.X + MENUENTRYSIZE_X) && (mouse.Y > ChooseMapPos.Y) && (mouse.Y < ChooseMapPos.Y + MENUENTRYSIZE_Y))
+                else if ((mouse.X > ChooseMapPos.X) && (mouse.X < ChooseMapPos.X + MAINMENUENTRYSIZE_X) && (mouse.Y > ChooseMapPos.Y) && (mouse.Y < ChooseMapPos.Y + MAINMENUENTRYSIZE_Y))
                 {
+                    timeSpace = new TimeSpan();
                     mainState = EMainState.LoadSavedMap;
                 }
             }
-            
+
             return EGameStates.LoadMenu;
         }
 
@@ -301,13 +304,13 @@ namespace paintRacer
         /// <returns>the next gamestate - EGameState</returns>
         private EGameStates UpdateLoadNewMap(GameTime gameTime)
         {
-            timeSpace += gameTime.ElapsedGameTime.Milliseconds;
-
+            timeSpace += gameTime.ElapsedGameTime;
+            //Helper.timeSpan += gameTime.ElapsedGameTime;
             MouseState mouseState = Mouse.GetState();
 
             if (mouseState.LeftButton == ButtonState.Pressed && timeSpace > Helper.TIMEBETWEENKEYS)
             {
-                timeSpace = 0;
+                timeSpace = new TimeSpan();
                 if ((mouseState.X > fileNamePos.X) && (mouseState.Y > fileNamePos.Y) && (mouseState.Y < fileNamePos.Y + MENULINESIZE))
                 {
                     createState = ECreatState.EditFileNameColor;
@@ -348,19 +351,18 @@ namespace paintRacer
                 }
                 else if ((mouseState.X > CreatePos.X) && (mouseState.X < CreatePos.X + MENUENTRYSIZE_X) && (mouseState.Y > CreatePos.Y) && (mouseState.Y < CreatePos.Y + MENUENTRYSIZE_Y))
                 {
-                    Global.map = new Map(MapPic, MapReader.createDataFromSWImage(MapPicSW), checkPoints, StartPosDirection[0], Physic.calculateRotation(new Vector2(1,0)));
-                    Console.WriteLine((-StartPosDirection[0].X + StartPosDirection[1].X) + "," + (StartPosDirection[0].Y - StartPosDirection[1].Y));
+                    Global.map = new Map(MapPic, MapReader.createDataFromSWImage(MapPicSW), checkPoints, StartPosDirection[0], Physic.calculateRotation(new Vector2(1, 0)));
                     return nextState;
                 }
                 else if ((mouseState.X > MapPicPos.X) && (mouseState.X < MapPicPos.X + MAPSIZE) && (mouseState.Y > MapPicPos.Y) && (mouseState.Y < MapPicPos.Y + MAPSIZE))
                 {
                     switch (createState)
                     {
-                        case ECreatState.SetCheckPoint_II :
+                        case ECreatState.SetCheckPoint_II:
                             checkPoints[checkPoints.Length - 1] = new Vector2((int)(mouseState.X / scal), (int)(mouseState.Y / scal));
                             createState = ECreatState.Nothing;
                             break;
-                        case ECreatState.SetCheckPoint_I :
+                        case ECreatState.SetCheckPoint_I:
                             if (checkPoints == null)
                                 checkPoints = new Vector2[2];
                             else
@@ -368,20 +370,20 @@ namespace paintRacer
                             checkPoints[checkPoints.Length - 2] = new Vector2((int)(mouseState.X / scal), (int)(mouseState.Y / scal));
                             createState = ECreatState.SetCheckPoint_II;
                             break;
-                        case ECreatState.SetFinish_II :
+                        case ECreatState.SetFinish_II:
                             FinishPoints[1] = new Vector2((int)(mouseState.X / scal), (int)(mouseState.Y / scal));
                             createState = ECreatState.Nothing;
                             break;
-                        case ECreatState.SetFinish_I :
+                        case ECreatState.SetFinish_I:
                             FinishPoints = new Vector2[2];
                             FinishPoints[0] = new Vector2((int)(mouseState.X / scal), (int)(mouseState.Y / scal));
                             createState = ECreatState.SetFinish_II;
                             break;
-                        case ECreatState.SetStartPoint_II :
+                        case ECreatState.SetStartPoint_II:
                             StartPosDirection[1] = new Vector2((int)(mouseState.X / scal), (int)(mouseState.Y / scal));
                             createState = ECreatState.Nothing;
                             break;
-                        case ECreatState.SetStartPoint_I :
+                        case ECreatState.SetStartPoint_I:
                             StartPosDirection = new Vector2[2];
                             StartPosDirection[0] = new Vector2((int)(mouseState.X / scal), (int)(mouseState.Y / scal));
                             createState = ECreatState.SetStartPoint_II;
@@ -393,21 +395,43 @@ namespace paintRacer
             if (createState == ECreatState.EditFileNameColor)
             {
                 KeyboardState keyboardState = Keyboard.GetState();
-                FileName += Helper.KeyToChar(keyboardState, gameTime);
-                if (keyboardState.IsKeyDown(Keys.Back) && Helper.timeSpan > Helper.TIMEBETWEENKEYS)
+                if (timeSpace > Helper.TIMEBETWEENKEYS)
                 {
-                    FileName = FileName.Substring(0, FileName.Length - 1);
-                    Helper.timeSpan = 0;
+                    if (keyboardState.IsKeyDown(Keys.Back) && FileName.Length > 0)
+                    {
+                        FileName = FileName.Substring(0, FileName.Length - 1);
+                        timeSpace = new TimeSpan();
+                    }
+                    else
+                    {
+                        string input = Helper.KeyToChar(keyboardState, gameTime);
+                        if (!input.Equals(""))
+                        {
+                            FileName += input;
+                            timeSpace = new TimeSpan();
+                        }
+                    }
                 }
             }
             if (createState == ECreatState.EditFileNameSW)
             {
                 KeyboardState keyboardState = Keyboard.GetState();
-                FileNameSW += Helper.KeyToChar(keyboardState, gameTime);
-                if (keyboardState.IsKeyDown(Keys.Back) && Helper.timeSpan > Helper.TIMEBETWEENKEYS)
+                if (timeSpace > Helper.TIMEBETWEENKEYS)
                 {
-                    FileNameSW = FileNameSW.Substring(0, FileNameSW.Length-1);
-                    Helper.timeSpan = 0;
+                    if (keyboardState.IsKeyDown(Keys.Back) && FileNameSW.Length > 0)
+                    {
+                        FileNameSW = FileNameSW.Substring(0, FileNameSW.Length - 1);
+                        timeSpace = new TimeSpan();
+                    }
+                    else
+                    {
+                        string input = Helper.KeyToChar(keyboardState, gameTime);
+                        if (!input.Equals(""))
+                        {
+                            FileNameSW += input;
+                            timeSpace = new TimeSpan();
+                        }
+                    }
                 }
             }
 
@@ -486,7 +510,7 @@ namespace paintRacer
                 for (int count = scrollpos; (count < scrollpos + NUM_ENTRIES) && (count < directoryarray.Length); count++)
                 {
                     pos.Y = (count - scrollpos) * (MENULINESIZE + MENULINESPACE) + MENUENTRYSPACE;
-                    spriteBatch.DrawString(DEFAULT_FONT, directoryarray[count].Substring(directoryarray[count].LastIndexOf('\\')+1), pos, DEFAULT_COLOR);
+                    spriteBatch.DrawString(DEFAULT_FONT, directoryarray[count].Substring(directoryarray[count].LastIndexOf('\\') + 1), pos, DEFAULT_COLOR);
                 }
 
             pos.Y = NUM_ENTRIES * (MENULINESIZE + MENULINESPACE) + 3 * MENUENTRYSPACE + MENUENTRYSIZE_Y;
@@ -569,37 +593,37 @@ namespace paintRacer
         {
             switch (createState)
             {
-                case ECreatState.Nothing :
+                case ECreatState.Nothing:
                     return "Load a Map and its black-and-\nwhite-dublicate:\n" +
                             "black   - road\n" +
                             "greay   - offroad\n" +
                             "white   - object";
-                case ECreatState.EditFileNameColor :
+                case ECreatState.EditFileNameColor:
                     return "Enter the name of the color-\npicture.";
-                case ECreatState.EditFileNameSW :
+                case ECreatState.EditFileNameSW:
                     return "Enter the name of the black-and-\nwhite-picture:\n" +
                             "black   - road\n" +
                             "greay   - offroad\n" +
                             "white   - object";
-                case ECreatState.SetCheckPoint_I :
+                case ECreatState.SetCheckPoint_I:
                     return "Set a checkpoint:\n" +
                             "A checkpoint are two points on both \nsides of the road.\n" +
                             "Click in the map to set the first \none.";
-                case ECreatState.SetCheckPoint_II :
+                case ECreatState.SetCheckPoint_II:
                     return "Set a checkpoint:\n" +
                             "A checkpoint are two points on both \nsides of the road.\n" +
                             "Click in the map to set the second \none.";
-                case ECreatState.SetStartPoint_I :
+                case ECreatState.SetStartPoint_I:
                     return "Click in the map to set the point, \nwere the cars start.";
-                case ECreatState.SetStartPoint_II :
+                case ECreatState.SetStartPoint_II:
                     return "Click in the map to set the direction, \nthe cars drive in.";
-                case ECreatState.SetFinish_I :
+                case ECreatState.SetFinish_I:
                     return "The finish is defind by two points \non both sides of the road:\n" +
                             "Click in the map to set the first \none.";
-                case ECreatState.SetFinish_II :
+                case ECreatState.SetFinish_II:
                     return "The finish is defind by two points \non both sides of the road:\n" +
                             "Click in the map to set the second \none.";
-                default :
+                default:
                     return "I can't help you!";
             }
         }
@@ -608,6 +632,6 @@ namespace paintRacer
         /// Unload
         /// </summary>
         public void Unload()
-        {}
+        { }
     }
 }

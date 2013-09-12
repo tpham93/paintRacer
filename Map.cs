@@ -85,7 +85,6 @@ namespace paintRacer
             this.checkPoints = checkPoints;
             this.start = startPoint;
             this.startRotation = startRotation;
-            Console.WriteLine(startRotation);
         }
 
         ///// <summary>
