@@ -57,6 +57,7 @@ namespace paintRacer
 
             players[0].setRotation(map.StartRotation);
             players[1].setRotation(map.StartRotation);
+
             Console.WriteLine(players[0].getRotation());
 
             level = map;

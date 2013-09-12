@@ -159,6 +159,7 @@ namespace paintRacer
 
         public void setRotation(float rotation)
         {
+            speed.direction = new Vector2(1,(float)Math.Tan(rotation));
             this.rotation=rotation;
         }
 
