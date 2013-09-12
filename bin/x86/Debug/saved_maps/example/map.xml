@@ -1,0 +1,8 @@
+<Map>
+	<ImageLocation Address="image.png"/>
+	<SWImageLocation Address="imageSW.png"/>
+	<Rotation Value="0"/>
+	<Startpoint X="1535" Y="550" />
+	<Checkpoints Number="0">
+	</Checkpoints>
+</Map>
