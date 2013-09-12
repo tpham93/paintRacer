@@ -351,15 +351,17 @@ namespace paintRacer
                 }
                 else if ((mouseState.X > CreatePos.X) && (mouseState.X < CreatePos.X + MENUENTRYSIZE_X) && (mouseState.Y > CreatePos.Y) && (mouseState.Y < CreatePos.Y + MENUENTRYSIZE_Y))
                 {
-                    Global.map = new Map(MapPic, MapReader.createDataFromSWImage(MapPicSW), checkPoints, StartPosDirection[0], Physic.calculateRotation(new Vector2(1, 0)));
+                    Global.map = new Map(MapPic, MapReader.createDataFromSWImage(MapPicSW), checkPoints, StartPosDirection[0], Physic.calculateRotation(StartPosDirection[1] - StartPosDirection[0]));
                     return nextState;
                 }
                 else if ((mouseState.X > MapPicPos.X) && (mouseState.X < MapPicPos.X + MAPSIZE) && (mouseState.Y > MapPicPos.Y) && (mouseState.Y < MapPicPos.Y + MAPSIZE))
                 {
+                    Vector2 relativePos = new Vector2(mouseState.X,mouseState.Y) - MapPicPos;
+
                     switch (createState)
                     {
                         case ECreatState.SetCheckPoint_II:
-                            checkPoints[checkPoints.Length - 1] = new Vector2((int)(mouseState.X / scal), (int)(mouseState.Y / scal));
+                            checkPoints[checkPoints.Length - 1] = new Vector2((int)(relativePos.X / scal), (int)(relativePos.Y / scal));
                             createState = ECreatState.Nothing;
                             break;
                         case ECreatState.SetCheckPoint_I:
@@ -367,25 +369,25 @@ namespace paintRacer
                                 checkPoints = new Vector2[2];
                             else
                                 checkPoints = Helper.resizeV2Array(checkPoints, 2);
-                            checkPoints[checkPoints.Length - 2] = new Vector2((int)(mouseState.X / scal), (int)(mouseState.Y / scal));
+                            checkPoints[checkPoints.Length - 2] = new Vector2((int)(relativePos.X / scal), (int)(relativePos.Y / scal));
                             createState = ECreatState.SetCheckPoint_II;
                             break;
                         case ECreatState.SetFinish_II:
-                            FinishPoints[1] = new Vector2((int)(mouseState.X / scal), (int)(mouseState.Y / scal));
+                            FinishPoints[1] = new Vector2((int)(relativePos.X / scal), (int)(relativePos.Y / scal));
                             createState = ECreatState.Nothing;
                             break;
                         case ECreatState.SetFinish_I:
                             FinishPoints = new Vector2[2];
-                            FinishPoints[0] = new Vector2((int)(mouseState.X / scal), (int)(mouseState.Y / scal));
+                            FinishPoints[0] = new Vector2((int)(relativePos.X / scal), (int)(relativePos.Y / scal));
                             createState = ECreatState.SetFinish_II;
                             break;
                         case ECreatState.SetStartPoint_II:
-                            StartPosDirection[1] = new Vector2((int)(mouseState.X / scal), (int)(mouseState.Y / scal));
+                            StartPosDirection[1] = new Vector2((int)(relativePos.X / scal), (int)(relativePos.Y / scal));
                             createState = ECreatState.Nothing;
                             break;
                         case ECreatState.SetStartPoint_I:
                             StartPosDirection = new Vector2[2];
-                            StartPosDirection[0] = new Vector2((int)(mouseState.X / scal), (int)(mouseState.Y / scal));
+                            StartPosDirection[0] = new Vector2((int)(relativePos.X / scal), (int)(relativePos.Y / scal));
                             createState = ECreatState.SetStartPoint_II;
                             break;
                     }
