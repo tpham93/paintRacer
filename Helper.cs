@@ -15,6 +15,8 @@ namespace paintRacer
         private static GraphicsDevice graphicsDevice;
 
         private static Keys lastKey;
+        public static int timeSpan;
+        public static int TIMEBETWEENKEYS = 300;
 
         // set graphicsDevice
         public static void Init(GraphicsDevice graphicsDevice)
@@ -108,10 +110,12 @@ namespace paintRacer
 
         public static string KeyToChar(KeyboardState keyboardState, GameTime gameTime)
         {
+            timeSpan += gameTime.ElapsedGameTime.Milliseconds;
             //A
-            if (keyboardState.IsKeyDown(Keys.A))
+            if (keyboardState.IsKeyDown(Keys.A) && !(lastKey == Keys.A && timeSpan < TIMEBETWEENKEYS))
             {
                 lastKey = Keys.A;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "A";
                 else
@@ -119,9 +123,10 @@ namespace paintRacer
             }
 
             //B
-            else if (keyboardState.IsKeyDown(Keys.B))
+            else if (keyboardState.IsKeyDown(Keys.B) && !(lastKey == Keys.B && timeSpan < TIMEBETWEENKEYS))
             {
                 lastKey = Keys.B;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "B";
                 else
@@ -129,9 +134,10 @@ namespace paintRacer
             }
 
             //C
-            else if (keyboardState.IsKeyDown(Keys.C))
+            else if (keyboardState.IsKeyDown(Keys.C) && !(lastKey == Keys.C && timeSpan < TIMEBETWEENKEYS))
             {
                 lastKey = Keys.C;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "C";
                 else
@@ -139,9 +145,10 @@ namespace paintRacer
             }
 
             //D
-            else if (keyboardState.IsKeyDown(Keys.D))
+            else if (keyboardState.IsKeyDown(Keys.D) && !(lastKey == Keys.D && timeSpan < TIMEBETWEENKEYS))
             {
                 lastKey = Keys.D;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "D";
                 else
@@ -149,9 +156,10 @@ namespace paintRacer
             }
 
             //E
-            else if (keyboardState.IsKeyDown(Keys.E))
+            else if (keyboardState.IsKeyDown(Keys.E) && !(lastKey == Keys.E && timeSpan < TIMEBETWEENKEYS))
             {
                 lastKey = Keys.E;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "E";
                 else
@@ -159,9 +167,10 @@ namespace paintRacer
             }
 
             //F
-            else if (keyboardState.IsKeyDown(Keys.F))
+            else if (keyboardState.IsKeyDown(Keys.F) && !(lastKey == Keys.F && timeSpan < TIMEBETWEENKEYS))
             {
                 lastKey = Keys.F;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "F";
                 else
@@ -169,9 +178,10 @@ namespace paintRacer
             }
 
             //G
-            else if (keyboardState.IsKeyDown(Keys.G))
+            else if (keyboardState.IsKeyDown(Keys.G) && !(lastKey == Keys.G && timeSpan < TIMEBETWEENKEYS))
             {
                 lastKey = Keys.G;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "G";
                 else
@@ -179,9 +189,10 @@ namespace paintRacer
             }
 
             //H
-            else if (keyboardState.IsKeyDown(Keys.H))
+            else if (keyboardState.IsKeyDown(Keys.H) && !(lastKey == Keys.H && timeSpan < TIMEBETWEENKEYS))
             {
                 lastKey = Keys.H;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "H";
                 else
@@ -189,9 +200,10 @@ namespace paintRacer
             }
 
             //I
-            else if (keyboardState.IsKeyDown(Keys.I))
+            else if (keyboardState.IsKeyDown(Keys.I) && !(lastKey == Keys.I && timeSpan < TIMEBETWEENKEYS))
             {
                 lastKey = Keys.I;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "I";
                 else
@@ -199,9 +211,10 @@ namespace paintRacer
             }
 
             //J
-            else if (keyboardState.IsKeyDown(Keys.J))
+            else if (keyboardState.IsKeyDown(Keys.J) && !(lastKey == Keys.J && timeSpan < TIMEBETWEENKEYS))
             {
                 lastKey = Keys.J;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "J";
                 else
@@ -209,9 +222,10 @@ namespace paintRacer
             }
 
             //K
-            else if (keyboardState.IsKeyDown(Keys.K))
+            else if (keyboardState.IsKeyDown(Keys.K) && !(lastKey == Keys.K && timeSpan < TIMEBETWEENKEYS))
             {
                 lastKey = Keys.K;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "K";
                 else
@@ -219,9 +233,10 @@ namespace paintRacer
             }
 
             //L
-            else if (keyboardState.IsKeyDown(Keys.L))
+            else if (keyboardState.IsKeyDown(Keys.L) && !(lastKey == Keys.L && timeSpan < TIMEBETWEENKEYS))
             {
                 lastKey = Keys.L;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "L";
                 else
@@ -229,9 +244,10 @@ namespace paintRacer
             }
 
             //M
-            else if (keyboardState.IsKeyDown(Keys.M))
+            else if (keyboardState.IsKeyDown(Keys.M) && !(lastKey == Keys.M && timeSpan < TIMEBETWEENKEYS))
             {
                 lastKey = Keys.M;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "M";
                 else
@@ -239,9 +255,10 @@ namespace paintRacer
             }
 
             //N
-            else if (keyboardState.IsKeyDown(Keys.N))
+            else if (keyboardState.IsKeyDown(Keys.N) && !(lastKey == Keys.N && timeSpan < TIMEBETWEENKEYS))
             {
                 lastKey = Keys.N;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "N";
                 else
@@ -249,9 +266,10 @@ namespace paintRacer
             }
 
             //O
-            else if (keyboardState.IsKeyDown(Keys.O))
+            else if (keyboardState.IsKeyDown(Keys.O) && !(lastKey == Keys.O && timeSpan < TIMEBETWEENKEYS))
             {
                 lastKey = Keys.O;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "O";
                 else
@@ -259,9 +277,10 @@ namespace paintRacer
             }
 
             //P
-            else if (keyboardState.IsKeyDown(Keys.P))
+            else if (keyboardState.IsKeyDown(Keys.P) && !(lastKey == Keys.P && timeSpan < TIMEBETWEENKEYS))
             {
                 lastKey = Keys.P;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "P";
                 else
@@ -269,9 +288,10 @@ namespace paintRacer
             }
 
             //Q
-            else if (keyboardState.IsKeyDown(Keys.Q))
+            else if (keyboardState.IsKeyDown(Keys.Q) && !(lastKey == Keys.Q && timeSpan < TIMEBETWEENKEYS))
             {
                 lastKey = Keys.Q;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "Q";
                 else
@@ -279,9 +299,10 @@ namespace paintRacer
             }
 
             //R
-            else if (keyboardState.IsKeyDown(Keys.R))
+            else if (keyboardState.IsKeyDown(Keys.R) && !(lastKey == Keys.R && timeSpan < TIMEBETWEENKEYS))
             {
                 lastKey = Keys.R;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "R";
                 else
@@ -289,9 +310,10 @@ namespace paintRacer
             }
 
             //S
-            else if (keyboardState.IsKeyDown(Keys.S))
+            else if (keyboardState.IsKeyDown(Keys.S) && !(lastKey == Keys.S && timeSpan < TIMEBETWEENKEYS))
             {
                 lastKey = Keys.S;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "S";
                 else
@@ -299,9 +321,10 @@ namespace paintRacer
             }
 
             //T
-            else if (keyboardState.IsKeyDown(Keys.T))
+            else if (keyboardState.IsKeyDown(Keys.T) && !(lastKey == Keys.T && timeSpan < TIMEBETWEENKEYS))
             {
                 lastKey = Keys.T;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "T";
                 else
@@ -309,9 +332,10 @@ namespace paintRacer
             }
 
             //B
-            else if (keyboardState.IsKeyDown(Keys.B))
+            else if (keyboardState.IsKeyDown(Keys.B) && !(lastKey == Keys.B && timeSpan < TIMEBETWEENKEYS))
             {
                 lastKey = Keys.B;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "B";
                 else
@@ -319,9 +343,10 @@ namespace paintRacer
             }
 
             //U
-            else if (keyboardState.IsKeyDown(Keys.U))
+            else if (keyboardState.IsKeyDown(Keys.U) && !(lastKey == Keys.U && timeSpan < TIMEBETWEENKEYS))
             {
                 lastKey = Keys.U;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "U";
                 else
@@ -329,9 +354,10 @@ namespace paintRacer
             }
 
             //V
-            else if (keyboardState.IsKeyDown(Keys.V))
+            else if (keyboardState.IsKeyDown(Keys.V) && !(lastKey == Keys.V && timeSpan < TIMEBETWEENKEYS))
             {
                 lastKey = Keys.V;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "V";
                 else
@@ -339,7 +365,7 @@ namespace paintRacer
             }
 
             //W
-            else if (keyboardState.IsKeyDown(Keys.W))
+            else if (keyboardState.IsKeyDown(Keys.W) && !(lastKey == Keys.W && timeSpan < TIMEBETWEENKEYS))
             {
                 lastKey = Keys.W;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
@@ -349,9 +375,10 @@ namespace paintRacer
             }
 
             //X
-            else if (keyboardState.IsKeyDown(Keys.X))
+            else if (keyboardState.IsKeyDown(Keys.X) && !(lastKey == Keys.X && timeSpan < TIMEBETWEENKEYS))
             {
                 lastKey = Keys.X;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "X";
                 else
@@ -359,9 +386,10 @@ namespace paintRacer
             }
 
             //Y
-            else if (keyboardState.IsKeyDown(Keys.Y))
+            else if (keyboardState.IsKeyDown(Keys.Y) && !(lastKey == Keys.Y && timeSpan < TIMEBETWEENKEYS))
             {
                 lastKey = Keys.Y;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "Y";
                 else
@@ -369,9 +397,10 @@ namespace paintRacer
             }
 
             //Z
-            else if (keyboardState.IsKeyDown(Keys.Z))
+            else if (keyboardState.IsKeyDown(Keys.Z) && !(lastKey == Keys.Z && timeSpan < TIMEBETWEENKEYS))
             {
                 lastKey = Keys.Z;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "Z";
                 else
@@ -379,108 +408,232 @@ namespace paintRacer
             }
 
             //0
-            else if (keyboardState.IsKeyDown(Keys.D0))
+            else if (keyboardState.IsKeyDown(Keys.D0) && !(lastKey == Keys.D0 && timeSpan < TIMEBETWEENKEYS))
             {
                 lastKey = Keys.D0;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "=";
+                else if (keyboardState.IsKeyDown(Keys.LeftAlt) || keyboardState.IsKeyDown(Keys.RightAlt))
+                    return "}";
                 else
                     return "0";
             }
             //0
-            else if (keyboardState.IsKeyDown(Keys.NumPad0))
+            else if (keyboardState.IsKeyDown(Keys.NumPad0) && !(lastKey == Keys.NumPad0 && timeSpan < TIMEBETWEENKEYS))
             {
                 lastKey = Keys.NumPad0;
-                if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
-                    return "=";
-                else
-                    return "0";
+                timeSpan = 0;
+                return "0";
             }
 
             //1
-            else if (keyboardState.IsKeyDown(Keys.D1) || keyboardState.IsKeyDown(Keys.NumPad1))
+            else if (keyboardState.IsKeyDown(Keys.D1) && !(lastKey == Keys.D1 && timeSpan < TIMEBETWEENKEYS))
             {
+                lastKey = Keys.D1;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "!";
                 else
                     return "1";
             }
+            //1
+            else if (keyboardState.IsKeyDown(Keys.NumPad0) && !(lastKey == Keys.NumPad1 && timeSpan < TIMEBETWEENKEYS))
+            {
+                lastKey = Keys.NumPad1;
+                timeSpan = 0;
+                return "1";
+            }
 
             //2
-            else if (keyboardState.IsKeyDown(Keys.D2) || keyboardState.IsKeyDown(Keys.NumPad2))
+            else if (keyboardState.IsKeyDown(Keys.D2) && !(lastKey == Keys.D2 && timeSpan < TIMEBETWEENKEYS))
             {
+                lastKey = Keys.D2;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "\"";
                 else
                     return "2";
             }
+            //2
+            else if (keyboardState.IsKeyDown(Keys.NumPad0) && !(lastKey == Keys.NumPad2 && timeSpan < TIMEBETWEENKEYS))
+            {
+                lastKey = Keys.NumPad2;
+                timeSpan = 0;
+                return "2";
+            }
 
             //3
-            else if (keyboardState.IsKeyDown(Keys.D3) || keyboardState.IsKeyDown(Keys.NumPad3))
+            else if (keyboardState.IsKeyDown(Keys.D3) && !(lastKey == Keys.D3 && timeSpan < TIMEBETWEENKEYS))
             {
+                lastKey = Keys.D3;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "§";
                 else
                     return "3";
             }
+            //3
+            else if (keyboardState.IsKeyDown(Keys.NumPad3) && !(lastKey == Keys.NumPad3 && timeSpan < TIMEBETWEENKEYS))
+            {
+                lastKey = Keys.NumPad3;
+                return "3";
+            }
 
             //4
-            else if (keyboardState.IsKeyDown(Keys.D4) || keyboardState.IsKeyDown(Keys.NumPad4))
+            else if (keyboardState.IsKeyDown(Keys.D4) && !(lastKey == Keys.D4 && timeSpan < TIMEBETWEENKEYS))
             {
+                lastKey = Keys.D4;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "$";
                 else
                     return "4";
             }
+            //4
+            else if (keyboardState.IsKeyDown(Keys.NumPad4) && !(lastKey == Keys.NumPad4 && timeSpan < TIMEBETWEENKEYS))
+            {
+                lastKey = Keys.NumPad4;
+                timeSpan = 0;
+                return "4";
+            }
 
             //5
-            else if (keyboardState.IsKeyDown(Keys.D5) || keyboardState.IsKeyDown(Keys.NumPad5))
+            else if (keyboardState.IsKeyDown(Keys.D5) && !(lastKey == Keys.D5 && timeSpan < TIMEBETWEENKEYS))
             {
+                lastKey = Keys.D5;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "%";
                 else
                     return "5";
             }
+            //5
+            else if (keyboardState.IsKeyDown(Keys.NumPad5) && !(lastKey == Keys.NumPad5 && timeSpan < TIMEBETWEENKEYS))
+            {
+                lastKey = Keys.NumPad5;
+                timeSpan = 0;
+                return "5";
+            }
 
             //6
-            else if (keyboardState.IsKeyDown(Keys.D6) || keyboardState.IsKeyDown(Keys.NumPad6))
+            else if (keyboardState.IsKeyDown(Keys.D6) && !(lastKey == Keys.D6 && timeSpan < TIMEBETWEENKEYS))
             {
+                lastKey = Keys.D6;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "&";
                 else
                     return "6";
             }
+            //6
+            else if (keyboardState.IsKeyDown(Keys.NumPad6) && !(lastKey == Keys.NumPad6 && timeSpan < TIMEBETWEENKEYS))
+            {
+                lastKey = Keys.NumPad6;
+                timeSpan = 0;
+                return "6";
+            }
 
             //7
-            else if (keyboardState.IsKeyDown(Keys.D7) || keyboardState.IsKeyDown(Keys.NumPad7))
+            else if (keyboardState.IsKeyDown(Keys.D7) && !(lastKey == Keys.D7 && timeSpan < TIMEBETWEENKEYS))
             {
+                lastKey = Keys.D7;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "/";
+                else if (keyboardState.IsKeyDown(Keys.LeftAlt) || keyboardState.IsKeyDown(Keys.RightAlt))
+                    return "{";
                 else
                     return "7";
             }
+            //7
+            else if (keyboardState.IsKeyDown(Keys.NumPad7) && !(lastKey == Keys.NumPad7 && timeSpan < TIMEBETWEENKEYS))
+            {
+                lastKey = Keys.NumPad7;
+                timeSpan = 0;
+                return "7";
+            }
 
             //8
-            else if (keyboardState.IsKeyDown(Keys.D8) || keyboardState.IsKeyDown(Keys.NumPad8))
+            else if (keyboardState.IsKeyDown(Keys.D8) && !(lastKey == Keys.D8 && timeSpan < TIMEBETWEENKEYS))
             {
+                lastKey = Keys.D8;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "(";
+                else if (keyboardState.IsKeyDown(Keys.LeftAlt) || keyboardState.IsKeyDown(Keys.RightAlt))
+                    return "[";
                 else
                     return "8";
             }
+            //8
+            else if (keyboardState.IsKeyDown(Keys.NumPad8) && !(lastKey == Keys.NumPad8 && timeSpan < TIMEBETWEENKEYS))
+            {
+                lastKey = Keys.NumPad8;
+                timeSpan = 0;
+                return "8";
+            }
 
             //9
-            else if (keyboardState.IsKeyDown(Keys.D9) || keyboardState.IsKeyDown(Keys.NumPad9))
+            else if (keyboardState.IsKeyDown(Keys.D9) && !(lastKey == Keys.D9 && timeSpan < TIMEBETWEENKEYS))
             {
+                lastKey = Keys.D9;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return ")";
+                else if (keyboardState.IsKeyDown(Keys.LeftAlt) || keyboardState.IsKeyDown(Keys.RightAlt))
+                    return "]";
                 else
                     return "9";
             }
+            //9
+            else if (keyboardState.IsKeyDown(Keys.NumPad9) && !(lastKey == Keys.NumPad9 && timeSpan < TIMEBETWEENKEYS))
+            {
+                lastKey = Keys.NumPad9;
+                timeSpan = 0;
+                return "9";
+            }
+
+            //,
+            else if (keyboardState.IsKeyDown(Keys.OemComma) && !(lastKey == Keys.OemComma && timeSpan < TIMEBETWEENKEYS))
+            {
+                lastKey = Keys.OemComma;
+                timeSpan = 0;
+                if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
+                    return ";";
+                else
+                    return ",";
+            }
+
+            //<
+            else if (keyboardState.IsKeyDown(Keys.OemBackslash) && !(lastKey == Keys.OemComma && timeSpan < TIMEBETWEENKEYS))
+            {
+                lastKey = Keys.OemComma;
+                timeSpan = 0;
+                if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
+                    return ">";
+                else if (keyboardState.IsKeyDown(Keys.LeftAlt) || keyboardState.IsKeyDown(Keys.RightAlt))
+                    return "|";
+                else
+                    return "<";
+            }
+
+            //-
+            else if (keyboardState.IsKeyDown(Keys.OemMinus) && !(lastKey == Keys.OemMinus && timeSpan < TIMEBETWEENKEYS))
+            {
+                lastKey = Keys.OemMinus;
+                timeSpan = 0;
+                if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
+                    return "_";
+                else
+                    return "-";
+            }
 
             //+
-            else if (keyboardState.IsKeyDown(Keys.Add))
+            else if (keyboardState.IsKeyDown(Keys.OemPlus) && !(lastKey == Keys.OemPlus && timeSpan < TIMEBETWEENKEYS))
             {
+                lastKey = Keys.OemPlus;
+                timeSpan = 0;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
                     return "*";
                 else if (keyboardState.IsKeyDown(Keys.LeftAlt) || keyboardState.IsKeyDown(Keys.RightAlt))
@@ -489,12 +642,70 @@ namespace paintRacer
                     return "+";
             }
 
+            //#
+            else if (keyboardState.IsKeyDown(Keys.OemQuestion) && !(lastKey == Keys.OemQuestion && timeSpan < TIMEBETWEENKEYS))
+            {
+                lastKey = Keys.OemQuestion;
+                timeSpan = 0;
+                if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
+                    return "'";
+                else
+                    return "#";
+            }
+
+            //+
+            else if (keyboardState.IsKeyDown(Keys.OemPipe) && !(lastKey == Keys.OemPipe && timeSpan < TIMEBETWEENKEYS))
+            {
+                lastKey = Keys.OemPipe;
+                timeSpan = 0;
+                if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
+                    return "°";
+                else
+                    return "^";
+            }
+
+            //ß
+            else if (keyboardState.IsKeyDown(Keys.OemOpenBrackets) && !(lastKey == Keys.OemOpenBrackets && timeSpan < TIMEBETWEENKEYS))
+            {
+                lastKey = Keys.OemOpenBrackets;
+                timeSpan = 0;
+                if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
+                    return "?";
+                else if (keyboardState.IsKeyDown(Keys.LeftAlt) || keyboardState.IsKeyDown(Keys.RightAlt))
+                    return "\\";
+                else
+                    return "sz";
+            }
+
+            //.
+            else if (keyboardState.IsKeyDown(Keys.OemPeriod) && !(lastKey == Keys.OemPeriod && timeSpan < TIMEBETWEENKEYS))
+            {
+                lastKey = Keys.OemPeriod;
+                timeSpan = 0;
+                if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
+                    return ":";
+                else
+                    return ".";
+            }
+
+
             ///TODO: continue
             
             else 
             {
                 return "";
             }
+        }
+
+        internal static Vector2[] resizeV2Array(Vector2[] array, int n)
+        {
+            if (array.Length <= -n) return null;
+            Vector2[] result = new Vector2[array.Length + n];
+            for (int i = 0; i < result.Length && i < array.Length; i++)
+            {
+                result[i] = new Vector2(array[i].X, array[i].Y);
+            }
+            return result;
         }
     }
 }

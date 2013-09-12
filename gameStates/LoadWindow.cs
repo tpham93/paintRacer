@@ -81,6 +81,7 @@ namespace paintRacer
 
         private int scrollpos = 0;
         private int timeSpace = 0;
+        private float scal;
 
         //some textures and positions
         private Texture2D whitePixel;
@@ -104,6 +105,7 @@ namespace paintRacer
         private Vector2 CreatePos;
         private Texture2D MapPic;
         private Texture2D MapPicSW;
+        private Vector2 MapPicPos;
 
         private Vector2 textArrayPos;
         private Vector2 fileNamePos;
@@ -111,6 +113,7 @@ namespace paintRacer
 
         private Vector2[] checkPoints;
         private Vector2[] StartPosDirection;
+        private Vector2[] FinishPoints;
 
         //const
 
@@ -139,7 +142,6 @@ namespace paintRacer
         const int MENULINESIZE = 20;
         const int MENULINESPACE = 5;
 
-        const int TIME_BETWEEN_KEY_PRESS = 150;
         const int NUM_ENTRIES = 5;
 
 
@@ -225,14 +227,14 @@ namespace paintRacer
                     int offset = count * (MENULINESIZE + MENULINESPACE);
                     if ((mouseState.X > textArrayPos.X) && (mouseState.Y > textArrayPos.Y + offset) && (mouseState.Y < textArrayPos.Y + offset + MENULINESIZE))
                     {
-                        //try
-                        //{
+                        try
+                        {
                             Global.map = XmlLoad.parseMapConfig(directoryarray[count + scrollpos]);
-                        //}
-                        //catch
-                        //{
-                        //    //return EGameStates.LoadMenu;
-                        //}
+                        }
+                        catch
+                        {
+                            //return EGameStates.LoadMenu;
+                        }
                         scrollpos = 0;
                         return nextState;
                     }
@@ -241,7 +243,7 @@ namespace paintRacer
 
             timeSpace += gameTime.ElapsedGameTime.Milliseconds;
 
-            if (timeSpace > TIME_BETWEEN_KEY_PRESS)
+            if (timeSpace > Helper.TIMEBETWEENKEYS)
             {
                 timeSpace = 0;
                 KeyboardState keyboartState = Keyboard.GetState();
@@ -299,10 +301,13 @@ namespace paintRacer
         /// <returns>the next gamestate - EGameState</returns>
         private EGameStates UpdateLoadNewMap(GameTime gameTime)
         {
+            timeSpace += gameTime.ElapsedGameTime.Milliseconds;
+
             MouseState mouseState = Mouse.GetState();
 
-            if (mouseState.LeftButton == ButtonState.Pressed)
+            if (mouseState.LeftButton == ButtonState.Pressed && timeSpace > Helper.TIMEBETWEENKEYS)
             {
+                timeSpace = 0;
                 if ((mouseState.X > fileNamePos.X) && (mouseState.Y > fileNamePos.Y) && (mouseState.Y < fileNamePos.Y + MENULINESIZE))
                 {
                     createState = ECreatState.EditFileNameColor;
@@ -330,6 +335,7 @@ namespace paintRacer
                 }
                 else if ((mouseState.X > remCheckPointPos.X) && (mouseState.X < remCheckPointPos.X + MENUENTRYSIZE_X) && (mouseState.Y > remCheckPointPos.Y) && (mouseState.Y < remCheckPointPos.Y + MENUENTRYSIZE_Y))
                 {
+                    Helper.resizeV2Array(checkPoints, -2);
                     createState = ECreatState.Nothing;
                 }
                 else if ((mouseState.X > StartPos.X) && (mouseState.X < StartPos.X + MENUENTRYSIZE_X) && (mouseState.Y > StartPos.Y) && (mouseState.Y < StartPos.Y + MENUENTRYSIZE_Y))
@@ -342,10 +348,69 @@ namespace paintRacer
                 }
                 else if ((mouseState.X > CreatePos.X) && (mouseState.X < CreatePos.X + MENUENTRYSIZE_X) && (mouseState.Y > CreatePos.Y) && (mouseState.Y < CreatePos.Y + MENUENTRYSIZE_Y))
                 {
-                    Global.map = new Map(MapPic, MapReader.createDataFromSWImage(MapPicSW), checkPoints, StartPosDirection[0], Physic.calculateRotation(StartPosDirection[1]));
+                    Global.map = new Map(MapPic, MapReader.createDataFromSWImage(MapPicSW), checkPoints, StartPosDirection[0], Physic.calculateRotation(new Vector2(1,0)));
+                    Console.WriteLine((-StartPosDirection[0].X + StartPosDirection[1].X) + "," + (StartPosDirection[0].Y - StartPosDirection[1].Y));
                     return nextState;
                 }
+                else if ((mouseState.X > MapPicPos.X) && (mouseState.X < MapPicPos.X + MAPSIZE) && (mouseState.Y > MapPicPos.Y) && (mouseState.Y < MapPicPos.Y + MAPSIZE))
+                {
+                    switch (createState)
+                    {
+                        case ECreatState.SetCheckPoint_II :
+                            checkPoints[checkPoints.Length - 1] = new Vector2((int)(mouseState.X / scal), (int)(mouseState.Y / scal));
+                            createState = ECreatState.Nothing;
+                            break;
+                        case ECreatState.SetCheckPoint_I :
+                            if (checkPoints == null)
+                                checkPoints = new Vector2[2];
+                            else
+                                checkPoints = Helper.resizeV2Array(checkPoints, 2);
+                            checkPoints[checkPoints.Length - 2] = new Vector2((int)(mouseState.X / scal), (int)(mouseState.Y / scal));
+                            createState = ECreatState.SetCheckPoint_II;
+                            break;
+                        case ECreatState.SetFinish_II :
+                            FinishPoints[1] = new Vector2((int)(mouseState.X / scal), (int)(mouseState.Y / scal));
+                            createState = ECreatState.Nothing;
+                            break;
+                        case ECreatState.SetFinish_I :
+                            FinishPoints = new Vector2[2];
+                            FinishPoints[0] = new Vector2((int)(mouseState.X / scal), (int)(mouseState.Y / scal));
+                            createState = ECreatState.SetFinish_II;
+                            break;
+                        case ECreatState.SetStartPoint_II :
+                            StartPosDirection[1] = new Vector2((int)(mouseState.X / scal), (int)(mouseState.Y / scal));
+                            createState = ECreatState.Nothing;
+                            break;
+                        case ECreatState.SetStartPoint_I :
+                            StartPosDirection = new Vector2[2];
+                            StartPosDirection[0] = new Vector2((int)(mouseState.X / scal), (int)(mouseState.Y / scal));
+                            createState = ECreatState.SetStartPoint_II;
+                            break;
+                    }
+                }
             }
+
+            if (createState == ECreatState.EditFileNameColor)
+            {
+                KeyboardState keyboardState = Keyboard.GetState();
+                FileName += Helper.KeyToChar(keyboardState, gameTime);
+                if (keyboardState.IsKeyDown(Keys.Back) && Helper.timeSpan > Helper.TIMEBETWEENKEYS)
+                {
+                    FileName = FileName.Substring(0, FileName.Length - 1);
+                    Helper.timeSpan = 0;
+                }
+            }
+            if (createState == ECreatState.EditFileNameSW)
+            {
+                KeyboardState keyboardState = Keyboard.GetState();
+                FileNameSW += Helper.KeyToChar(keyboardState, gameTime);
+                if (keyboardState.IsKeyDown(Keys.Back) && Helper.timeSpan > Helper.TIMEBETWEENKEYS)
+                {
+                    FileNameSW = FileNameSW.Substring(0, FileNameSW.Length-1);
+                    Helper.timeSpan = 0;
+                }
+            }
+
 
             return EGameStates.LoadMenu;
         }
@@ -424,7 +489,7 @@ namespace paintRacer
                     spriteBatch.DrawString(DEFAULT_FONT, directoryarray[count].Substring(directoryarray[count].LastIndexOf('\\')+1), pos, DEFAULT_COLOR);
                 }
 
-            pos.Y += MENUENTRYSPACE + MENUENTRYSIZE_Y;
+            pos.Y = NUM_ENTRIES * (MENULINESIZE + MENULINESPACE) + 3 * MENUENTRYSPACE + MENUENTRYSIZE_Y;
             spriteBatch.Draw(Back, pos, Color.White);
             BackPos = new Vector2(pos.X, pos.Y);
 
@@ -447,7 +512,7 @@ namespace paintRacer
                 int y = MapPic.Height;
 
                 int max = Math.Max(x, y);
-                float scal = (float)MAPSIZE / (float)max;
+                scal = (float)MAPSIZE / (float)max;
 
                 x = (int)(x * scal);
                 y = (int)(y * scal);
@@ -458,6 +523,8 @@ namespace paintRacer
             {
                 spriteBatch.Draw(whitePixel, new Rectangle(MAPLEFTBOUND, MAPLEFTBOUND, MAPSIZE, MAPSIZE), Color.Moccasin);
             }
+
+            MapPicPos = new Vector2(MAPLEFTBOUND);
 
             //Text
             Vector2 pos = new Vector2(CREATEMENUBUTTONLEFTBOUND, MENUENTRYSPACE);
@@ -508,9 +575,9 @@ namespace paintRacer
                             "greay   - offroad\n" +
                             "white   - object";
                 case ECreatState.EditFileNameColor :
-                    return "Enter the location of the color-\npicture.";
+                    return "Enter the name of the color-\npicture.";
                 case ECreatState.EditFileNameSW :
-                    return "Enter the location of the black-and-\nwhite-picture:\n" +
+                    return "Enter the name of the black-and-\nwhite-picture:\n" +
                             "black   - road\n" +
                             "greay   - offroad\n" +
                             "white   - object";

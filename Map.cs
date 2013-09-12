@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace paintRacer
 {
@@ -84,6 +85,7 @@ namespace paintRacer
             this.checkPoints = checkPoints;
             this.start = startPoint;
             this.startRotation = startRotation;
+            Console.WriteLine(startRotation);
         }
 
         ///// <summary>

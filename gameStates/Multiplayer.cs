@@ -39,12 +39,13 @@ namespace paintRacer
             this.graphicsDevice = graphicsDevice;
 
             //Initializes Level and Player with test textures
-            level = new Map(MAP_PIC_SW, MAP_PIC);
+            //level = new Map(MAP_PIC_SW, MAP_PIC);
+            level = Global.map;
             players = new Player[2];
             players[0] = new Player(Helper.loadImage("testcar.png"), Color.Blue);
             players[1] = new Player(Helper.loadImage("testcar.png"), Color.Red);
-            players[0].setPosition(new Vector2(start_pos.X - 40, start_pos.Y));
-            players[1].setPosition(new Vector2(start_pos.X + 40, start_pos.Y));
+            players[0].setPosition(new Vector2(level.Start.X - 40, level.Start.Y));
+            players[1].setPosition(new Vector2(level.Start.X + 40, level.Start.Y));
         }
         // constructor for the game, if finished the LoadWindow
         public Multiplayer(GraphicsDevice graphicsDevice, Player[] players, Map map)
@@ -56,6 +57,7 @@ namespace paintRacer
 
             players[0].setRotation(map.StartRotation);
             players[1].setRotation(map.StartRotation);
+            Console.WriteLine(players[0].getRotation());
 
             level = map;
 
@@ -69,6 +71,7 @@ namespace paintRacer
 
         public EGameStates Update(GameTime gameTime)
         {
+            Console.WriteLine(players[0].getRotation());
             scene.Update(gameTime, Keyboard.GetState());
             return EGameStates.MultiPlayer;
         }
