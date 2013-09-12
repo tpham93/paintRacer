@@ -10,8 +10,10 @@ namespace paintRacer
 {
     class XmlLoad
     {
-        public static Map parseMapConfig(string filepath)
+        public static Map parseMapConfig(string directoryPath)
         {
+            string filepath = directoryPath + @"\map.xml";
+
             Texture2D image = null;
             EMapStates[,] mapData = null;
             Vector2[] checkPoints = null;
@@ -26,13 +28,16 @@ namespace paintRacer
                     switch (reader.Name)
                     {
                         case "ImageLocation":
-                            image = Helper.loadImage(reader.GetAttribute("Address"));
+                            image = Helper.loadImage(directoryPath + '\\' + reader.GetAttribute("Address"));
                             break;
                         case "SWImageLocation":
-                            mapData = MapReader.createDataFromSWImage(Helper.loadImage(reader.GetAttribute("Address")));
+                            mapData = MapReader.createDataFromSWImage(Helper.loadImage(directoryPath + '\\' + reader.GetAttribute("Address")));
                             break;
                         case "Rotation":
                             rotation = Convert.ToSingle(reader.GetAttribute("Value"));
+                            break;
+                        case "Startpoint":
+                            startpoint = parsePoint(reader);
                             break;
                         case "Checkpoints":
                             checkPoints = parseCheckpoints(reader);
@@ -70,7 +75,7 @@ namespace paintRacer
                     }
                 }
             }
-            return null;
+            return checkpoints;
         }
 
 

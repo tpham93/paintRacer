@@ -75,7 +75,7 @@ namespace paintRacer
         private EGameStates nextState;
         private ECreatState createState;
 
-        private string[] filearray;
+        private string[] directoryarray;
         private string FileName = "";
         private string FileNameSW = "";
 
@@ -165,7 +165,7 @@ namespace paintRacer
         {
             mainState = EMainState.MainMenu;
             
-            filearray = Directory.GetFiles("saved_maps");
+            directoryarray = Directory.GetDirectories("saved_maps");
 
             DEFAULT_FONT = content.Load<SpriteFont>(@"font");
 
@@ -225,14 +225,14 @@ namespace paintRacer
                     int offset = count * (MENULINESIZE + MENULINESPACE);
                     if ((mouseState.X > textArrayPos.X) && (mouseState.Y > textArrayPos.Y + offset) && (mouseState.Y < textArrayPos.Y + offset + MENULINESIZE))
                     {
-                        try
-                        {
-                            Global.map = XmlLoad.parseMapConfig(filearray[count + scrollpos]);
-                        }
-                        catch
-                        {
-                            //return EGameStates.LoadMenu;
-                        }
+                        //try
+                        //{
+                            Global.map = XmlLoad.parseMapConfig(directoryarray[count + scrollpos]);
+                        //}
+                        //catch
+                        //{
+                        //    //return EGameStates.LoadMenu;
+                        //}
                         scrollpos = 0;
                         return nextState;
                     }
@@ -248,7 +248,7 @@ namespace paintRacer
                 if (keyboartState.IsKeyDown(Keys.Down))
                 {
                     ++scrollpos;
-                    scrollpos = scrollpos >= filearray.Length ? filearray.Length-1 : scrollpos;
+                    scrollpos = scrollpos >= directoryarray.Length ? directoryarray.Length-1 : scrollpos;
                 }
                 else if (keyboartState.IsKeyDown(Keys.Up))
                 {
@@ -417,11 +417,11 @@ namespace paintRacer
             Vector2 pos = new Vector2(LOADMENUBUTTONLEFTBOUND, MENUENTRYSPACE);
             textArrayPos = new Vector2(pos.X, pos.Y);
 
-            if (filearray != null)
-                for (int count = scrollpos; (count < scrollpos + NUM_ENTRIES) && (count < filearray.Length); count++)
+            if (directoryarray != null)
+                for (int count = scrollpos; (count < scrollpos + NUM_ENTRIES) && (count < directoryarray.Length); count++)
                 {
                     pos.Y = (count - scrollpos) * (MENULINESIZE + MENULINESPACE) + MENUENTRYSPACE;
-                    spriteBatch.DrawString(DEFAULT_FONT, filearray[count].Substring(filearray[count].LastIndexOf('\\')+1), pos, DEFAULT_COLOR);
+                    spriteBatch.DrawString(DEFAULT_FONT, directoryarray[count].Substring(directoryarray[count].LastIndexOf('\\')+1), pos, DEFAULT_COLOR);
                 }
 
             pos.Y += MENUENTRYSPACE + MENUENTRYSIZE_Y;

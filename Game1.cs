@@ -150,8 +150,12 @@ namespace paintRacer
                             }
                             else
                             {
-                                //gameStateElement = new Singleplayer(GraphicsDevice);
-                                //gameStateElement.Load(Content);
+
+                                Player[] players = new Player[1];
+                                players[0] = new Player(Helper.loadImage("testcar.png"), Color.Blue);
+
+                                gameStateElement = new Singleplayer(GraphicsDevice, players, Global.map);
+                                gameStateElement.Load(Content);
                             }
                             tmpGameStateElement = null;
                             break;
@@ -163,7 +167,12 @@ namespace paintRacer
                             }
                             else
                             {
-                                gameStateElement = new Multiplayer(GraphicsDevice);
+
+                                Player[] players = new Player[2];
+                                players[0] = new Player(Helper.loadImage("testcar.png"), Color.Blue);
+                                players[1] = new Player(Helper.loadImage("testcar.png"), Color.Red);
+
+                                gameStateElement = new Multiplayer(GraphicsDevice,players,Global.map);
                                 gameStateElement.Load(Content);
                             }
                             tmpGameStateElement = null;

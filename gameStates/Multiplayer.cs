@@ -49,6 +49,16 @@ namespace paintRacer
         // constructor for the game, if finished the LoadWindow
         public Multiplayer(GraphicsDevice graphicsDevice, Player[] players, Map map)
         {
+            this.players = players;
+
+            players[0].setPosition(map.Start + new Vector2(-40, 0));
+            players[1].setPosition(map.Start + new Vector2(+40, 0));
+
+            players[0].setRotation(map.StartRotation);
+            players[1].setRotation(map.StartRotation);
+
+            level = map;
+
             this.graphicsDevice = graphicsDevice;
         }
 
