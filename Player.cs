@@ -99,8 +99,11 @@ namespace paintRacer
                 times[lap - 1] = scene.raceTime - (lap == 1 ? 0 : times[lap - 2]);
                 ++lap;
             }
-            else if (Physic.checkPoint(pointarray[2 * num], pointarray[2 * num + 1], this.position))
-                checkPoints[num] = true;
+            else if (2 * num + 1 < pointarray.Length)
+            {
+                if (Physic.checkPoint(pointarray[2 * num], pointarray[2 * num + 1], this.position))
+                    checkPoints[num] = true;
+            }
         }
 
         /// get the pixels, which are used for the collision

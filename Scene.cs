@@ -25,7 +25,12 @@ namespace paintRacer
         }
 
         private ERaceState raceState;
+        public TimeSpan startTime, raceTime;
+<<<<<<< .mine
         public int startTime, raceTime;
+=======
+        private TimeSpan startTime, raceTime;
+>>>>>>> .theirs
 
         private Map level;
         private Player[] players;
@@ -47,8 +52,8 @@ namespace paintRacer
 
         public Scene(Map level, Player[] players, Viewport defaultView, Keys[,] keys, Microsoft.Xna.Framework.Content.ContentManager content)
         {
-            startTime = 0;
-            raceTime = 0;
+            startTime = new TimeSpan();
+            raceTime = new TimeSpan();
             raceState = ERaceState.LightOff;
 
             lightOff = Helper.loadImage("Ampel_aus.png");
@@ -97,32 +102,37 @@ namespace paintRacer
             //before start
             if (raceState == ERaceState.LightOff || raceState == ERaceState.Ready_I || raceState == ERaceState.Ready_II || raceState == ERaceState.Ready_III || raceState == ERaceState.Ready_IV || raceState == ERaceState.Ready_V || raceState == ERaceState.Go)
             {
-                startTime += gameTime.ElapsedGameTime.Milliseconds;
-                if (startTime < 1 * lightTackt)
-                    raceState = ERaceState.LightOff;
-                else if (startTime < 2 * lightTackt)
-                    raceState = ERaceState.Ready_I;
-                else if (startTime < 3 * lightTackt)
-                    raceState = ERaceState.Ready_II;
-                else if (startTime < 4 * lightTackt)
-                    raceState = ERaceState.Ready_III;
-                else if (startTime < 5 * lightTackt)
-                    raceState = ERaceState.Ready_IV;
-                else if (startTime < 6 * lightTackt)
-                    raceState = ERaceState.Ready_V;
-                else if (startTime < 7 * lightTackt)
-                    raceState = ERaceState.Go;
-                else if (startTime < 8 * lightTackt)
-                    raceState = ERaceState.Race;
+                startTime += gameTime.ElapsedGameTime;
+                //if (startTime < 1 * lightTackt)
+                //    raceState = ERaceState.LightOff;
+                //else if (startTime < 2 * lightTackt)
+                //    raceState = ERaceState.Ready_I;
+                //else if (startTime < 3 * lightTackt)
+                //    raceState = ERaceState.Ready_II;
+                //else if (startTime < 4 * lightTackt)
+                //    raceState = ERaceState.Ready_III;
+                //else if (startTime < 5 * lightTackt)
+                //    raceState = ERaceState.Ready_IV;
+                //else if (startTime < 6 * lightTackt)
+                //    raceState = ERaceState.Ready_V;
+                //else if (startTime < 7 * lightTackt)
+                //    raceState = ERaceState.Go;
+                //else if (startTime < 8 * lightTackt)
+                //    raceState = ERaceState.Race;
+
+                if (startTime > new TimeSpan(0, 0, 0, 0, ((int)raceState + 1) * lightTackt))
+                {   
+                    ++raceState;
+                }
             }
 
             //in race
             if (raceState == ERaceState.Go || raceState == ERaceState.Race || raceState == ERaceState.EndOff || raceState == ERaceState.EndOn)
             {
-                raceTime += gameTime.ElapsedGameTime.Milliseconds;
-                if (((players[0].lap > Multiplayer.LAPS) || (players.Length > 1 && players[1].lap > Multiplayer.LAPS)) && (raceTime / lightTackt) % 2 == 0)
+                raceTime += gameTime.ElapsedGameTime;
+                if (((players[0].lap > Multiplayer.LAPS) || (players.Length > 1 && players[1].lap > Multiplayer.LAPS)) && (raceTime.TotalMilliseconds / lightTackt) % 2 == 0)
                     raceState = ERaceState.EndOff;
-                if (((players[0].lap > Multiplayer.LAPS) || (players.Length > 1 && players[1].lap > Multiplayer.LAPS)) && (raceTime / lightTackt) % 2 > 0)
+                if (((players[0].lap > Multiplayer.LAPS) || (players.Length > 1 && players[1].lap > Multiplayer.LAPS)) && (raceTime.TotalMilliseconds / lightTackt) % 2 > 0)
                     raceState = ERaceState.EndOn;
             }
 
