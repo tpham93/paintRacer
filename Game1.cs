@@ -152,7 +152,7 @@ namespace paintRacer
                             {
 
                                 Player[] players = new Player[1];
-                                players[0] = new Player(Helper.loadImage("testcar.png"), Color.Blue, (Global.map.CheckPoints.Length-1)/2);
+                                players[0] = new Player(Helper.loadImage("testcar.png"), Color.Blue, (Global.map.CheckPoints.Length)/2);
 
                                 gameStateElement = new Singleplayer(GraphicsDevice, players, Global.map);
                                 gameStateElement.Load(Content);
@@ -169,8 +169,8 @@ namespace paintRacer
                             {
 
                                 Player[] players = new Player[2];
-                                players[0] = new Player(Helper.loadImage("testcar.png"), Color.Blue, (Global.map.CheckPoints.Length-1)/2);
-                                players[1] = new Player(Helper.loadImage("testcar.png"), Color.Red, (Global.map.CheckPoints.Length-1)/2);
+                                players[0] = new Player(Helper.loadImage("testcar.png"), Color.Blue, (Global.map.CheckPoints.Length)/2);
+                                players[1] = new Player(Helper.loadImage("testcar.png"), Color.Red, (Global.map.CheckPoints.Length)/2);
 
                                 gameStateElement = new Multiplayer(GraphicsDevice,players,Global.map);
                                 gameStateElement.Load(Content);

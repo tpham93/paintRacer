@@ -44,8 +44,8 @@ namespace paintRacer
             //level = new Map(MAP_PIC_SW, MAP_PIC);
             level = Global.map;
             players = new Player[2];
-            players[0] = new Player(Helper.loadImage("testcar.png"), Color.Blue, (level.CheckPoints.Length-1)/2);
-            players[1] = new Player(Helper.loadImage("testcar.png"), Color.Red, (level.CheckPoints.Length-1)/2);
+            players[0] = new Player(Helper.loadImage("testcar.png"), Color.Blue, (level.CheckPoints.Length)/2);
+            players[1] = new Player(Helper.loadImage("testcar.png"), Color.Red, (level.CheckPoints.Length)/2);
             players[0].setPosition(new Vector2(level.Start.X - 40, level.Start.Y));
             players[1].setPosition(new Vector2(level.Start.X + 40, level.Start.Y));
         }

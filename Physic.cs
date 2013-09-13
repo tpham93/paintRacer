@@ -169,7 +169,7 @@ namespace paintRacer
          */
         public static bool checkPoint(Vector2 pointA, Vector2 pointB, Vector2 mid)
         {
-            float diff = 1.5f;
+            float diff = 1.3f;
 
             Vector2 ab = new Vector2(Math.Abs(pointA.X - pointB.X), Math.Abs(pointA.Y - pointB.Y));
             Vector2 am = new Vector2(Math.Abs(pointA.X - mid.X), Math.Abs(pointA.Y - mid.Y));

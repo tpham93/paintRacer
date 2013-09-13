@@ -43,7 +43,7 @@ namespace paintRacer
             checkPoints = new Boolean[numCheckPoints];
             for (int i = 0; i < checkPoints.Length; ++i)
                 checkPoints[i] = false;
-            lap = 0;
+            lap = 1;
 
             position = Vector2.Zero;
             rotation = 0.0f;
@@ -89,14 +89,14 @@ namespace paintRacer
             int num;
             for (num = 0; num < checkPoints.Length && checkPoints[num] == true; ++num);
             Vector2[] pointarray = scene.getLevel().CheckPoints;
-            if (Physic.checkPoint(pointarray[2 * num], pointarray[2 * num + 1], this.position))
-                checkPoints[num] = true;
             if (num == checkPoints.Length)
             {
-                for (int i = 0; i < checkPoints.Length-1; ++i)
+                for (int i = 0; i < checkPoints.Length; ++i)
                     checkPoints[i] = false;
-                ++lap;
+                    ++lap;
             }
+            else if (Physic.checkPoint(pointarray[2 * num], pointarray[2 * num + 1], this.position))
+                checkPoints[num] = true;
         }
 
         /// get the pixels, which are used for the collision
