@@ -51,6 +51,8 @@ namespace paintRacer
 
         public void Update(GameTime gameTime, bool[] pressedKeys)
         {
+            //Console.Out.WriteLine(getRotation());
+
             Vector2 driverInput=Vector2.Zero;
             if (pressedKeys[(int)Config.controlKeys.Up])
             {
@@ -159,8 +161,7 @@ namespace paintRacer
 
         public void setRotation(float rotation)
         {
-            ///todo
-            speed.direction = new Vector2(1,(float)Math.Tan(rotation));
+            speed.direction = new Vector2((float)Math.Sin(rotation), (float)Math.Cos(rotation + MathHelper.Pi));
             this.rotation=rotation;
         }
 
