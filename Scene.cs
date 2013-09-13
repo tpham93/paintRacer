@@ -26,11 +26,6 @@ namespace paintRacer
 
         private ERaceState raceState;
         public TimeSpan startTime, raceTime;
-<<<<<<< .mine
-        public int startTime, raceTime;
-=======
-        private TimeSpan startTime, raceTime;
->>>>>>> .theirs
 
         private Map level;
         private Player[] players;
@@ -175,9 +170,9 @@ namespace paintRacer
 
                 //laps and time
                 spriteBatch.Draw(pixel, new Rectangle(0,0,800,50), Color.LightGray);
-                int RTmin = raceTime / 60000;
-                int RTsek = (raceTime % 60000) / 1000;
-                int RTmsek = (raceTime % 1000) / 10;
+                int RTmin = raceTime.Minutes;
+                int RTsek = raceTime.Seconds;
+                int RTmsek = raceTime.Milliseconds / 10;
                 int minTime = 0;
                 for (int j = 0; j < players[0].lap-1; ++j)
                     minTime = Math.Min((minTime == 0 ? 1000000 : minTime), players[0].times[j]);
