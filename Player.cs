@@ -61,7 +61,7 @@ namespace paintRacer
         {
             //Console.Out.WriteLine(getRotation());
 
-            Vector2 driverInput=Vector2.Zero;
+            Vector2 driverInput = Vector2.Zero;
             if (pressedKeys[(int)Config.controlKeys.Up])
             {
                 driverInput.Y++;
@@ -87,13 +87,19 @@ namespace paintRacer
             rotation = Physic.calculateRotation(speed.direction);
 
             int num;
-            for (num = 0; num < checkPoints.Length && checkPoints[num] == true; ++num);
+            for (num = 0; num < checkPoints.Length && checkPoints[num] == true; ++num) ;
             Vector2[] pointarray = scene.getLevel().CheckPoints;
-            if (Physic.checkPoint(pointarray[2 * num], pointarray[2 * num + 1], this.position))
-                checkPoints[num] = true;
+            if (2 * num + 1 < pointarray.Length)
+            {
+                if (Physic.checkPoint(pointarray[2 * num], pointarray[2 * num + 1], this.position))
+                {
+                    checkPoints[num] = true;
+                    Console.Out.WriteLine(num);
+                }
+            }
             if (num == checkPoints.Length)
             {
-                for (int i = 0; i < checkPoints.Length-1; ++i)
+                for (int i = 0; i < checkPoints.Length; ++i)
                     checkPoints[i] = false;
                 ++lap;
             }
@@ -122,7 +128,7 @@ namespace paintRacer
         }
 
         ///If player is left null we consider this to be the protagonist of the current viewport, otherwise player is the position this is to be aligned on
-        public void Draw(SpriteBatch spriteBatch, GraphicsDevice GraphicsDevice, Viewport viewport, Player player=null)
+        public void Draw(SpriteBatch spriteBatch, GraphicsDevice GraphicsDevice, Viewport viewport, Player player = null)
         {
             //Assumes GraphicsDevice previously contained default Viewport
             Viewport defaultView = GraphicsDevice.Viewport;
@@ -131,9 +137,9 @@ namespace paintRacer
             GraphicsDevice.Viewport = viewport;
 
             spriteBatch.Begin();
-            
+
             //Player's rectangle size based on his texture size and origin currently in the center
-            if(player==null)
+            if (player == null)
             {
                 spriteBatch.Draw(texture, new Rectangle(viewport.Width / 2, viewport.Height / 2, texture.Width, texture.Height), null, color, 0, new Vector2((float)texture.Width / 2, (float)texture.Height / 2), SpriteEffects.None, 0);
             }
@@ -142,14 +148,14 @@ namespace paintRacer
                 //Player's draw position: center of the screen - other player's position (this is the point 0,0 on the map) + own position
 
                 //get the vector of the difference of bothe positions
-                Vector2 drawPosition =position-player.position;
+                Vector2 drawPosition = position - player.position;
                 //rotate the vector of the difference of both middlepoints by rotation of the other player
                 drawPosition = Helper.rotateVector2(drawPosition, -player.getRotation());
                 // set drawposition relativly to the middle of the viewport
                 drawPosition += new Vector2(viewport.Width / 2, viewport.Height / 2);
-                
+
                 // draw in the viewport, relativley to the rotation of the player
-                spriteBatch.Draw(texture, new Rectangle((int)drawPosition.X, (int)drawPosition.Y, texture.Width, texture.Height), null, color,rotation-player.getRotation(), new Vector2((float)texture.Width / 2, (float)texture.Height / 2), SpriteEffects.None, 0);
+                spriteBatch.Draw(texture, new Rectangle((int)drawPosition.X, (int)drawPosition.Y, texture.Width, texture.Height), null, color, rotation - player.getRotation(), new Vector2((float)texture.Width / 2, (float)texture.Height / 2), SpriteEffects.None, 0);
             }
 
             spriteBatch.End();
@@ -170,7 +176,7 @@ namespace paintRacer
 
         public void setPosition(Vector2 position)
         {
-            this.position=position;
+            this.position = position;
         }
 
         public float getRotation()
@@ -181,7 +187,7 @@ namespace paintRacer
         public void setRotation(float rotation)
         {
             speed.direction = new Vector2((float)Math.Sin(rotation), (float)Math.Cos(rotation + MathHelper.Pi));
-            this.rotation=rotation;
+            this.rotation = rotation;
         }
 
         public bool[,] getCollisionData()

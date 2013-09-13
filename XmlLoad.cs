@@ -34,7 +34,7 @@ namespace paintRacer
                             mapData = MapReader.createDataFromSWImage(Helper.loadImage(directoryPath + '\\' + reader.GetAttribute("Address")));
                             break;
                         case "Rotation":
-                            rotation = Convert.ToSingle(reader.GetAttribute("Value"));
+                            rotation = Convert.ToSingle(reader.GetAttribute("Value").Replace('.',','));
                             break;
                         case "Startpoint":
                             startpoint = parsePoint(reader);
@@ -58,7 +58,7 @@ namespace paintRacer
             int index = 0;
             while (reader.Read())
             {
-                if (reader.NodeType != XmlNodeType.EndElement)
+                if (reader.NodeType == XmlNodeType.EndElement)
                 {
                     if (reader.Name == "CheckPoints")
                         break;
@@ -85,7 +85,7 @@ namespace paintRacer
             int index = 0;
             while (reader.Read())
             {
-                if (reader.NodeType != XmlNodeType.EndElement)
+                if (reader.NodeType == XmlNodeType.EndElement)
                 {
                     if (reader.Name == "CheckPoint")
                         break;
