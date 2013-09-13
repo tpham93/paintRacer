@@ -15,6 +15,7 @@ namespace paintRacer
 
         public Boolean[] checkPoints;
         public int lap;
+        public int[] times;
         //In radian
         private float rotation;
         private Speed speed;
@@ -40,6 +41,8 @@ namespace paintRacer
         //Inconsistency with Level (create with string or texture?)
         public Player(Texture2D texture, Color color, int numCheckPoints)
         {
+            times = new int[Multiplayer.LAPS];
+
             checkPoints = new Boolean[numCheckPoints];
             for (int i = 0; i < checkPoints.Length; ++i)
                 checkPoints[i] = false;
@@ -93,7 +96,8 @@ namespace paintRacer
             {
                 for (int i = 0; i < checkPoints.Length; ++i)
                     checkPoints[i] = false;
-                    ++lap;
+                times[lap - 1] = scene.raceTime - (lap == 1 ? 0 : times[lap - 2]);
+                ++lap;
             }
             else if (Physic.checkPoint(pointarray[2 * num], pointarray[2 * num + 1], this.position))
                 checkPoints[num] = true;

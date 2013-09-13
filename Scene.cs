@@ -25,7 +25,7 @@ namespace paintRacer
         }
 
         private ERaceState raceState;
-        private int startTime, raceTime;
+        public int startTime, raceTime;
 
         private Map level;
         private Player[] players;
@@ -92,7 +92,7 @@ namespace paintRacer
 
         public void Update(GameTime gameTime, KeyboardState keyboardState)
         {
-            int lightTackt = 1000;
+            int lightTackt = 700;
 
             //before start
             if (raceState == ERaceState.LightOff || raceState == ERaceState.Ready_I || raceState == ERaceState.Ready_II || raceState == ERaceState.Ready_III || raceState == ERaceState.Ready_IV || raceState == ERaceState.Ready_V || raceState == ERaceState.Go)
@@ -165,12 +165,27 @@ namespace paintRacer
 
                 //laps and time
                 spriteBatch.Draw(pixel, new Rectangle(0,0,800,50), Color.LightGray);
-                spriteBatch.DrawString(Font, "Lap: " + players[0].lap + " / " + Multiplayer.LAPS, new Vector2(10, 0), Color.Black);
+                int RTmin = raceTime / 60000;
+                int RTsek = (raceTime % 60000) / 1000;
+                int RTmsek = (raceTime % 1000) / 10;
+                int minTime = 0;
+                for (int j = 0; j < players[0].lap-1; ++j)
+                    minTime = Math.Min((minTime == 0 ? 1000000 : minTime), players[0].times[j]);
+                int LTsek = minTime / 1000;
+                int LTmsek = (minTime % 1000) / 10;
+                spriteBatch.DrawString(Font, "Lap: " + players[0].lap + " / " + Multiplayer.LAPS + "   " + RTmin + ":" + RTsek + "," + RTmsek + "  \nfastest Lap: " + LTsek + "," + LTmsek + "sek", new Vector2(5, 0), Color.Black);
                 if (players.Length > 1)
-                    spriteBatch.DrawString(Font, "Lap: " + players[1].lap + " / " + Multiplayer.LAPS, new Vector2(410, 0), Color.Black);
+                {
+                    minTime = 0;
+                    for (int j = 0; j < players[1].lap-1; ++j)
+                        minTime = Math.Min((minTime == 0 ? 1000000 : minTime), players[1].times[j]);
+                    LTsek = minTime / 1000;
+                    LTmsek = (minTime % 1000) / 10;
+                    spriteBatch.DrawString(Font, "Lap: " + players[1].lap + " / " + Multiplayer.LAPS + "   " + RTmin + ":" + RTsek + "," + RTmsek + "  \nfastest Lap: " + LTsek + "," + LTmsek + "sek", new Vector2(405, 0), Color.Black);
+                }
 
                 //light
-                Vector2 pos = new Vector2 ((800-370)/2, 100);
+                Vector2 pos = new Vector2 ((800-250)/2, 50);
                 switch (raceState)
                 {
                     case ERaceState.LightOff :

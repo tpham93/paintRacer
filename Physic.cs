@@ -16,10 +16,8 @@ namespace paintRacer
         private const float WHEEL_RADIUS = 0.25f; //radius of wheels in m
         private const float STEARING = 0.0003f; //if you stear left or right
 
-        private const float ROLL_FRICTION_STREET = 400f; //roll-friction stops the car in m
-        private const float ROLL_FRICTION_GRASS = 1400f; //roll-friction stops the car in m
-        //private const float STATIC_FRICTION_STREET = 0.9f; //helps the car to stay on road in 1
-        //private const float STATIC_FRICTION_GRASS = 0.6f; //helps the car to stay on road in 1
+        private const float ROLL_FRICTION = 400f; //roll-friction stops the car in m
+        private const float OFFROAD_MAX_ENERGIE = 5000000f;
         private const float G = 9.81f; //gravitational acceleration in m/s²
 
         /**
@@ -98,7 +96,7 @@ namespace paintRacer
             }
 
             //frictions Fr =          µrr           * g  /     r
-            float rollFrictionForce = (((mapState == EMapStates.Road) ? ROLL_FRICTION_STREET : ROLL_FRICTION_GRASS) * G / WHEEL_RADIUS);
+            float rollFrictionForce = (ROLL_FRICTION * G / WHEEL_RADIUS);
 
             //set acceleration force
             float accelerationForce = 0f;
@@ -126,6 +124,8 @@ namespace paintRacer
 
             if (energie < 0f)
                 energie = 0f;
+            if (mapState == EMapStates.Offroad && energie > OFFROAD_MAX_ENERGIE)
+                energie = OFFROAD_MAX_ENERGIE;
 
             //save direction of speed
             int richtung = 1;
@@ -169,7 +169,7 @@ namespace paintRacer
          */
         public static bool checkPoint(Vector2 pointA, Vector2 pointB, Vector2 mid)
         {
-            float diff = 1.3f;
+            float diff = 1.000005f;
 
             Vector2 ab = new Vector2(Math.Abs(pointA.X - pointB.X), Math.Abs(pointA.Y - pointB.Y));
             Vector2 am = new Vector2(Math.Abs(pointA.X - mid.X), Math.Abs(pointA.Y - mid.Y));
