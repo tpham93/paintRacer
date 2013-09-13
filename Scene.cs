@@ -16,8 +16,14 @@ namespace paintRacer
         private Keys[,] keys;
         private int playerCount;
 
-        public Scene(Map level, Player[] players, Viewport defaultView, Keys[,] keys)
+        private Texture2D pixel;
+        private SpriteFont Font;
+
+        public Scene(Map level, Player[] players, Viewport defaultView, Keys[,] keys, Microsoft.Xna.Framework.Content.ContentManager content)
         {
+            pixel = Helper.loadImage("OneWithePixel.png");
+            Font = content.Load<SpriteFont>(@"font");
+            
             this.level = level;
 
             playerCount = Math.Min(players.Length, keys.GetLength(0));
@@ -79,6 +85,16 @@ namespace paintRacer
                 // draw the protaginist on top
                 players[i].Draw(spriteBatch, spriteBatch.GraphicsDevice, viewports[i], players[i]);
                 //Physic.hasCollision(players[i].getPosition(), players[i].getCollisionData(), players[i].getRotation(), level.getMapData());
+                
+                //draw infos
+                spriteBatch.Begin();
+
+                spriteBatch.Draw(pixel, new Rectangle(0,0,800,50), Color.LightGray);
+                spriteBatch.DrawString(Font, "Lap: " + players[0].lap + " / " + Multiplayer.LAPS, new Vector2(10, 0), Color.Black);
+                if (players.Length > 1)
+                    spriteBatch.DrawString(Font, "Lap: " + players[1].lap + " / " + Multiplayer.LAPS, new Vector2(410, 0), Color.Black);
+
+                spriteBatch.End();
             }
         }
 

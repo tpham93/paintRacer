@@ -12,6 +12,9 @@ namespace paintRacer
         private bool[,] collisiondata;
 
         private Vector2 position;
+
+        public Boolean[] checkPoints;
+        public int lap;
         //In radian
         private float rotation;
         private Speed speed;
@@ -35,8 +38,13 @@ namespace paintRacer
         }
 
         //Inconsistency with Level (create with string or texture?)
-        public Player(Texture2D texture, Color color)
+        public Player(Texture2D texture, Color color, int numCheckPoints)
         {
+            checkPoints = new Boolean[numCheckPoints];
+            for (int i = 0; i < checkPoints.Length; ++i)
+                checkPoints[i] = false;
+            lap = 0;
+
             position = Vector2.Zero;
             rotation = 0.0f;
             speed = new Speed(new Vector2(0f, -1f), 0f);
@@ -74,10 +82,21 @@ namespace paintRacer
             //Console.WriteLine("Calculated speed: " +speed);
             //Console.WriteLine("Calculated Direction: " + direction);
 
-            ///TODO: read the MapState out of the map and give it here in the function
             speed = Physic.calculateSpeed(gameTime, this, driverInput, scene.getLevel().Data);
             position = Physic.calculateNextPos(gameTime, position, speed);
             rotation = Physic.calculateRotation(speed.direction);
+
+            int num;
+            for (num = 0; num < checkPoints.Length && checkPoints[num] == true; ++num);
+            Vector2[] pointarray = scene.getLevel().CheckPoints;
+            if (Physic.checkPoint(pointarray[2 * num], pointarray[2 * num + 1], this.position))
+                checkPoints[num] = true;
+            if (num == checkPoints.Length)
+            {
+                for (int i = 0; i < checkPoints.Length-1; ++i)
+                    checkPoints[i] = false;
+                ++lap;
+            }
         }
 
         /// get the pixels, which are used for the collision

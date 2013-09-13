@@ -15,6 +15,8 @@ namespace paintRacer
 {
     class Multiplayer : IGameStateElements
     {
+        //const
+        public const int LAPS = 3;
 
         //Must be in Loadfunction
         String MAP_PIC = "test2.png";
@@ -42,8 +44,8 @@ namespace paintRacer
             //level = new Map(MAP_PIC_SW, MAP_PIC);
             level = Global.map;
             players = new Player[2];
-            players[0] = new Player(Helper.loadImage("testcar.png"), Color.Blue);
-            players[1] = new Player(Helper.loadImage("testcar.png"), Color.Red);
+            players[0] = new Player(Helper.loadImage("testcar.png"), Color.Blue, (level.CheckPoints.Length-1)/2);
+            players[1] = new Player(Helper.loadImage("testcar.png"), Color.Red, (level.CheckPoints.Length-1)/2);
             players[0].setPosition(new Vector2(level.Start.X - 40, level.Start.Y));
             players[1].setPosition(new Vector2(level.Start.X + 40, level.Start.Y));
         }
@@ -52,8 +54,10 @@ namespace paintRacer
         {
             this.players = players;
 
-            players[0].setPosition(map.Start + new Vector2(-40, 0));
-            players[1].setPosition(map.Start + new Vector2(+40, 0));
+            int distance = 40;
+            Vector2 offset = new Vector2((float)(distance*Math.Cos(map.StartRotation)), -(float)(distance*Math.Sin(map.StartRotation)));
+            players[0].setPosition(map.Start + offset);
+            players[1].setPosition(map.Start + new Vector2(-offset.X, -offset.Y));
 
             players[0].setRotation(map.StartRotation);
             players[1].setRotation(map.StartRotation);
@@ -65,7 +69,7 @@ namespace paintRacer
 
         public void Load(ContentManager content)
         {
-            scene = new Scene(level, players, graphicsDevice.Viewport, Config.getKeys());
+            scene = new Scene(level, players, graphicsDevice.Viewport, Config.getKeys(), content);
         }
 
         public EGameStates Update(GameTime gameTime)

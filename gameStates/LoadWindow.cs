@@ -68,7 +68,11 @@ namespace paintRacer
             /// <summary>
             /// set the finish-line (second part)
             /// </summary>
-            SetFinish_II
+            SetFinish_II,
+            /// <summary>
+            /// if an error happens
+            /// </summary>
+            Error
         }
 
         private EMainState mainState;
@@ -229,14 +233,14 @@ namespace paintRacer
                     {
                         try
                         {
-                            Global.map = XmlLoad.parseMapConfig(directoryarray[count + scrollpos]);
+                            Global.map = XmlLoad.parseMapConfig(directoryarray[count + scrollpos]); 
+                            scrollpos = 0;
+                            return nextState;
                         }
                         catch
                         {
-                            //return EGameStates.LoadMenu;
+                            return EGameStates.LoadMenu;
                         }
-                        scrollpos = 0;
-                        return nextState;
                     }
                 }
             }
@@ -351,8 +355,30 @@ namespace paintRacer
                 }
                 else if ((mouseState.X > CreatePos.X) && (mouseState.X < CreatePos.X + MENUENTRYSIZE_X) && (mouseState.Y > CreatePos.Y) && (mouseState.Y < CreatePos.Y + MENUENTRYSIZE_Y))
                 {
-                    Global.map = new Map(MapPic, MapReader.createDataFromSWImage(MapPicSW), checkPoints, StartPosDirection[0], Physic.calculateRotation(StartPosDirection[1] - StartPosDirection[0]));
-                    return nextState;
+                    try
+                    {
+                        Vector2[] points = Helper.resizeV2Array(checkPoints, 2);
+                        points[points.Length - 2] = FinishPoints[0];
+                        points[points.Length - 1] = FinishPoints[1];
+                        Global.map = new Map(MapPic, MapReader.createDataFromSWImage(MapPicSW), points, StartPosDirection[0], Physic.calculateRotation(StartPosDirection[1] - StartPosDirection[0]));
+                        return nextState;
+                    }
+                    catch
+                    {
+                        createState = ECreatState.Error;
+                        return EGameStates.LoadMenu;
+                    }
+                }
+                else if ((mouseState.X > BackPos.X) && (mouseState.X < BackPos.X + MENUENTRYSIZE_X) && (mouseState.Y > BackPos.Y) && (mouseState.Y < BackPos.Y + MENUENTRYSIZE_Y))
+                {
+                    MapPic = null;
+                    MapPicSW = null;
+                    checkPoints = null;
+                    FinishPoints = null;
+                    StartPosDirection = null;
+                    createState = ECreatState.Nothing;
+                    mainState = EMainState.MainMenu;
+                    return EGameStates.LoadMenu;
                 }
                 else if ((mouseState.X > MapPicPos.X) && (mouseState.X < MapPicPos.X + MAPSIZE) && (mouseState.Y > MapPicPos.Y) && (mouseState.Y < MapPicPos.Y + MAPSIZE))
                 {
@@ -588,6 +614,9 @@ namespace paintRacer
             CreatePos = new Vector2(MAPLEFTBOUND, 2 * MAPLEFTBOUND + MAPSIZE);
             spriteBatch.Draw(Create, CreatePos, Color.White);
 
+            BackPos = new Vector2(MAPLEFTBOUND + MENUENTRYSIZE_X + MENUENTRYSPACE, CreatePos.Y);
+            spriteBatch.Draw(Back, new Rectangle((int)BackPos.X, (int)BackPos.Y, MENUENTRYSIZE_X, MENUENTRYSIZE_Y), Color.White);
+
             spriteBatch.End();
         }
 
@@ -625,6 +654,8 @@ namespace paintRacer
                 case ECreatState.SetFinish_II:
                     return "The finish is defind by two points \non both sides of the road:\n" +
                             "Click in the map to set the second \none.";
+                case ECreatState.Error :
+                    return "ERROR";
                 default:
                     return "I can't help you!";
             }

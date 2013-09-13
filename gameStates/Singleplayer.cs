@@ -45,7 +45,7 @@ namespace paintRacer
 
         public void Load(Microsoft.Xna.Framework.Content.ContentManager content)
         {
-            scene = new Scene(level, players, graphicsDevice.Viewport, Config.getKeys());
+            scene = new Scene(level, players, graphicsDevice.Viewport, Config.getKeys(), content);
         }
 
         public EGameStates Update(Microsoft.Xna.Framework.GameTime gameTime)
