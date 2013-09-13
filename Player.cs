@@ -96,7 +96,7 @@ namespace paintRacer
             {
                 for (int i = 0; i < checkPoints.Length; ++i)
                     checkPoints[i] = false;
-                times[lap - 1] = scene.raceTime - (lap == 1 ? 0 : times[lap - 2]);
+                times[lap - 1] = scene.raceTime - (lap == 1 ? new TimeSpan() : times[lap - 2]);
                 ++lap;
             }
             else if (2 * num + 1 < pointarray.Length)

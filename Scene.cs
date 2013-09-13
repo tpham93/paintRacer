@@ -175,7 +175,7 @@ namespace paintRacer
                 int RTmsek = raceTime.Milliseconds / 10;
                 int minTime = 0;
                 for (int j = 0; j < players[0].lap-1; ++j)
-                    minTime = Math.Min((minTime == 0 ? 1000000 : minTime), players[0].times[j]);
+                    minTime = Math.Min((minTime == 0 ? 1000000 : minTime), (int)players[0].times[j].TotalMilliseconds);
                 int LTsek = minTime / 1000;
                 int LTmsek = (minTime % 1000) / 10;
                 spriteBatch.DrawString(Font, "Lap: " + players[0].lap + " / " + Multiplayer.LAPS + "   " + RTmin + ":" + RTsek + "," + RTmsek + "  \nfastest Lap: " + LTsek + "," + LTmsek + "sek", new Vector2(5, 0), Color.Black);
@@ -183,7 +183,7 @@ namespace paintRacer
                 {
                     minTime = 0;
                     for (int j = 0; j < players[1].lap-1; ++j)
-                        minTime = Math.Min((minTime == 0 ? 1000000 : minTime), players[1].times[j]);
+                        minTime = Math.Min((minTime == 0 ? 1000000 : minTime), (int)players[1].times[j].TotalMilliseconds);
                     LTsek = minTime / 1000;
                     LTmsek = (minTime % 1000) / 10;
                     spriteBatch.DrawString(Font, "Lap: " + players[1].lap + " / " + Multiplayer.LAPS + "   " + RTmin + ":" + RTsek + "," + RTmsek + "  \nfastest Lap: " + LTsek + "," + LTmsek + "sek", new Vector2(405, 0), Color.Black);
