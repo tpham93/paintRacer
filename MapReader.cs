@@ -66,9 +66,9 @@ namespace paintRacer
         public static Map createMap(string imageFile, string swImageForData, Vector2[] checkPoints, Vector2 startPoint, Vector2 startDirection)
         {
             Texture2D image = Helper.loadImage(imageFile);
-            EMapStates[,] data = createDataFromSWImage(Helper.loadImage(swImageForData));
+            Texture2D swImage = Helper.loadImage(swImageForData);
             float rotation = Physic.calculateRotation(startDirection);
-            return new Map(image, data, checkPoints, startPoint, rotation);
+            return new Map(image, swImage, checkPoints, startPoint, rotation);
         }
 
         /// <summary>

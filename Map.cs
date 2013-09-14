@@ -7,6 +7,7 @@ namespace paintRacer
     class Map
     {
         Texture2D image;
+        Texture2D swImage;
         EMapStates[,] data;
         Vector2[] checkPoints;
         Vector2 start;
@@ -28,28 +29,37 @@ namespace paintRacer
         {
             get { return startRotation; }
         }
-
-
-        /// <summary>
-        /// Struct to save maps (constructor for the prototype)
-        /// </summary>
-        /// 
-        /// <param name="swImagePath">
-        /// the location of the black white picture
-        /// </param>
-        /// 
-        /// <param name="imagePath">
-        /// the location of the picture
-        /// </param>
-        /// 
-        public Map(string swImagePath, string imagePath)
+        public Texture2D Image
         {
-            this.image = Helper.loadImage(imagePath);
-            this.data = MapReader.createDataFromSWImage(Helper.loadImage(swImagePath));
-            checkPoints = new Vector2[0];
-            start = new Vector2(1535, 550);
-            startRotation = 0;
+            get { return image; }
         }
+        public Texture2D SwImage
+        {
+            get { return swImage; }
+        }
+
+
+        ///// <summary>
+        ///// Struct to save maps (constructor for the prototype)
+        ///// </summary>
+        ///// 
+        ///// <param name="swImagePath">
+        ///// the location of the black white picture
+        ///// </param>
+        ///// 
+        ///// <param name="imagePath">
+        ///// the location of the picture
+        ///// </param>
+        ///// 
+        //public Map(string swImagePath, string imagePath)
+        //{
+        //    this.image = Helper.loadImage(imagePath);
+        //    swImage = Helper.loadImage(swImagePath);
+        //    this.data = MapReader.createDataFromSWImage(swImage);
+        //    checkPoints = new Vector2[0];
+        //    start = new Vector2(1535, 550);
+        //    startRotation = 0;
+        //}
 
 
         /// <summary>
@@ -78,10 +88,11 @@ namespace paintRacer
         /// the rotation the cars start with
         /// </param>
         /// 
-        public Map(Texture2D image, EMapStates[,] mapData, Vector2[] checkPoints, Vector2 startPoint, float startRotation)
+        public Map(Texture2D image, Texture2D swImage/*EMapStates[,] mapData*/, Vector2[] checkPoints, Vector2 startPoint, float startRotation)
         {
             this.image = image;
-            this.data = mapData;
+            this.swImage = swImage;
+            this.data = MapReader.createDataFromSWImage(swImage);
             this.checkPoints = checkPoints;
             this.start = startPoint;
             this.startRotation = startRotation;

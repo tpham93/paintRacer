@@ -219,7 +219,9 @@ namespace paintRacer
         private EGameStates UpdateLoadSavedMap(GameTime gameTime)
         {
             MouseState mouseState = Mouse.GetState();
-            if (mouseState.LeftButton == ButtonState.Pressed)
+
+            timeSpace += gameTime.ElapsedGameTime;
+            if (mouseState.LeftButton == ButtonState.Pressed && timeSpace > Helper.TIMEBETWEENKEYS)
             {
                 if ((mouseState.X > BackPos.X) && (mouseState.X < BackPos.X + MENUENTRYSIZE_X) && (mouseState.Y > BackPos.Y) && (mouseState.Y < BackPos.Y + MENUENTRYSIZE_Y))
                 {
@@ -235,6 +237,7 @@ namespace paintRacer
                         {
                             Global.map = XmlLoad.parseMapConfig(directoryarray[count + scrollpos]); 
                             scrollpos = 0;
+                            timeSpace = new TimeSpan();
                             return nextState;
                         }
                         catch
@@ -360,7 +363,10 @@ namespace paintRacer
                         Vector2[] points = Helper.resizeV2Array(checkPoints, 2);
                         points[points.Length - 2] = FinishPoints[0];
                         points[points.Length - 1] = FinishPoints[1];
-                        Global.map = new Map(MapPic, MapReader.createDataFromSWImage(MapPicSW), points, StartPosDirection[0], Physic.calculateRotation(StartPosDirection[1] - StartPosDirection[0]));
+                        Global.map = new Map(MapPic, MapPicSW, points, StartPosDirection[0], Physic.calculateRotation(StartPosDirection[1] - StartPosDirection[0]));
+                        string[] addressParts = FileName.Split(new char[]{'\\','/','.'});
+                        XMLSave.saveMap(addressParts[addressParts.Length - 2], Global.map);
+                        Console.Out.WriteLine("Saved!");
                         return nextState;
                     }
                     catch

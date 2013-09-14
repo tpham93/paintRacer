@@ -15,7 +15,7 @@ namespace paintRacer
             string filepath = directoryPath + @"\map.xml";
 
             Texture2D image = null;
-            EMapStates[,] mapData = null;
+            Texture2D swImage = null;
             Vector2[] checkPoints = null;
             Vector2 startpoint = new Vector2(-1,-1);
             float rotation = 0f;
@@ -31,7 +31,7 @@ namespace paintRacer
                             image = Helper.loadImage(directoryPath + '\\' + reader.GetAttribute("Address"));
                             break;
                         case "SWImageLocation":
-                            mapData = MapReader.createDataFromSWImage(Helper.loadImage(directoryPath + '\\' + reader.GetAttribute("Address")));
+                            swImage = Helper.loadImage(directoryPath + '\\' + reader.GetAttribute("Address"));
                             break;
                         case "Rotation":
                             rotation = Convert.ToSingle(reader.GetAttribute("Value").Replace('.',','));
@@ -45,11 +45,11 @@ namespace paintRacer
                     }
                 }
             }
-            if (image == null || mapData == null || checkPoints == null || startpoint == new Vector2(-1, -1))
+            if (image == null || swImage == null || checkPoints == null || startpoint == new Vector2(-1, -1))
             {
                 throw new Exception(filepath + " is an Invalid Config Data.");
             }
-            return new Map(image, mapData, checkPoints, startpoint, rotation);
+            return new Map(image, swImage, checkPoints, startpoint, rotation);
         }
 
         private static Vector2[] parseCheckpoints(XmlTextReader reader)
@@ -60,14 +60,14 @@ namespace paintRacer
             {
                 if (reader.NodeType == XmlNodeType.EndElement)
                 {
-                    if (reader.Name == "CheckPoints")
+                    if (reader.Name == "Checkpoints")
                         break;
                 }
                 else
                 {
                     switch (reader.Name)
                     {
-                        case "CheckPoint":
+                        case "Checkpoint":
                             Vector2[] c = parseCheckpoint(reader);
                             checkpoints[index++] = c[0];
                             checkpoints[index++] = c[1];
@@ -87,7 +87,7 @@ namespace paintRacer
             {
                 if (reader.NodeType == XmlNodeType.EndElement)
                 {
-                    if (reader.Name == "CheckPoint")
+                    if (reader.Name == "Checkpoint")
                         break;
                 }
                 else

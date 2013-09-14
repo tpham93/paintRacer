@@ -4,17 +4,17 @@
 	<Rotation Value="0"/>
 	<Startpoint X="1535" Y="550" />
 	<Checkpoints Number="3">
-		<CheckPoint>
+		<Checkpoint>
 			<Point X="927" Y="359" />
 			<Point X="927" Y="506" />
-		</CheckPoint>
-		<CheckPoint>
+		</Checkpoint>
+		<Checkpoint>
 			<Point X="495" Y="785" />
 			<Point X="645" Y="785" />
-		</CheckPoint>
-		<CheckPoint>
+		</Checkpoint>
+		<Checkpoint>
 			<Point X="1440" Y="469" />
 			<Point X="1651" Y="469" />
-		</CheckPoint>
+		</Checkpoint>
 	</Checkpoints>
 </Map>
