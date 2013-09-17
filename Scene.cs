@@ -125,9 +125,9 @@ namespace paintRacer
             if (raceState == ERaceState.Go || raceState == ERaceState.Race || raceState == ERaceState.EndOff || raceState == ERaceState.EndOn)
             {
                 raceTime += gameTime.ElapsedGameTime;
-                if (((players[0].lap > Multiplayer.LAPS) || (players.Length > 1 && players[1].lap > Multiplayer.LAPS)) && (raceTime.TotalMilliseconds / lightTackt) % 2 == 0)
+                if (((players[0].lap > Multiplayer.LAPS) || (players.Length > 1 && players[1].lap > Multiplayer.LAPS)) && ((int)raceTime.TotalMilliseconds / lightTackt) % 2 == 0)
                     raceState = ERaceState.EndOff;
-                if (((players[0].lap > Multiplayer.LAPS) || (players.Length > 1 && players[1].lap > Multiplayer.LAPS)) && (raceTime.TotalMilliseconds / lightTackt) % 2 > 0)
+                if (((players[0].lap > Multiplayer.LAPS) || (players.Length > 1 && players[1].lap > Multiplayer.LAPS)) && ((int)raceTime.TotalMilliseconds / lightTackt) % 2 > 0)
                     raceState = ERaceState.EndOn;
             }
 
