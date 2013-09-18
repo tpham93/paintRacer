@@ -1,6 +1,7 @@
 <Map>
 	<ImageLocation Address="image.png"/>
 	<SWImageLocation Address="imageSW.png"/>
+	<Highscore Address="highscore"/>
 	<Rotation Value="0"/>
 	<Startpoint X="1535" Y="550" />
 	<Checkpoints Number="3">

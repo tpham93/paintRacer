@@ -12,6 +12,7 @@ namespace paintRacer
         Vector2[] checkPoints;
         Vector2 start;
         float startRotation;
+        Highscore highscore;
 
         public EMapStates[,] Data
         {
@@ -37,6 +38,11 @@ namespace paintRacer
         {
             get { return swImage; }
         }
+        public Highscore Highscore
+        {
+            get { return highscore; }
+            set { highscore = value; }
+        }
 
 
         ///// <summary>
@@ -60,6 +66,53 @@ namespace paintRacer
         //    start = new Vector2(1535, 550);
         //    startRotation = 0;
         //}
+
+
+
+        /// <summary>
+        /// Struct to save maps
+        /// </summary>
+        /// 
+        /// <param name="image">
+        /// the location of the picture
+        /// </param>
+        /// 
+        /// <param name="swImage">
+        /// the location of the picture for collisionDetection
+        /// </param>
+        /// 
+        /// <param name="highscore">
+        /// Highscore-Object
+        /// </param>
+        /// 
+        /// <param name="mapData">
+        /// the data of the map, def. were road, offroad and objects are
+        /// </param>
+        /// 
+        /// <param name="checkPoints">
+        /// the points whitch mark the checkpoints
+        /// size%2 must be 0
+        /// last tupel is finish
+        /// </param>
+        /// 
+        /// <param name="startPoint">
+        /// the midpoint of the cars in startposition
+        /// </param>
+        /// 
+        /// <param name="startRotation">
+        /// the rotation the cars start with
+        /// </param>
+        /// 
+        public Map(Texture2D image, Texture2D swImage, Highscore highscore, Vector2[] checkPoints, Vector2 startPoint, float startRotation)
+        {
+            this.image = image;
+            this.swImage = swImage;
+            this.data = MapReader.createDataFromSWImage(swImage);
+            this.checkPoints = checkPoints;
+            this.start = startPoint;
+            this.startRotation = startRotation;
+            this.highscore = highscore;
+        }
 
 
         /// <summary>
@@ -88,7 +141,7 @@ namespace paintRacer
         /// the rotation the cars start with
         /// </param>
         /// 
-        public Map(Texture2D image, Texture2D swImage/*EMapStates[,] mapData*/, Vector2[] checkPoints, Vector2 startPoint, float startRotation)
+        public Map(Texture2D image, Texture2D swImage, string directoryPath, Vector2[] checkPoints, Vector2 startPoint, float startRotation)
         {
             this.image = image;
             this.swImage = swImage;
@@ -96,6 +149,7 @@ namespace paintRacer
             this.checkPoints = checkPoints;
             this.start = startPoint;
             this.startRotation = startRotation;
+            this.highscore = new Highscore(directoryPath+@"\highscore");
         }
 
         ///// <summary>

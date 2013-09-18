@@ -24,6 +24,8 @@ namespace paintRacer
 
         private Scene scene;
 
+        private string name;
+
         //What is the point of this Rectangle?! (Player is supposed to be drawn in the middle of the screen anyways, only width and height are required)
         //Commented out for the time being
         //      -> given size of the car specified by the map
@@ -39,8 +41,9 @@ namespace paintRacer
         }
 
         //Inconsistency with Level (create with string or texture?)
-        public Player(Texture2D texture, Color color, int numCheckPoints)
+        public Player(string name,Texture2D texture, Color color, int numCheckPoints)
         {
+            this.name = name;
             times = new TimeSpan[Multiplayer.LAPS];
 
             checkPoints = new Boolean[numCheckPoints];
@@ -81,9 +84,6 @@ namespace paintRacer
             {
                 driverInput.X++;
             }
-            //Console.WriteLine("Driver input: " +driverInput);
-            //Console.WriteLine("Calculated speed: " +speed);
-            //Console.WriteLine("Calculated Direction: " + direction);
 
             speed = Physic.calculateSpeed(gameTime, this, driverInput, scene.getLevel().Data);
             position = Physic.calculateNextPos(gameTime, position, speed);
@@ -98,6 +98,12 @@ namespace paintRacer
                     checkPoints[i] = false;
                 times[lap - 1] = scene.raceTime - (lap == 1 ? new TimeSpan() : times[lap - 2]);
                 ++lap;
+                if (lap == Multiplayer.LAPS + 1)
+                {
+                    scene.getLevel().Highscore.insertScore(new HighscoreElement(name, scene.raceTime));
+                    scene.getLevel().Highscore.writeToFile();
+                    Console.Out.WriteLine("Highscore updated!");
+                }
             }
             else if (2 * num + 1 < pointarray.Length)
             {

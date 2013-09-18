@@ -15,46 +15,58 @@ namespace paintRacer
         public Highscore(String path)
         {
             this.path = path;
-            String[] lines = File.ReadAllLines(path);
-            highscoreEntries = new List<HighscoreElement>(MAXHIGHSCORE_COUNT);
-            for (int i = 0; i < MAXHIGHSCORE_COUNT && i < lines.Length; ++i)
+            if (File.Exists(path))
             {
-                highscoreEntries[i] = new HighscoreElement(lines[i]);
-            }
-            if (lines.Length > 0)
-            {
-                int h = Convert.ToInt32(lines[lines.GetUpperBound(0)]);
-                if (h != hash())
+                String[] lines = File.ReadAllLines(path);
+                highscoreEntries = new List<HighscoreElement>(MAXHIGHSCORE_COUNT);
+                for (int i = 0; i < MAXHIGHSCORE_COUNT && i < lines.Length-1; ++i)
                 {
-                    throw new Exception("Corrupted Highscore");
+                    highscoreEntries.Add(new HighscoreElement(lines[i]));
                 }
+                if (lines.Length > 0)
+                {
+                    int h = Convert.ToInt32(lines[lines.GetUpperBound(0)]);
+                    if (h != hash())
+                    {
+                        throw new Exception("Corrupted Highscore");
+                    }
+                }
+            }
+            else
+            {
+                File.Create(path);
+                highscoreEntries = new List<HighscoreElement>();
             }
         }
 
         private int hash()
         {
-            int h = 0;
+            int h = 1;
             for (int i = 0; i < MAXHIGHSCORE_COUNT && i < highscoreEntries.Count; ++i)
             {
                 string highscoreString = highscoreEntries[i].ToString();
                 int lineValue = 0;
+                int sign = 1;
                 for (int l = 0; l < highscoreString.Length; ++l)
                 {
-                    lineValue += highscoreString[l];
+                    lineValue += sign * highscoreString[l];
+                    sign *= -1;
                 }
-                h += -h * highscoreString.Length * lineValue;
+                h += highscoreString.Length * Math.Abs(lineValue);
             }
-            return 0;
+            return h;
         }
 
         public void writeToFile()
         {
             TextWriter textWriter = new StreamWriter(path, false);
+            
             for (int i = 0; i < MAXHIGHSCORE_COUNT && i < highscoreEntries.Count; ++i)
             {
                 textWriter.WriteLine(highscoreEntries[i].ToString());
             }
             textWriter.WriteLine(hash());
+            textWriter.Close();
         }
 
         public bool isInHighscore(HighscoreElement highscoreElement)
