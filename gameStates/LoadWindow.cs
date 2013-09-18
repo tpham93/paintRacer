@@ -236,17 +236,17 @@ namespace paintRacer
                     int offset = count * (MENULINESIZE + MENULINESPACE);
                     if ((mouse.X > textArrayPos.X) && (mouse.Y > textArrayPos.Y + offset) && (mouse.Y < textArrayPos.Y + offset + MENULINESIZE))
                     {
-                        try
+                        //try
                         {
                             Global.map = XmlLoad.parseMapConfig(directoryarray[count + scrollpos]);
                             scrollpos = 0;
                             timeSpace = new TimeSpan();
                             return nextState;
                         }
-                        catch
-                        {
-                            return EGameStates.LoadMenu;
-                        }
+                        //catch
+                        //{
+                        //    return EGameStates.LoadMenu;
+                        //}
                     }
                 }
             }
@@ -330,10 +330,12 @@ namespace paintRacer
                         Vector2[] points = Helper.resizeV2Array(checkPoints, 2);
                         points[points.Length - 2] = FinishPoints[0];
                         points[points.Length - 1] = FinishPoints[1];
-                        Global.map = new Map(MapPic, MapPicSW, points, StartPosDirection[0], Physic.calculateRotation(StartPosDirection[1] - StartPosDirection[0]));
-                        string[] addressParts = FileName.Split(new char[]{'\\','/','.'});
-                        XMLSave.saveMap(addressParts[addressParts.Length - 2], Global.map);
-                        Console.Out.WriteLine("Saved!");
+                        string[] addressParts = FileName.Split(new char[] { '\\', '/', '.' });
+                        string mapName = XMLSave.getDirectoryName(addressParts[addressParts.Length - 2]);
+                        Directory.CreateDirectory(@"saved_maps\" + mapName);
+                        Global.map = new Map(MapPic, MapPicSW, @"saved_maps\" + mapName, points, StartPosDirection[0], Physic.calculateRotation(StartPosDirection[1] - StartPosDirection[0]));
+                        XMLSave.saveMap(@"saved_maps\" + mapName, Global.map);
+                        //Console.Out.WriteLine("Saved!");
                         return nextState;
                     }
                     catch

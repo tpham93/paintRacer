@@ -63,13 +63,13 @@ namespace paintRacer
         /// a new map to play on
         /// </returns>
         /// 
-        public static Map createMap(string imageFile, string swImageForData, Vector2[] checkPoints, Vector2 startPoint, Vector2 startDirection)
-        {
-            Texture2D image = Helper.loadImage(imageFile);
-            Texture2D swImage = Helper.loadImage(swImageForData);
-            float rotation = Physic.calculateRotation(startDirection);
-            return new Map(image, swImage, checkPoints, startPoint, rotation);
-        }
+        //public static Map createMap(string imageFile, string swImageForData, Vector2[] checkPoints, Vector2 startPoint, Vector2 startDirection)
+        //{
+        //    Texture2D image = Helper.loadImage(imageFile);
+        //    Texture2D swImage = Helper.loadImage(swImageForData);
+        //    float rotation = Physic.calculateRotation(startDirection);
+        //    return new Map(image, swImage, checkPoints, startPoint, rotation);
+        //}
 
         /// <summary>
         /// create a 2D-Array of EMapStates from an sw image

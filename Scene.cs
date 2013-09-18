@@ -98,22 +98,6 @@ namespace paintRacer
             if (raceState == ERaceState.LightOff || raceState == ERaceState.Ready_I || raceState == ERaceState.Ready_II || raceState == ERaceState.Ready_III || raceState == ERaceState.Ready_IV || raceState == ERaceState.Ready_V || raceState == ERaceState.Go)
             {
                 startTime += gameTime.ElapsedGameTime;
-                //if (startTime < 1 * lightTackt)
-                //    raceState = ERaceState.LightOff;
-                //else if (startTime < 2 * lightTackt)
-                //    raceState = ERaceState.Ready_I;
-                //else if (startTime < 3 * lightTackt)
-                //    raceState = ERaceState.Ready_II;
-                //else if (startTime < 4 * lightTackt)
-                //    raceState = ERaceState.Ready_III;
-                //else if (startTime < 5 * lightTackt)
-                //    raceState = ERaceState.Ready_IV;
-                //else if (startTime < 6 * lightTackt)
-                //    raceState = ERaceState.Ready_V;
-                //else if (startTime < 7 * lightTackt)
-                //    raceState = ERaceState.Go;
-                //else if (startTime < 8 * lightTackt)
-                //    raceState = ERaceState.Race;
 
                 if (startTime > new TimeSpan(0, 0, 0, 0, ((int)raceState + 1) * lightTackt))
                 {   

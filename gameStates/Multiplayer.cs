@@ -19,10 +19,10 @@ namespace paintRacer
         public const int LAPS = 3;
 
         //Must be in Loadfunction
-        String MAP_PIC = "test2.png";
-        String MAP_PIC_SW = "test2SW.png";
-        Vector2 start_pos = new Vector2(1535, 550);
-        Vector2[] check_points = new Vector2[1];
+        //String MAP_PIC = "test2.png";
+        //String MAP_PIC_SW = "test2SW.png";
+        //Vector2 start_pos = new Vector2(1535, 550);
+        Vector2[] check_points;// = new Vector2[1];
 
         //Member of Scene.cs
         Map level;
@@ -36,19 +36,19 @@ namespace paintRacer
 
         GraphicsDevice graphicsDevice;
 
-        public Multiplayer(GraphicsDevice graphicsDevice)
-        {
-            this.graphicsDevice = graphicsDevice;
+        //public Multiplayer(GraphicsDevice graphicsDevice)
+        //{
+        //    this.graphicsDevice = graphicsDevice;
 
-            //Initializes Level and Player with test textures
-            //level = new Map(MAP_PIC_SW, MAP_PIC);
-            level = Global.map;
-            players = new Player[2];
-            players[0] = new Player(Helper.loadImage("testcar.png"), Color.Blue, (level.CheckPoints.Length)/2);
-            players[1] = new Player(Helper.loadImage("testcar.png"), Color.Red, (level.CheckPoints.Length)/2);
-            players[0].setPosition(new Vector2(level.Start.X - 40, level.Start.Y));
-            players[1].setPosition(new Vector2(level.Start.X + 40, level.Start.Y));
-        }
+        //    //Initializes Level and Player with test textures
+        //    //level = new Map(MAP_PIC_SW, MAP_PIC);
+        //    level = Global.map;
+        //    players = new Player[2];
+        //    players[0] = new Player(Helper.loadImage("testcar.png"), Color.Blue, (level.CheckPoints.Length)/2);
+        //    players[1] = new Player(Helper.loadImage("testcar.png"), Color.Red, (level.CheckPoints.Length)/2);
+        //    players[0].setPosition(new Vector2(level.Start.X - 40, level.Start.Y));
+        //    players[1].setPosition(new Vector2(level.Start.X + 40, level.Start.Y));
+        //}
         // constructor for the game, if finished the LoadWindow
         public Multiplayer(GraphicsDevice graphicsDevice, Player[] players, Map map)
         {

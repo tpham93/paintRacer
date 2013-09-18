@@ -14,10 +14,13 @@ namespace paintRacer
         {
             string filepath = directoryPath + @"\map.xml";
 
+            bool hasToBeUpdated = false;
+
             Texture2D image = null;
             Texture2D swImage = null;
+            Highscore highscore = null;
             Vector2[] checkPoints = null;
-            Vector2 startpoint = new Vector2(-1,-1);
+            Vector2 startpoint = new Vector2(-1, -1);
             float rotation = 0f;
 
             XmlTextReader reader = new XmlTextReader(filepath);
@@ -33,8 +36,11 @@ namespace paintRacer
                         case "SWImageLocation":
                             swImage = Helper.loadImage(directoryPath + '\\' + reader.GetAttribute("Address"));
                             break;
+                        case "Highscore":
+                            highscore = new Highscore(directoryPath + '\\' + reader.GetAttribute("Address"));
+                            break;
                         case "Rotation":
-                            rotation = Convert.ToSingle(reader.GetAttribute("Value").Replace('.',','));
+                            rotation = Convert.ToSingle(reader.GetAttribute("Value").Replace('.', ','));
                             break;
                         case "Startpoint":
                             startpoint = parsePoint(reader);
@@ -45,11 +51,31 @@ namespace paintRacer
                     }
                 }
             }
-            if (image == null || swImage == null || checkPoints == null || startpoint == new Vector2(-1, -1))
+
+            reader.Close();
+
+            if (checkPoints == null)
+            {
+                checkPoints = new Vector2[0];
+                hasToBeUpdated = true;
+            }
+
+            if (highscore == null)
+            {
+                highscore = new Highscore(directoryPath + @"\highscore");
+                hasToBeUpdated = true;
+            }
+
+            if (image == null || swImage == null || startpoint == new Vector2(-1, -1))
             {
                 throw new Exception(filepath + " is an Invalid Config Data.");
             }
-            return new Map(image, swImage, checkPoints, startpoint, rotation);
+
+            Map map = new Map(image, swImage, highscore, checkPoints, startpoint, rotation);
+            if (hasToBeUpdated)
+                XMLSave.updateMapFile(directoryPath, map);
+
+            return map;
         }
 
         private static Vector2[] parseCheckpoints(XmlTextReader reader)

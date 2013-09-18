@@ -8,8 +8,6 @@ namespace paintRacer
 {
     class Config
     {
-        private static Point screenResolution;
-
         // available Keys (Restructure as enum/map? Make more abstract to fit multiplayer?)
 
         public enum controlKeys
