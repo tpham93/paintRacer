@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-//using paintRacer.gameStates;
+using paintRacer.gameStates;
 
 namespace paintRacer
 {
@@ -152,7 +152,7 @@ namespace paintRacer
                             {
 
                                 Player[] players = new Player[1];
-                                players[0] = new Player("Player 1",Helper.loadImage("testcar.png"), Color.Blue, (Global.map.CheckPoints.Length)/2);
+                                players[0] = new Player("Player 1", Helper.loadImage("Content/testcar.png"), Color.Blue, (Global.map.CheckPoints.Length) / 2);
 
                                 gameStateElement = new Singleplayer(GraphicsDevice, players, Global.map);
                                 gameStateElement.Load(Content);
@@ -203,6 +203,9 @@ namespace paintRacer
                             tmpGameStateElement = null;
                             gameStateElement.Load(Content);
                             value = EGameStates.LoadMenu;
+                            break;
+                        case EGameStates.Credits:
+                            gameStateElement = new Credits();
                             break;
                     }
                     gameState = value;
