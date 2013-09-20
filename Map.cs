@@ -8,6 +8,7 @@ namespace paintRacer
     {
         Texture2D image;
         Texture2D swImage;
+        Texture2D backgroundImage;
         EMapStates[,] data;
         Vector2[] checkPoints;
         Vector2 start;
@@ -112,6 +113,7 @@ namespace paintRacer
             this.start = startPoint;
             this.startRotation = startRotation;
             this.highscore = highscore;
+            this.backgroundImage = Helper.genRectangleTexture(1, 1, Config.MAP_BACKGROUND_COLOR);
         }
 
 
@@ -190,6 +192,7 @@ namespace paintRacer
 
         public void Draw(SpriteBatch spriteBatch, GraphicsDevice GraphicsDevice, Viewport viewport, Player player)
         {
+
             //Shortening the Draw call
             int width = image.Bounds.Width;
             int height = image.Bounds.Height;
@@ -201,6 +204,7 @@ namespace paintRacer
             GraphicsDevice.Viewport = viewport;
 
             spriteBatch.Begin();
+            spriteBatch.Draw(backgroundImage, new Rectangle(0,0,viewport.Width,viewport.Height), Color.White);
             //Positions texture in the middle of the screen with the Player Rotation set appropriately and the Player Position set as its origin
             spriteBatch.Draw(image, new Rectangle((int)(viewport.Width / 2), (int)(viewport.Height / 2), width, height), null, Color.White, -player.getRotation(), player.getPosition(), SpriteEffects.None, 0);
             spriteBatch.End();

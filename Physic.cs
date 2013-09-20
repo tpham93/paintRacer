@@ -39,7 +39,7 @@ namespace paintRacer
             return new Vector2(pos.X + (speed.direction.X) * speed.abs * time, pos.Y + (speed.direction.Y) * speed.abs * time);
         }
 
-        
+
         /// <summary>
         /// returns the updated speed of the car
         /// </summary>
@@ -66,7 +66,9 @@ namespace paintRacer
         /// </returns>
         public static Speed calculateSpeed(GameTime gameTime, Player player, Vector2 driverInput, EMapStates[,] mapdata)
         {
-            //Console.WriteLine("driverInput: [" + driverInput.X + ";" + driverInput.Y + "]"); 
+
+            //int collisionCount = hasCollision();
+
             int playerPosX = (int)player.getPosition().X;
             int playerPosY = (int)player.getPosition().Y;
 
@@ -119,7 +121,7 @@ namespace paintRacer
 
             //rollFrictionForce = 0;
             //enrgie of car ( 1/2  *  m   *             v²           ) - (      F           *     v       *      t                                      )
-            float energie = (1f / 2f * MASS * absNewSpeed * absNewSpeed) -(rollFrictionForce * Math.Abs(absNewSpeed) * (float)gameTime.ElapsedGameTime.TotalSeconds);
+            float energie = (1f / 2f * MASS * absNewSpeed * absNewSpeed) - (rollFrictionForce * Math.Abs(absNewSpeed) * (float)gameTime.ElapsedGameTime.TotalSeconds);
             //Console.WriteLine("energie: " + energie);
 
             if (energie < 0f)
@@ -129,13 +131,13 @@ namespace paintRacer
 
             //save direction of speed
             int richtung = 1;
-                if (absNewSpeed < 0)
-                    richtung = -1;
+            if (absNewSpeed < 0)
+                richtung = -1;
             // |v|      =                      WURZEL( 2 *  E     *   m  )
             absNewSpeed = richtung * (float)Math.Sqrt((2 * energie / MASS));
 
             //calculate new direction
-            float totalStearingFactor = (float)(richtung * gameTime.ElapsedGameTime.Milliseconds * STEARING * Math.Log(Math.Abs(absNewSpeed)+1));
+            float totalStearingFactor = (float)(richtung * gameTime.ElapsedGameTime.Milliseconds * STEARING * Math.Log(Math.Abs(absNewSpeed) + 1));
             Vector2 newDirection = new Vector2(speed.direction.X + sideMove.X * totalStearingFactor, speed.direction.Y + sideMove.Y * totalStearingFactor);
             newDirection.Normalize();
 
@@ -144,8 +146,10 @@ namespace paintRacer
 
             Speed res = new Speed(newDirection, absNewSpeed);
 
-            if (hasCollision(calculateNextPos(gameTime,player.getPosition(),res), player.getCollisionData(), player.getRotation(), mapdata))
-                return new Speed(newDirection, -0.5f*absNewSpeed);
+            if (hasCollision(calculateNextPos(gameTime, player.getPosition(), res), player.getCollisionData(), calculateRotation(res.direction), mapdata))
+            {
+                return new Speed(newDirection, -0.5f * absNewSpeed);
+            }
 
             return res;
         }
@@ -155,7 +159,7 @@ namespace paintRacer
          **/
         public static float calculateRotation(Vector2 direction)
         {
-            return (float) Math.Atan2(direction.X,-direction.Y);
+            return (float)Math.Atan2(direction.X, -direction.Y);
         }
 
         /**
@@ -231,7 +235,7 @@ namespace paintRacer
                     if (playerCollisionData[x, y])
                     {
                         // calculate the pos on the map
-                        tmpVect.X = x-middlePoint.X;
+                        tmpVect.X = x - middlePoint.X;
                         tmpVect.Y = y - middlePoint.Y;
                         mapPosition = Helper.rotateVector2(tmpVect, rotationCos, rotationSin) + position;
                         if (mapPosition.X >= 0 && mapPosition.X < mapData.GetUpperBound(0) && mapPosition.Y >= 0 && mapPosition.Y < mapData.GetUpperBound(1))
@@ -245,7 +249,6 @@ namespace paintRacer
                     }
                 }
             }
-
             return false;
         }
     }
