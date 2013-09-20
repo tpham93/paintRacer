@@ -25,7 +25,7 @@ namespace paintRacer
         }
 
 
-        public static Texture2D loadImage(String filename,Rectangle rect = new Rectangle(), Color color =new Color())
+        public static Texture2D loadImage(String filename, Rectangle rect = new Rectangle(), Color color = new Color())
         {
             //Might throw FileNotFoundException
             FileStream fileStream = new FileStream(filename, FileMode.Open);
@@ -39,7 +39,7 @@ namespace paintRacer
             else
             {
                 // rendertarget to save the resized image
-                RenderTarget2D renderTarget = new RenderTarget2D(graphicsDevice,rect.Width,rect.Height,false,SurfaceFormat.Color,DepthFormat.Depth24Stencil8);
+                RenderTarget2D renderTarget = new RenderTarget2D(graphicsDevice, rect.Width, rect.Height, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
                 // create  spriteBatch to draw the resized image
                 SpriteBatch spriteBatch = new SpriteBatch(graphicsDevice);
                 // save the earlier rendertargets
@@ -84,8 +84,10 @@ namespace paintRacer
         //Creates playerCount amounts of viewports (appropriately stretched and positioned). Will throw Exceptions in case the user request 0 or less/3 or more viewports
         public static Viewport[] createViewports(int playerCount, Viewport defaultView)
         {
+            const int bordersize = 4;
+
             Viewport[] viewports = new Viewport[playerCount];
-            if(playerCount<=0)
+            if (playerCount <= 0)
             {
                 throw new Exception("Couldn't create viewports, playerCount is smaller than (or equal to) 0.");
             }
@@ -97,9 +99,9 @@ namespace paintRacer
             {
                 viewports[0] = defaultView;
                 viewports[1] = defaultView;
-                viewports[0].Width /= 2;
-                viewports[1].Width /= 2;
-                viewports[1].X = viewports[0].Width;
+                viewports[0].Width = viewports[0].Width / 2 - bordersize / 2;
+                viewports[1].Width = viewports[1].Width / 2 - bordersize / 2;
+                viewports[1].X = viewports[0].Width + bordersize;
             }
             else
             {
@@ -690,8 +692,8 @@ namespace paintRacer
 
 
             ///TODO: continue
-            
-            else 
+
+            else
             {
                 return "";
             }
@@ -712,7 +714,7 @@ namespace paintRacer
             return null;
         }
 
-        public static Texture2D genRectangleTexture(int width, int height,Color color)
+        public static Texture2D genRectangleTexture(int width, int height, Color color)
         {
             Texture2D output = new Texture2D(graphicsDevice, width, height);
 

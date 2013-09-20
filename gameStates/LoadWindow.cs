@@ -128,12 +128,12 @@ namespace paintRacer
         GraphicsDevice graphicsDevice;
 
         // constants___________________________________________
-        const int MAINMENUENTRYSIZE_X = (int)Config.BIG_BUTTON.X;
-        const int MAINMENUENTRYSIZE_Y = (int)Config.BIG_BUTTON.Y;
+        const int MAINMENUENTRYSIZE_X = (int)Config.BIG_BUTTON_X;
+        const int MAINMENUENTRYSIZE_Y = (int)Config.BIG_BUTTON_Y;
         const int MAINMENUENTRYSPACE = Config.BIG_BUTTON_SPACE;
 
-        const int MENUENTRYSIZE_X = (int)Config.SMALL_BUTTON.X;
-        const int MENUENTRYSIZE_Y = (int)Config.SMALL_BUTTON.X;
+        const int MENUENTRYSIZE_X = (int)Config.SMALL_BUTTON_X;
+        const int MENUENTRYSIZE_Y = (int)Config.SMALL_BUTTON_Y;
         const int MENUENTRYSPACE = Config.SMALL_BUTTON_SPACE;
 
         const int MENULINESIZE = Config.LINE_SIZE;

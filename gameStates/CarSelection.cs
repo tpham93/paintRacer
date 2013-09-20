@@ -14,7 +14,6 @@ namespace paintRacer
 {
     class CarSelection : IGameStateElements
     {
-        int scrollValue;
         EGameStates nextGamestate;
         SpriteFont spriteFont;
 
@@ -33,6 +32,7 @@ namespace paintRacer
         Texture2D selectedTextureBackground;
         Rectangle selectedTextureBackgroundRectangle;
 
+        int scrollValue;
         string[] files;
         Viewport fileListViewport;
         Texture2D fileListBackground;
@@ -42,8 +42,8 @@ namespace paintRacer
         Texture2D finishButtonTexture;
         Rectangle finishButtonRectangle;
 
-        const int MENUENTRYSIZE_X = 125;
-        const int MENUENTRYSIZE_Y = 50;
+        const int MENUENTRYSIZE_X = Config.SMALL_BUTTON_X;
+        const int MENUENTRYSIZE_Y = Config.SMALL_BUTTON_Y;
 
         readonly Color[] playerColors;
 
@@ -53,6 +53,15 @@ namespace paintRacer
 
         public CarSelection(EGameStates nextGamestate)
         {
+
+            const int fileListWidth = 300;
+            const int fileListHeight = 200;
+
+            const int selectedRectangleSize = 400;
+
+            const int nameWidth = 200;
+            const int nameHeight = 25;
+
             switch (nextGamestate)
             {
                 case EGameStates.SinglePlayer:
@@ -68,7 +77,6 @@ namespace paintRacer
                     break;
             }
 
-            nameIndex = -1;
 
             fileOffset = new Vector2();
             selectedTexture = null;
@@ -79,12 +87,11 @@ namespace paintRacer
             {
                 files[i] = Path.GetFileName(files[i]);
             }
-            const int fileListWidth = 300;
-            const int fileListHeight = 200;
+            scrollValue = Mouse.GetState().ScrollWheelValue;
             fileListRectangle = new Rectangle(50, 130, fileListWidth, fileListHeight);
-            const int selectedRectangleSize = 400;
             selectedTextureBackgroundRectangle = new Rectangle(375, 40, selectedRectangleSize, selectedRectangleSize);
-            fileListBackground = Helper.genRectangleTexture(fileListWidth, fileListHeight, Color.White * 0.5f);
+            fileListBackground = Helper.genRectangleTexture(fileListWidth, fileListHeight, Config.TEXT_BOX_COLOR);
+
             selectedTextureBackground = Helper.genRectangleTexture(selectedRectangleSize, selectedRectangleSize, Color.White * 0.5f);
             Point selectedTextureCenterPoint = selectedTextureBackgroundRectangle.Center;
             selectedTextureBackgroundMiddlePosition = new Vector2(selectedTextureCenterPoint.X, selectedTextureCenterPoint.Y);
@@ -93,11 +100,9 @@ namespace paintRacer
 
             playerColors = new Color[] { Color.Blue, Color.Red };
 
-            scrollValue = Mouse.GetState().ScrollWheelValue;
+            nameIndex = -1;
             nameRectangles = new Rectangle[names.Length];
-            const int nameWidth = 200;
-            const int nameHeight = 25;
-            nameBackground = Helper.genRectangleTexture(nameWidth, nameHeight, Color.White * 0.5f);
+            nameBackground = Helper.genRectangleTexture(nameWidth, nameHeight, Config.TEXT_BOX_COLOR);
         }
 
         public void Load(ContentManager content)
@@ -124,7 +129,7 @@ namespace paintRacer
             int newScrollValue = mouseState.ScrollWheelValue;
             if (newScrollValue != scrollValue)
             {
-                int difference = scrollValue - newScrollValue;
+                int difference = newScrollValue - scrollValue;
                 fileOffset.Y += 10 * (difference / Math.Abs(difference));
                 int minOffsetY = -Math.Max(files.Length * (SPACE_Y + fontHeight) - fileListRectangle.Height, 0);
                 fileOffset.Y = Math.Max(minOffsetY, Math.Min(fileOffset.Y, 0));
@@ -214,8 +219,8 @@ namespace paintRacer
                 for (int i = 0; i < nameRectangles.Length; ++i)
                 {
                     spriteBatch.Draw(nameBackground, new Rectangle(nameRectangles[i].X - nameViewport.X, nameRectangles[i].Y - nameViewport.Y, nameRectangles[i].Width, nameRectangles[i].Height), Color.White);
-                    spriteBatch.DrawString(spriteFont, "Player " + (i + 1) + ":", new Vector2(0, nameRectangles[i].Y - nameViewport.Y), Color.Black);
-                    spriteBatch.DrawString(spriteFont, names[i], new Vector2(nameRectangles[i].X - nameViewport.X, nameRectangles[i].Y - nameViewport.Y), Color.Black);
+                    spriteBatch.DrawString(spriteFont, "Player " + (i + 1) + ":", new Vector2(0, nameRectangles[i].Y - nameViewport.Y), Config.TEXT_COLOR);
+                    spriteBatch.DrawString(spriteFont, names[i], new Vector2(nameRectangles[i].X - nameViewport.X, nameRectangles[i].Y - nameViewport.Y), Config.TEXT_COLOR);
                 }
             }
             spriteBatch.End();
@@ -228,7 +233,7 @@ namespace paintRacer
                 for (int i = 0; i < files.Length; ++i)
                 {
                     string s = files[i];
-                    spriteBatch.DrawString(spriteFont, s, tmpPos, Color.Black);
+                    spriteBatch.DrawString(spriteFont, s, tmpPos, Config.TEXT_COLOR);
                     tmpPos.Y += spriteFont.MeasureString(s).Y + SPACE_Y;
                 }
             }
