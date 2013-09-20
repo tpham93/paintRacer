@@ -8,6 +8,20 @@ namespace paintRacer
 {
     class Config
     {
+        //consts for game and GUI
+        public const Color TEXT_BOX_COLOR = Color.Moccasin;
+        public const int TEXTFIELD_BORDER = 5;
+        public const Color TEXT_COLOR = Color.Black;
+        public const Vector2 BIG_BUTTON = new Vector2(187, 75);
+        public const Vector2 SMALL_BUTTON = new Vector2(125, 50);
+        public const int BIG_BUTTON_SPACE = 15;
+        public const int SMALL_BUTTON_SPACE = 5;
+        public const int LINE_SIZE = 20;
+        public const int BIG_LINE_SPACE = 5;
+        public const int SMALL_LINE_SPACE = 2;
+        public const TimeSpan TIME_BETWEEN_SAME_EVENT = new TimeSpan(0, 0, 0, 0, 150);
+        
+        
         // available Keys (Restructure as enum/map? Make more abstract to fit multiplayer?)
 
         public enum controlKeys

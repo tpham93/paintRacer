@@ -21,9 +21,9 @@ namespace paintRacer.gameStates
         private TimeSpan timeSpace;
 
         private const int LINENUM = 20;
-        private const int LINESIZE = 22;
-        private const int BUTTONSIZE_X = 125;
-        private const int BUTTONSIZE_Y = 50;
+        private const int LINESIZE = Config.LINE_SIZE + Config.SMALL_LINE_SPACE;
+        private const int BUTTONSIZE_X = (int)Config.SMALL_BUTTON.X;
+        private const int BUTTONSIZE_Y = (int)Config.SMALL_BUTTON.Y;
 
         string[] output = {"CREDITS", 
                            "=======", "",
@@ -58,12 +58,12 @@ namespace paintRacer.gameStates
             timeSpace += gameTime.ElapsedGameTime;
 
             MouseState mouse = Mouse.GetState();
-            if (mouse.LeftButton == ButtonState.Pressed && timeSpace > Helper.TIMEBETWEENKEYS && (mouse.X > backPos.X) && (mouse.X < backPos.X + BUTTONSIZE_X) && (mouse.Y > backPos.Y) && (mouse.Y < backPos.Y + BUTTONSIZE_Y))
+            if (mouse.LeftButton == ButtonState.Pressed && timeSpace > Config.TIME_BETWEEN_SAME_EVENT && (mouse.X > backPos.X) && (mouse.X < backPos.X + BUTTONSIZE_X) && (mouse.Y > backPos.Y) && (mouse.Y < backPos.Y + BUTTONSIZE_Y))
             {
                 return EGameStates.Menue;
             }
 
-            if (timeSpace > Helper.TIMEBETWEENKEYS)
+            if (timeSpace > Config.TIME_BETWEEN_SAME_EVENT)
             {
                 timeSpace = new TimeSpan();
                 KeyboardState keyboartState = Keyboard.GetState();
@@ -87,12 +87,12 @@ namespace paintRacer.gameStates
             spriteBatch.Begin();
 
             spriteBatch.Draw(bgPic, new Vector2(0, 0), Color.White);
-            spriteBatch.Draw(pixel, new Rectangle(300, 10, 490, 450), Color.Moccasin);
+            spriteBatch.Draw(pixel, new Rectangle(300, 10, 490, 450), Config.TEXT_BOX_COLOR);
             Vector2 textpos = new Vector2(305, 15);
 
             for (int count = scroll; count-scroll < LINENUM && count < output.Length; ++count)
             {
-                spriteBatch.DrawString(font, output[count], textpos, Color.Black);
+                spriteBatch.DrawString(font, output[count], textpos, Config.TEXT_COLOR);
                 textpos.Y += LINESIZE;
             }
 

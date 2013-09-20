@@ -123,26 +123,21 @@ namespace paintRacer
         private const int MAINMENUBUTTONLEFTBOUND = 500;
         private const int LOADMENUBUTTONLEFTBOUND = 200;
         private const int CREATEMENUBUTTONLEFTBOUND = MAPSIZE + MAPLEFTBOUND + 25;
-        private Color DEFAULT_COLOR = Color.Black;
         private SpriteFont DEFAULT_FONT;
-        private const int TEXTFIELDBORDER = 5;
 
         GraphicsDevice graphicsDevice;
 
         // constants___________________________________________
-        const int MAINMENUENTRYSIZE_X = 187;
-        const int MAINMENUENTRYSIZE_Y = 75;
-        const int MAINMENUENTRYSPACE = 15;
-        const int MAINMENUENTRYNUM = 3;
+        const int MAINMENUENTRYSIZE_X = (int)Config.BIG_BUTTON.X;
+        const int MAINMENUENTRYSIZE_Y = (int)Config.BIG_BUTTON.Y;
+        const int MAINMENUENTRYSPACE = Config.BIG_BUTTON_SPACE;
 
-        const int MENUENTRYSIZE_X = 125;
-        const int MENUENTRYSIZE_Y = 50;
-        const int MENUENTRYSPACE = 10;
-        const int LOADMENUENTRYNUM = 5;
-        const int CHOOSEMENUENTRYNUM = 5;
+        const int MENUENTRYSIZE_X = (int)Config.SMALL_BUTTON.X;
+        const int MENUENTRYSIZE_Y = (int)Config.SMALL_BUTTON.X;
+        const int MENUENTRYSPACE = Config.SMALL_BUTTON_SPACE;
 
-        const int MENULINESIZE = 20;
-        const int MENULINESPACE = 5;
+        const int MENULINESIZE = Config.LINE_SIZE;
+        const int MENULINESPACE = Config.BIG_LINE_SPACE;
 
         const int NUM_ENTRIES = 5;
 
@@ -217,7 +212,7 @@ namespace paintRacer
         {
             MouseState mouse = Mouse.GetState();
             timeSpace += gameTime.ElapsedGameTime;
-            if (mouse.LeftButton == ButtonState.Pressed && timeSpace > Helper.TIMEBETWEENKEYS)
+            if (mouse.LeftButton == ButtonState.Pressed && timeSpace > Config.TIME_BETWEEN_SAME_EVENT)
             {
                 if ((mouse.X > BackPos.X) && (mouse.X < BackPos.X + MAINMENUENTRYSIZE_X) && (mouse.Y > BackPos.Y) && (mouse.Y < BackPos.Y + MAINMENUENTRYSIZE_Y))
                 {
@@ -236,22 +231,15 @@ namespace paintRacer
                     int offset = count * (MENULINESIZE + MENULINESPACE);
                     if ((mouse.X > textArrayPos.X) && (mouse.Y > textArrayPos.Y + offset) && (mouse.Y < textArrayPos.Y + offset + MENULINESIZE))
                     {
-                        try
-                        //{
-                            Global.map = XmlLoad.parseMapConfig(directoryarray[count + scrollpos]);
-                            scrollpos = 0;
-                            timeSpace = new TimeSpan();
-                            return nextState;
-                        //}
-                        catch
-                        {
-                            return EGameStates.LoadMenu;
-                        }
+                        Global.map = XmlLoad.parseMapConfig(directoryarray[count + scrollpos]);
+                        scrollpos = 0;
+                        timeSpace = new TimeSpan();
+                        return nextState;
                     }
                 }
             }
 
-            if (timeSpace > Helper.TIMEBETWEENKEYS)
+            if (timeSpace > Config.TIME_BETWEEN_SAME_EVENT)
             {
                 timeSpace = new TimeSpan();
                 KeyboardState keyboartState = Keyboard.GetState();
@@ -282,7 +270,7 @@ namespace paintRacer
             //Helper.timeSpan += gameTime.ElapsedGameTime;
             MouseState mouseState = Mouse.GetState();
 
-            if (mouseState.LeftButton == ButtonState.Pressed && timeSpace > Helper.TIMEBETWEENKEYS)
+            if (mouseState.LeftButton == ButtonState.Pressed && timeSpace > Config.TIME_BETWEEN_SAME_EVENT)
             {
                 timeSpace = new TimeSpan();
                 if ((mouseState.X > fileNamePos.X) && (mouseState.Y > fileNamePos.Y) && (mouseState.Y < fileNamePos.Y + MENULINESIZE))
@@ -398,7 +386,7 @@ namespace paintRacer
             if (createState == ECreatState.EditFileNameColor)
             {
                 KeyboardState keyboardState = Keyboard.GetState();
-                if (timeSpace > Helper.TIMEBETWEENKEYS)
+                if (timeSpace > Config.TIME_BETWEEN_SAME_EVENT)
                 {
                     if (keyboardState.IsKeyDown(Keys.Back) && FileName.Length > 0)
                     {
@@ -419,7 +407,7 @@ namespace paintRacer
             if (createState == ECreatState.EditFileNameSW)
             {
                 KeyboardState keyboardState = Keyboard.GetState();
-                if (timeSpace > Helper.TIMEBETWEENKEYS)
+                if (timeSpace > Config.TIME_BETWEEN_SAME_EVENT)
                 {
                     if (keyboardState.IsKeyDown(Keys.Back) && FileNameSW.Length > 0)
                     {
@@ -484,13 +472,13 @@ namespace paintRacer
             Vector2 pos = new Vector2(MAINMENUBUTTONLEFTBOUND, MAINMENUENTRYSPACE);
             textArrayPos = new Vector2(pos.X, pos.Y);
 
-            spriteBatch.Draw(whitePixel, new Rectangle((int)textArrayPos.X - TEXTFIELDBORDER, (int)textArrayPos.Y - TEXTFIELDBORDER, 800 - (int)textArrayPos.X, (int)textArrayPos.Y + 2 * TEXTFIELDBORDER + NUM_ENTRIES * (MENULINESIZE + MENULINESPACE)), Color.Moccasin);
+            spriteBatch.Draw(whitePixel, new Rectangle((int)textArrayPos.X - Config.TEXTFIELD_BORDER, (int)textArrayPos.Y - Config.TEXTFIELD_BORDER, 800 - (int)textArrayPos.X, (int)textArrayPos.Y + 2 * Config.TEXTFIELD_BORDER + NUM_ENTRIES * (MENULINESIZE + MENULINESPACE)), Config.TEXT_BOX_COLOR);
 
             if (directoryarray != null)
                 for (int count = scrollpos; (count < scrollpos + NUM_ENTRIES) && (count < directoryarray.Length); count++)
                 {
                     pos.Y = (count - scrollpos) * (MENULINESIZE + MENULINESPACE) + MENUENTRYSPACE;
-                    spriteBatch.DrawString(DEFAULT_FONT, directoryarray[count].Substring(directoryarray[count].LastIndexOf('\\') + 1), pos, DEFAULT_COLOR);
+                    spriteBatch.DrawString(DEFAULT_FONT, directoryarray[count].Substring(directoryarray[count].LastIndexOf('\\') + 1), pos, Config.TEXT_COLOR);
                 }
 
             pos.Y = NUM_ENTRIES * (MENULINESIZE + MENULINESPACE) + 3 * MENUENTRYSPACE + MENUENTRYSIZE_Y;
@@ -529,7 +517,7 @@ namespace paintRacer
             }
             else
             {
-                spriteBatch.Draw(whitePixel, new Rectangle(MAPLEFTBOUND, MAPLEFTBOUND, MAPSIZE, MAPSIZE), Color.Moccasin);
+                spriteBatch.Draw(whitePixel, new Rectangle(MAPLEFTBOUND, MAPLEFTBOUND, MAPSIZE, MAPSIZE), Config.TEXT_BOX_COLOR);
             }
 
             MapPicPos = new Vector2(MAPLEFTBOUND);
@@ -537,17 +525,17 @@ namespace paintRacer
             //Text
             Vector2 pos = new Vector2(CREATEMENUBUTTONLEFTBOUND, MENUENTRYSPACE);
 
-            spriteBatch.Draw(whitePixel, new Rectangle((int)pos.X - TEXTFIELDBORDER, (int)pos.Y - TEXTFIELDBORDER, 800 - (int)pos.X, 2 * MENULINESIZE + MENULINESPACE + 2 * TEXTFIELDBORDER), Color.Moccasin);
+            spriteBatch.Draw(whitePixel, new Rectangle((int)pos.X - Config.TEXTFIELD_BORDER, (int)pos.Y - Config.TEXTFIELD_BORDER, 800 - (int)pos.X, 2 * MENULINESIZE + MENULINESPACE + 2 * Config.TEXTFIELD_BORDER), Config.TEXT_BOX_COLOR);
 
-            spriteBatch.DrawString(DEFAULT_FONT, "Color-File: " + FileName, pos, DEFAULT_COLOR);
+            spriteBatch.DrawString(DEFAULT_FONT, "Color-File: " + FileName, pos, Config.TEXT_COLOR);
             fileNamePos = new Vector2(pos.X, pos.Y);
 
             pos.Y += MENULINESIZE + MENULINESPACE;
-            spriteBatch.DrawString(DEFAULT_FONT, "SW-File: " + FileNameSW, pos, DEFAULT_COLOR);
+            spriteBatch.DrawString(DEFAULT_FONT, "SW-File: " + FileNameSW, pos, Config.TEXT_COLOR);
             fileNameSWPos = new Vector2(pos.X, pos.Y);
 
             //Buttons
-            pos.Y += MENULINESIZE + MENULINESPACE + TEXTFIELDBORDER;
+            pos.Y += MENULINESIZE + MENULINESPACE + Config.TEXTFIELD_BORDER;
             spriteBatch.Draw(LoadMap, pos, Color.White);
             LoadMapPos = new Vector2(pos.X, pos.Y);
 
@@ -568,8 +556,8 @@ namespace paintRacer
             FinishPos = new Vector2(pos.X, pos.Y);
 
             pos.Y += MENUENTRYSIZE_Y + MENUENTRYSPACE;
-            spriteBatch.Draw(whitePixel, new Rectangle((int)pos.X - TEXTFIELDBORDER, (int)pos.Y - TEXTFIELDBORDER, 800 - (int)pos.X, 480 - (int)pos.Y), Color.Moccasin);
-            spriteBatch.DrawString(DEFAULT_FONT, Info(), pos, DEFAULT_COLOR);
+            spriteBatch.Draw(whitePixel, new Rectangle((int)pos.X - Config.TEXTFIELD_BORDER, (int)pos.Y - Config.TEXTFIELD_BORDER, 800 - (int)pos.X, 480 - (int)pos.Y), Config.TEXT_BOX_COLOR);
+            spriteBatch.DrawString(DEFAULT_FONT, Info(), pos, Config.TEXT_COLOR);
 
             CreatePos = new Vector2(MAPLEFTBOUND, 2 * MAPLEFTBOUND + MAPSIZE);
             spriteBatch.Draw(Create, CreatePos, Color.White);
