@@ -60,7 +60,7 @@ namespace paintRacer
 
             const int selectedRectangleSize = 400;
 
-            const int nameWidth = 200;
+            const int nameWidth = 350;
             const int nameHeight = 25;
 
             switch (nextGamestate)
@@ -115,7 +115,7 @@ namespace paintRacer
             for (int i = 0; i < nameRectangles.Length; ++i)
             {
                 names[i] = "";
-                nameRectangles[i] = new Rectangle(150, 40 + i * (SPACE_Y + fontHeight), nameBackground.Width, nameBackground.Height);
+                nameRectangles[i] = new Rectangle(0, 40 + i * (SPACE_Y + fontHeight), nameBackground.Width, nameBackground.Height);
             }
             nameViewport = new Viewport(50, 40, 300, (nameRectangles.Length - 1) * (SPACE_Y + fontHeight) + 40);
         }
@@ -224,8 +224,8 @@ namespace paintRacer
                 for (int i = 0; i < nameRectangles.Length; ++i)
                 {
                     spriteBatch.Draw(nameBackground, new Rectangle(nameRectangles[i].X - nameViewport.X, nameRectangles[i].Y - nameViewport.Y, nameRectangles[i].Width, nameRectangles[i].Height), Color.White);
-                    spriteBatch.DrawString(spriteFont, "Player " + (i + 1) + ":", new Vector2(0, nameRectangles[i].Y - nameViewport.Y), Config.TEXT_COLOR);
-                    spriteBatch.DrawString(spriteFont, names[i], new Vector2(nameRectangles[i].X - nameViewport.X, nameRectangles[i].Y - nameViewport.Y), Config.TEXT_COLOR);
+                    spriteBatch.DrawString(spriteFont, "Player " + (i + 1) + ":" + names[i], new Vector2(nameRectangles[i].X, nameRectangles[i].Y - nameViewport.Y), Config.TEXT_COLOR);
+                    //spriteBatch.DrawString(spriteFont, names[i], new Vector2(nameRectangles[i].X - nameViewport.X, nameRectangles[i].Y - nameViewport.Y), Config.TEXT_COLOR);
                 }
             }
             spriteBatch.End();
