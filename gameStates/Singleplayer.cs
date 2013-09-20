@@ -25,7 +25,7 @@ namespace paintRacer
 
         public Singleplayer(GraphicsDevice graphicsDevice)
         {
-
+            this.graphicsDevice = graphicsDevice;
         }
 
         

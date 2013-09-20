@@ -16,7 +16,6 @@ namespace paintRacer
 
         private static Keys lastKey;
         public static TimeSpan timeSpan;
-        public static TimeSpan TIMEBETWEENKEYS = new TimeSpan(0, 0, 0, 0, 200);
 
         // set graphicsDevice
         public static void Init(GraphicsDevice graphicsDevice)
@@ -114,7 +113,7 @@ namespace paintRacer
         {
             timeSpan += gameTime.ElapsedGameTime;
             //A
-            if (keyboardState.IsKeyDown(Keys.A) && !(lastKey == Keys.A && timeSpan < TIMEBETWEENKEYS))
+            if (keyboardState.IsKeyDown(Keys.A) && !(lastKey == Keys.A && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.A;
                 timeSpan = new TimeSpan();
@@ -125,7 +124,7 @@ namespace paintRacer
             }
 
             //B
-            else if (keyboardState.IsKeyDown(Keys.B) && !(lastKey == Keys.B && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.B) && !(lastKey == Keys.B && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.B;
                 timeSpan = new TimeSpan();
@@ -136,7 +135,7 @@ namespace paintRacer
             }
 
             //C
-            else if (keyboardState.IsKeyDown(Keys.C) && !(lastKey == Keys.C && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.C) && !(lastKey == Keys.C && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.C;
                 timeSpan = new TimeSpan();
@@ -147,7 +146,7 @@ namespace paintRacer
             }
 
             //D
-            else if (keyboardState.IsKeyDown(Keys.D) && !(lastKey == Keys.D && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.D) && !(lastKey == Keys.D && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.D;
                 timeSpan = new TimeSpan();
@@ -158,7 +157,7 @@ namespace paintRacer
             }
 
             //E
-            else if (keyboardState.IsKeyDown(Keys.E) && !(lastKey == Keys.E && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.E) && !(lastKey == Keys.E && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.E;
                 timeSpan = new TimeSpan();
@@ -169,7 +168,7 @@ namespace paintRacer
             }
 
             //F
-            else if (keyboardState.IsKeyDown(Keys.F) && !(lastKey == Keys.F && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.F) && !(lastKey == Keys.F && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.F;
                 timeSpan = new TimeSpan();
@@ -180,7 +179,7 @@ namespace paintRacer
             }
 
             //G
-            else if (keyboardState.IsKeyDown(Keys.G) && !(lastKey == Keys.G && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.G) && !(lastKey == Keys.G && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.G;
                 timeSpan = new TimeSpan();
@@ -191,7 +190,7 @@ namespace paintRacer
             }
 
             //H
-            else if (keyboardState.IsKeyDown(Keys.H) && !(lastKey == Keys.H && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.H) && !(lastKey == Keys.H && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.H;
                 timeSpan = new TimeSpan();
@@ -202,7 +201,7 @@ namespace paintRacer
             }
 
             //I
-            else if (keyboardState.IsKeyDown(Keys.I) && !(lastKey == Keys.I && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.I) && !(lastKey == Keys.I && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.I;
                 timeSpan = new TimeSpan();
@@ -213,7 +212,7 @@ namespace paintRacer
             }
 
             //J
-            else if (keyboardState.IsKeyDown(Keys.J) && !(lastKey == Keys.J && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.J) && !(lastKey == Keys.J && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.J;
                 timeSpan = new TimeSpan();
@@ -224,7 +223,7 @@ namespace paintRacer
             }
 
             //K
-            else if (keyboardState.IsKeyDown(Keys.K) && !(lastKey == Keys.K && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.K) && !(lastKey == Keys.K && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.K;
                 timeSpan = new TimeSpan();
@@ -235,7 +234,7 @@ namespace paintRacer
             }
 
             //L
-            else if (keyboardState.IsKeyDown(Keys.L) && !(lastKey == Keys.L && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.L) && !(lastKey == Keys.L && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.L;
                 timeSpan = new TimeSpan();
@@ -246,7 +245,7 @@ namespace paintRacer
             }
 
             //M
-            else if (keyboardState.IsKeyDown(Keys.M) && !(lastKey == Keys.M && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.M) && !(lastKey == Keys.M && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.M;
                 timeSpan = new TimeSpan();
@@ -257,7 +256,7 @@ namespace paintRacer
             }
 
             //N
-            else if (keyboardState.IsKeyDown(Keys.N) && !(lastKey == Keys.N && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.N) && !(lastKey == Keys.N && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.N;
                 timeSpan = new TimeSpan();
@@ -268,7 +267,7 @@ namespace paintRacer
             }
 
             //O
-            else if (keyboardState.IsKeyDown(Keys.O) && !(lastKey == Keys.O && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.O) && !(lastKey == Keys.O && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.O;
                 timeSpan = new TimeSpan();
@@ -279,7 +278,7 @@ namespace paintRacer
             }
 
             //P
-            else if (keyboardState.IsKeyDown(Keys.P) && !(lastKey == Keys.P && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.P) && !(lastKey == Keys.P && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.P;
                 timeSpan = new TimeSpan();
@@ -290,7 +289,7 @@ namespace paintRacer
             }
 
             //Q
-            else if (keyboardState.IsKeyDown(Keys.Q) && !(lastKey == Keys.Q && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.Q) && !(lastKey == Keys.Q && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.Q;
                 timeSpan = new TimeSpan();
@@ -301,7 +300,7 @@ namespace paintRacer
             }
 
             //R
-            else if (keyboardState.IsKeyDown(Keys.R) && !(lastKey == Keys.R && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.R) && !(lastKey == Keys.R && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.R;
                 timeSpan = new TimeSpan();
@@ -312,7 +311,7 @@ namespace paintRacer
             }
 
             //S
-            else if (keyboardState.IsKeyDown(Keys.S) && !(lastKey == Keys.S && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.S) && !(lastKey == Keys.S && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.S;
                 timeSpan = new TimeSpan();
@@ -323,7 +322,7 @@ namespace paintRacer
             }
 
             //T
-            else if (keyboardState.IsKeyDown(Keys.T) && !(lastKey == Keys.T && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.T) && !(lastKey == Keys.T && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.T;
                 timeSpan = new TimeSpan();
@@ -334,7 +333,7 @@ namespace paintRacer
             }
 
             //B
-            else if (keyboardState.IsKeyDown(Keys.B) && !(lastKey == Keys.B && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.B) && !(lastKey == Keys.B && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.B;
                 timeSpan = new TimeSpan();
@@ -345,7 +344,7 @@ namespace paintRacer
             }
 
             //U
-            else if (keyboardState.IsKeyDown(Keys.U) && !(lastKey == Keys.U && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.U) && !(lastKey == Keys.U && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.U;
                 timeSpan = new TimeSpan();
@@ -356,7 +355,7 @@ namespace paintRacer
             }
 
             //V
-            else if (keyboardState.IsKeyDown(Keys.V) && !(lastKey == Keys.V && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.V) && !(lastKey == Keys.V && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.V;
                 timeSpan = new TimeSpan();
@@ -367,7 +366,7 @@ namespace paintRacer
             }
 
             //W
-            else if (keyboardState.IsKeyDown(Keys.W) && !(lastKey == Keys.W && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.W) && !(lastKey == Keys.W && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.W;
                 if (keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift) || keyboardState.IsKeyDown(Keys.CapsLock))
@@ -377,7 +376,7 @@ namespace paintRacer
             }
 
             //X
-            else if (keyboardState.IsKeyDown(Keys.X) && !(lastKey == Keys.X && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.X) && !(lastKey == Keys.X && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.X;
                 timeSpan = new TimeSpan();
@@ -388,7 +387,7 @@ namespace paintRacer
             }
 
             //Y
-            else if (keyboardState.IsKeyDown(Keys.Y) && !(lastKey == Keys.Y && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.Y) && !(lastKey == Keys.Y && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.Y;
                 timeSpan = new TimeSpan();
@@ -399,7 +398,7 @@ namespace paintRacer
             }
 
             //Z
-            else if (keyboardState.IsKeyDown(Keys.Z) && !(lastKey == Keys.Z && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.Z) && !(lastKey == Keys.Z && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.Z;
                 timeSpan = new TimeSpan();
@@ -410,7 +409,7 @@ namespace paintRacer
             }
 
             //0
-            else if (keyboardState.IsKeyDown(Keys.D0) && !(lastKey == Keys.D0 && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.D0) && !(lastKey == Keys.D0 && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.D0;
                 timeSpan = new TimeSpan();
@@ -422,7 +421,7 @@ namespace paintRacer
                     return "0";
             }
             //0
-            else if (keyboardState.IsKeyDown(Keys.NumPad0) && !(lastKey == Keys.NumPad0 && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.NumPad0) && !(lastKey == Keys.NumPad0 && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.NumPad0;
                 timeSpan = new TimeSpan();
@@ -430,7 +429,7 @@ namespace paintRacer
             }
 
             //1
-            else if (keyboardState.IsKeyDown(Keys.D1) && !(lastKey == Keys.D1 && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.D1) && !(lastKey == Keys.D1 && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.D1;
                 timeSpan = new TimeSpan();
@@ -440,7 +439,7 @@ namespace paintRacer
                     return "1";
             }
             //1
-            else if (keyboardState.IsKeyDown(Keys.NumPad0) && !(lastKey == Keys.NumPad1 && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.NumPad0) && !(lastKey == Keys.NumPad1 && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.NumPad1;
                 timeSpan = new TimeSpan();
@@ -448,7 +447,7 @@ namespace paintRacer
             }
 
             //2
-            else if (keyboardState.IsKeyDown(Keys.D2) && !(lastKey == Keys.D2 && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.D2) && !(lastKey == Keys.D2 && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.D2;
                 timeSpan = new TimeSpan();
@@ -458,7 +457,7 @@ namespace paintRacer
                     return "2";
             }
             //2
-            else if (keyboardState.IsKeyDown(Keys.NumPad0) && !(lastKey == Keys.NumPad2 && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.NumPad0) && !(lastKey == Keys.NumPad2 && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.NumPad2;
                 timeSpan = new TimeSpan();
@@ -466,7 +465,7 @@ namespace paintRacer
             }
 
             //3
-            else if (keyboardState.IsKeyDown(Keys.D3) && !(lastKey == Keys.D3 && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.D3) && !(lastKey == Keys.D3 && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.D3;
                 timeSpan = new TimeSpan();
@@ -476,14 +475,14 @@ namespace paintRacer
                     return "3";
             }
             //3
-            else if (keyboardState.IsKeyDown(Keys.NumPad3) && !(lastKey == Keys.NumPad3 && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.NumPad3) && !(lastKey == Keys.NumPad3 && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.NumPad3;
                 return "3";
             }
 
             //4
-            else if (keyboardState.IsKeyDown(Keys.D4) && !(lastKey == Keys.D4 && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.D4) && !(lastKey == Keys.D4 && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.D4;
                 timeSpan = new TimeSpan();
@@ -493,7 +492,7 @@ namespace paintRacer
                     return "4";
             }
             //4
-            else if (keyboardState.IsKeyDown(Keys.NumPad4) && !(lastKey == Keys.NumPad4 && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.NumPad4) && !(lastKey == Keys.NumPad4 && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.NumPad4;
                 timeSpan = new TimeSpan();
@@ -501,7 +500,7 @@ namespace paintRacer
             }
 
             //5
-            else if (keyboardState.IsKeyDown(Keys.D5) && !(lastKey == Keys.D5 && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.D5) && !(lastKey == Keys.D5 && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.D5;
                 timeSpan = new TimeSpan();
@@ -511,7 +510,7 @@ namespace paintRacer
                     return "5";
             }
             //5
-            else if (keyboardState.IsKeyDown(Keys.NumPad5) && !(lastKey == Keys.NumPad5 && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.NumPad5) && !(lastKey == Keys.NumPad5 && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.NumPad5;
                 timeSpan = new TimeSpan();
@@ -519,7 +518,7 @@ namespace paintRacer
             }
 
             //6
-            else if (keyboardState.IsKeyDown(Keys.D6) && !(lastKey == Keys.D6 && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.D6) && !(lastKey == Keys.D6 && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.D6;
                 timeSpan = new TimeSpan();
@@ -529,7 +528,7 @@ namespace paintRacer
                     return "6";
             }
             //6
-            else if (keyboardState.IsKeyDown(Keys.NumPad6) && !(lastKey == Keys.NumPad6 && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.NumPad6) && !(lastKey == Keys.NumPad6 && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.NumPad6;
                 timeSpan = new TimeSpan();
@@ -537,7 +536,7 @@ namespace paintRacer
             }
 
             //7
-            else if (keyboardState.IsKeyDown(Keys.D7) && !(lastKey == Keys.D7 && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.D7) && !(lastKey == Keys.D7 && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.D7;
                 timeSpan = new TimeSpan();
@@ -549,7 +548,7 @@ namespace paintRacer
                     return "7";
             }
             //7
-            else if (keyboardState.IsKeyDown(Keys.NumPad7) && !(lastKey == Keys.NumPad7 && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.NumPad7) && !(lastKey == Keys.NumPad7 && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.NumPad7;
                 timeSpan = new TimeSpan();
@@ -557,7 +556,7 @@ namespace paintRacer
             }
 
             //8
-            else if (keyboardState.IsKeyDown(Keys.D8) && !(lastKey == Keys.D8 && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.D8) && !(lastKey == Keys.D8 && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.D8;
                 timeSpan = new TimeSpan();
@@ -569,7 +568,7 @@ namespace paintRacer
                     return "8";
             }
             //8
-            else if (keyboardState.IsKeyDown(Keys.NumPad8) && !(lastKey == Keys.NumPad8 && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.NumPad8) && !(lastKey == Keys.NumPad8 && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.NumPad8;
                 timeSpan = new TimeSpan();
@@ -577,7 +576,7 @@ namespace paintRacer
             }
 
             //9
-            else if (keyboardState.IsKeyDown(Keys.D9) && !(lastKey == Keys.D9 && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.D9) && !(lastKey == Keys.D9 && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.D9;
                 timeSpan = new TimeSpan();
@@ -589,7 +588,7 @@ namespace paintRacer
                     return "9";
             }
             //9
-            else if (keyboardState.IsKeyDown(Keys.NumPad9) && !(lastKey == Keys.NumPad9 && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.NumPad9) && !(lastKey == Keys.NumPad9 && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.NumPad9;
                 timeSpan = new TimeSpan();
@@ -597,7 +596,7 @@ namespace paintRacer
             }
 
             //,
-            else if (keyboardState.IsKeyDown(Keys.OemComma) && !(lastKey == Keys.OemComma && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.OemComma) && !(lastKey == Keys.OemComma && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.OemComma;
                 timeSpan = new TimeSpan();
@@ -608,7 +607,7 @@ namespace paintRacer
             }
 
             //<
-            else if (keyboardState.IsKeyDown(Keys.OemBackslash) && !(lastKey == Keys.OemComma && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.OemBackslash) && !(lastKey == Keys.OemComma && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.OemComma;
                 timeSpan = new TimeSpan();
@@ -621,7 +620,7 @@ namespace paintRacer
             }
 
             //-
-            else if (keyboardState.IsKeyDown(Keys.OemMinus) && !(lastKey == Keys.OemMinus && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.OemMinus) && !(lastKey == Keys.OemMinus && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.OemMinus;
                 timeSpan = new TimeSpan();
@@ -632,7 +631,7 @@ namespace paintRacer
             }
 
             //+
-            else if (keyboardState.IsKeyDown(Keys.OemPlus) && !(lastKey == Keys.OemPlus && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.OemPlus) && !(lastKey == Keys.OemPlus && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.OemPlus;
                 timeSpan = new TimeSpan();
@@ -645,7 +644,7 @@ namespace paintRacer
             }
 
             //#
-            else if (keyboardState.IsKeyDown(Keys.OemQuestion) && !(lastKey == Keys.OemQuestion && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.OemQuestion) && !(lastKey == Keys.OemQuestion && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.OemQuestion;
                 timeSpan = new TimeSpan();
@@ -656,7 +655,7 @@ namespace paintRacer
             }
 
             //+
-            else if (keyboardState.IsKeyDown(Keys.OemPipe) && !(lastKey == Keys.OemPipe && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.OemPipe) && !(lastKey == Keys.OemPipe && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.OemPipe;
                 timeSpan = new TimeSpan();
@@ -667,7 +666,7 @@ namespace paintRacer
             }
 
             //ß
-            else if (keyboardState.IsKeyDown(Keys.OemOpenBrackets) && !(lastKey == Keys.OemOpenBrackets && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.OemOpenBrackets) && !(lastKey == Keys.OemOpenBrackets && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.OemOpenBrackets;
                 timeSpan = new TimeSpan();
@@ -680,7 +679,7 @@ namespace paintRacer
             }
 
             //.
-            else if (keyboardState.IsKeyDown(Keys.OemPeriod) && !(lastKey == Keys.OemPeriod && timeSpan < TIMEBETWEENKEYS))
+            else if (keyboardState.IsKeyDown(Keys.OemPeriod) && !(lastKey == Keys.OemPeriod && timeSpan < Config.TIME_BETWEEN_SAME_EVENT))
             {
                 lastKey = Keys.OemPeriod;
                 timeSpan = new TimeSpan();

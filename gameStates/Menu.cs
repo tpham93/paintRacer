@@ -22,25 +22,18 @@ namespace paintRacer
         Texture2D backgound;
         // index of selected entry
         int selectedEntry;
-        // time between keypress (max = MINTIMEKEYPRESS))
+        // time between keypress (max = Config.TIME_BETWEEN_SAME_EVENT))
         TimeSpan timeBetweenKeyPress;
 
         // constants___________________________________________
         const int SELECTIONPOINTERSIZE_X = 100;    //size of marker
         const int SELECTIONPOINTERSIZE_Y = 50;    //size of marker
-        const int MENUENTRYSIZE_X = 187;
-        const int MENUENTRYSIZE_Y = 75;
-        const int MENUENTRYSPACE = 15;
         const int MENUENTRYNUM = 5;
 
         // variables used as constants
-        Vector2 MENUSTARTPOS = new Vector2(50, MENUENTRYSPACE);   //"pointer" on first menuentry
+        Vector2 MENUSTARTPOS = new Vector2(50, Config.BIG_BUTTON_SPACE);   //"pointer" on first menuentry
         Color MENUENTRYCOLOR = Color.White;  //menuentrycolor
         Color MENUSELECTIONPOINTERCOLOR = Color.Green;
-
-        //const int MINTIMEKEYPRESS = 100;
-
-        readonly TimeSpan MINTIMEKEYPRESS = new TimeSpan(0,0,0,0,200);
 
         const Keys SELECT_UP = Keys.Up;
         const Keys SELECT_DOWN = Keys.Down;
@@ -53,21 +46,21 @@ namespace paintRacer
             backgound = Helper.loadImage("Content/start.png");
             selectionPointerTexture = Helper.loadImage("Content/menu/car.png", new Rectangle(0, 0, SELECTIONPOINTERSIZE_X, SELECTIONPOINTERSIZE_Y));
             menuEntrieTexture = new Texture2D[5];                            //array-size shuld be 5
-            menuEntrieTexture[0] = Helper.loadImage(@"Content\menu\singlePlayer.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));//first menuentry
-            menuEntrieTexture[1] = Helper.loadImage(@"Content\menu\multyPlayer.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y)); //2nd menuentry
-            menuEntrieTexture[2] = Helper.loadImage(@"Content\menu\highscore.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));   //3rd menuentry
-            menuEntrieTexture[3] = Helper.loadImage(@"Content\menu\credits.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));     //4th menuentry
-            menuEntrieTexture[4] = Helper.loadImage(@"Content\menu\beenden.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));     //5th menuentry
+            menuEntrieTexture[0] = Helper.loadImage(@"Content\menu\singlePlayer.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));//first menuentry
+            menuEntrieTexture[1] = Helper.loadImage(@"Content\menu\multyPlayer.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y)); //2nd menuentry
+            menuEntrieTexture[2] = Helper.loadImage(@"Content\menu\highscore.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));   //3rd menuentry
+            menuEntrieTexture[3] = Helper.loadImage(@"Content\menu\credits.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));     //4th menuentry
+            menuEntrieTexture[4] = Helper.loadImage(@"Content\menu\beenden.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));     //5th menuentry
             //load font
             //spriteFont = content.Load<SpriteFont>("Arial");
 
             //initialize timeBetweenKeyPress
-            timeBetweenKeyPress = MINTIMEKEYPRESS;
+            timeBetweenKeyPress = Config.TIME_BETWEEN_SAME_EVENT;
         }
 
         public EGameStates Update(GameTime gameTime)
         {
-            if (timeBetweenKeyPress >= MINTIMEKEYPRESS)
+            if (timeBetweenKeyPress >= Config.TIME_BETWEEN_SAME_EVENT)
             {
                 KeyboardState keyboardState = Keyboard.GetState();
                 if (keyboardState.IsKeyDown(SELECT_UP))
@@ -123,12 +116,12 @@ namespace paintRacer
             for (int i = 0; i < MENUENTRYNUM; i++)
             {
                 spriteBatch.Draw(menuEntrieTexture[i], tmpVect, MENUENTRYCOLOR);
-                tmpVect.Y += MENUENTRYSIZE_Y + MENUENTRYSPACE;
+                tmpVect.Y += (int)Config.BIG_BUTTON.Y + Config.BIG_BUTTON_SPACE;
             }
 
             // draw menuentrypointer
-            tmpVect.X += MENUENTRYSIZE_X + MENUENTRYSPACE - 5;
-            tmpVect.Y = MENUSTARTPOS.Y + (MENUENTRYSPACE + MENUENTRYSIZE_Y) * selectedEntry + (MENUENTRYSIZE_Y - SELECTIONPOINTERSIZE_Y) / 2;
+            tmpVect.X += (int)Config.BIG_BUTTON.X + Config.BIG_BUTTON_SPACE - 5;
+            tmpVect.Y = MENUSTARTPOS.Y + (Config.BIG_BUTTON_SPACE + (int)Config.BIG_BUTTON.Y) * selectedEntry + ((int)Config.BIG_BUTTON.Y - SELECTIONPOINTERSIZE_Y) / 2;
             spriteBatch.Draw(selectionPointerTexture, tmpVect, MENUSELECTIONPOINTERCOLOR);
 
 

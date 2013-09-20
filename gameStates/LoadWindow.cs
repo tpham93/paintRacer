@@ -127,18 +127,7 @@ namespace paintRacer
 
         GraphicsDevice graphicsDevice;
 
-        // constants___________________________________________
-        const int MAINMENUENTRYSIZE_X = (int)Config.BIG_BUTTON_X;
-        const int MAINMENUENTRYSIZE_Y = (int)Config.BIG_BUTTON_Y;
-        const int MAINMENUENTRYSPACE = Config.BIG_BUTTON_SPACE;
-
-        const int MENUENTRYSIZE_X = (int)Config.SMALL_BUTTON_X;
-        const int MENUENTRYSIZE_Y = (int)Config.SMALL_BUTTON_Y;
-        const int MENUENTRYSPACE = Config.SMALL_BUTTON_SPACE;
-
-        const int MENULINESIZE = Config.LINE_SIZE;
-        const int MENULINESPACE = Config.BIG_LINE_SPACE;
-
+        // constants
         const int NUM_ENTRIES = 5;
 
 
@@ -170,15 +159,15 @@ namespace paintRacer
 
             //load Textures
             whitePixel = Helper.loadImage(@"Content\OneWithePixel.png");
-            LoadNewMap = Helper.loadImage(@"Content\loadMenu\LoadNewMap.png", new Rectangle(0, 0, MAINMENUENTRYSIZE_X, MAINMENUENTRYSIZE_Y));
-            //ChooseMap = Helper.loadImage(@"Content\loadMenu\ChooseMap.png", new Rectangle(0, 0, MAINMENUENTRYSIZE_X, MAINMENUENTRYSIZE_Y));
-            Back = Helper.loadImage(@"Content\loadMenu\Back.png", new Rectangle(0, 0, MAINMENUENTRYSIZE_X, MAINMENUENTRYSIZE_Y));
-            LoadMap = Helper.loadImage(@"Content\loadMenu\Load.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));
-            CheckPoint = Helper.loadImage(@"Content\loadMenu\Checkpoint.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));
-            Start = Helper.loadImage(@"Content\loadMenu\Start.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));
-            Finish = Helper.loadImage(@"Content\loadMenu\Finish.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));
-            remCheckPoint = Helper.loadImage(@"Content\loadmenu\Remove.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));
-            Create = Helper.loadImage(@"Content\loadmenu\Create.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));
+            LoadNewMap = Helper.loadImage(@"Content\loadMenu\LoadNewMap.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));
+            //ChooseMap = Helper.loadImage(@"Content\loadMenu\ChooseMap.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));
+            Back = Helper.loadImage(@"Content\loadMenu\Back.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));
+            LoadMap = Helper.loadImage(@"Content\loadMenu\Load.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.X));
+            CheckPoint = Helper.loadImage(@"Content\loadMenu\Checkpoint.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.X));
+            Start = Helper.loadImage(@"Content\loadMenu\Start.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.X));
+            Finish = Helper.loadImage(@"Content\loadMenu\Finish.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.X));
+            remCheckPoint = Helper.loadImage(@"Content\loadmenu\Remove.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.X));
+            Create = Helper.loadImage(@"Content\loadmenu\Create.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.X));
             bgPic = Helper.loadImage("Content/track.png");
         }
 
@@ -214,13 +203,13 @@ namespace paintRacer
             timeSpace += gameTime.ElapsedGameTime;
             if (mouse.LeftButton == ButtonState.Pressed && timeSpace > Config.TIME_BETWEEN_SAME_EVENT)
             {
-                if ((mouse.X > BackPos.X) && (mouse.X < BackPos.X + MAINMENUENTRYSIZE_X) && (mouse.Y > BackPos.Y) && (mouse.Y < BackPos.Y + MAINMENUENTRYSIZE_Y))
+                if ((mouse.X > BackPos.X) && (mouse.X < BackPos.X + (int)Config.BIG_BUTTON.X) && (mouse.Y > BackPos.Y) && (mouse.Y < BackPos.Y + (int)Config.BIG_BUTTON.Y))
                 {
                     timeSpace = new TimeSpan();
                     return EGameStates.Menue;
                 }
 
-                else if ((mouse.X > LoadMapPos.X) && (mouse.X < LoadMapPos.X + MAINMENUENTRYSIZE_X) && (mouse.Y > LoadMapPos.Y) && (mouse.Y < LoadMapPos.Y + MAINMENUENTRYSIZE_Y))
+                else if ((mouse.X > LoadMapPos.X) && (mouse.X < LoadMapPos.X + (int)Config.BIG_BUTTON.X) && (mouse.Y > LoadMapPos.Y) && (mouse.Y < LoadMapPos.Y + (int)Config.BIG_BUTTON.Y))
                 {
                     timeSpace = new TimeSpan();
                     mainState = EMainState.LoadNewMap;
@@ -228,8 +217,8 @@ namespace paintRacer
 
                 for (int count = 0; count < NUM_ENTRIES; ++count)
                 {
-                    int offset = count * (MENULINESIZE + MENULINESPACE);
-                    if ((mouse.X > textArrayPos.X) && (mouse.Y > textArrayPos.Y + offset) && (mouse.Y < textArrayPos.Y + offset + MENULINESIZE))
+                    int offset = count * (Config.LINE_SIZE + Config.BIG_LINE_SPACE);
+                    if ((mouse.X > textArrayPos.X) && (mouse.Y > textArrayPos.Y + offset) && (mouse.Y < textArrayPos.Y + offset + Config.LINE_SIZE))
                     {
                         Global.map = XmlLoad.parseMapConfig(directoryarray[count + scrollpos]);
                         scrollpos = 0;
@@ -273,15 +262,15 @@ namespace paintRacer
             if (mouseState.LeftButton == ButtonState.Pressed && timeSpace > Config.TIME_BETWEEN_SAME_EVENT)
             {
                 timeSpace = new TimeSpan();
-                if ((mouseState.X > fileNamePos.X) && (mouseState.Y > fileNamePos.Y) && (mouseState.Y < fileNamePos.Y + MENULINESIZE))
+                if ((mouseState.X > fileNamePos.X) && (mouseState.Y > fileNamePos.Y) && (mouseState.Y < fileNamePos.Y + Config.LINE_SIZE))
                 {
                     createState = ECreatState.EditFileNameColor;
                 }
-                else if ((mouseState.X > fileNameSWPos.X) && (mouseState.Y > fileNameSWPos.Y) && (mouseState.Y < fileNameSWPos.Y + MENULINESIZE))
+                else if ((mouseState.X > fileNameSWPos.X) && (mouseState.Y > fileNameSWPos.Y) && (mouseState.Y < fileNameSWPos.Y + Config.LINE_SIZE))
                 {
                     createState = ECreatState.EditFileNameSW;
                 }
-                else if ((mouseState.X > LoadMapPos.X) && (mouseState.X < LoadMapPos.X + MENUENTRYSIZE_X) && (mouseState.Y > LoadMapPos.Y) && (mouseState.Y < LoadMapPos.Y + MENUENTRYSIZE_Y))
+                else if ((mouseState.X > LoadMapPos.X) && (mouseState.X < LoadMapPos.X + (int)Config.SMALL_BUTTON.X) && (mouseState.Y > LoadMapPos.Y) && (mouseState.Y < LoadMapPos.Y + (int)Config.SMALL_BUTTON.X))
                 {
                     createState = ECreatState.Nothing;
                     try
@@ -294,24 +283,24 @@ namespace paintRacer
                         return EGameStates.LoadMenu;
                     }
                 }
-                else if ((mouseState.X > CheckPointPos.X) && (mouseState.X < CheckPointPos.X + MENUENTRYSIZE_X) && (mouseState.Y > CheckPointPos.Y) && (mouseState.Y < CheckPointPos.Y + MENUENTRYSIZE_Y))
+                else if ((mouseState.X > CheckPointPos.X) && (mouseState.X < CheckPointPos.X + (int)Config.SMALL_BUTTON.X) && (mouseState.Y > CheckPointPos.Y) && (mouseState.Y < CheckPointPos.Y + (int)Config.SMALL_BUTTON.X))
                 {
                     createState = ECreatState.SetCheckPoint_I;
                 }
-                else if ((mouseState.X > remCheckPointPos.X) && (mouseState.X < remCheckPointPos.X + MENUENTRYSIZE_X) && (mouseState.Y > remCheckPointPos.Y) && (mouseState.Y < remCheckPointPos.Y + MENUENTRYSIZE_Y))
+                else if ((mouseState.X > remCheckPointPos.X) && (mouseState.X < remCheckPointPos.X + (int)Config.SMALL_BUTTON.X) && (mouseState.Y > remCheckPointPos.Y) && (mouseState.Y < remCheckPointPos.Y + (int)Config.SMALL_BUTTON.X))
                 {
                     Helper.resizeV2Array(checkPoints, -2);
                     createState = ECreatState.Nothing;
                 }
-                else if ((mouseState.X > StartPos.X) && (mouseState.X < StartPos.X + MENUENTRYSIZE_X) && (mouseState.Y > StartPos.Y) && (mouseState.Y < StartPos.Y + MENUENTRYSIZE_Y))
+                else if ((mouseState.X > StartPos.X) && (mouseState.X < StartPos.X + (int)Config.SMALL_BUTTON.X) && (mouseState.Y > StartPos.Y) && (mouseState.Y < StartPos.Y + (int)Config.SMALL_BUTTON.X))
                 {
                     createState = ECreatState.SetStartPoint_I;
                 }
-                else if ((mouseState.X > FinishPos.X) && (mouseState.X < FinishPos.X + MENUENTRYSIZE_X) && (mouseState.Y > FinishPos.Y) && (mouseState.Y < FinishPos.Y + MENUENTRYSIZE_Y))
+                else if ((mouseState.X > FinishPos.X) && (mouseState.X < FinishPos.X + (int)Config.SMALL_BUTTON.X) && (mouseState.Y > FinishPos.Y) && (mouseState.Y < FinishPos.Y + (int)Config.SMALL_BUTTON.X))
                 {
                     createState = ECreatState.SetFinish_I;
                 }
-                else if ((mouseState.X > CreatePos.X) && (mouseState.X < CreatePos.X + MENUENTRYSIZE_X) && (mouseState.Y > CreatePos.Y) && (mouseState.Y < CreatePos.Y + MENUENTRYSIZE_Y))
+                else if ((mouseState.X > CreatePos.X) && (mouseState.X < CreatePos.X + (int)Config.SMALL_BUTTON.X) && (mouseState.Y > CreatePos.Y) && (mouseState.Y < CreatePos.Y + (int)Config.SMALL_BUTTON.X))
                 {
                     try
                     {
@@ -332,7 +321,7 @@ namespace paintRacer
                         return EGameStates.LoadMenu;
                     }
                 }
-                else if ((mouseState.X > BackPos.X) && (mouseState.X < BackPos.X + MENUENTRYSIZE_X) && (mouseState.Y > BackPos.Y) && (mouseState.Y < BackPos.Y + MENUENTRYSIZE_Y))
+                else if ((mouseState.X > BackPos.X) && (mouseState.X < BackPos.X + (int)Config.SMALL_BUTTON.X) && (mouseState.Y > BackPos.Y) && (mouseState.Y < BackPos.Y + (int)Config.SMALL_BUTTON.X))
                 {
                     MapPic = null;
                     MapPicSW = null;
@@ -469,23 +458,23 @@ namespace paintRacer
         {
             spriteBatch.Begin();
 
-            Vector2 pos = new Vector2(MAINMENUBUTTONLEFTBOUND, MAINMENUENTRYSPACE);
+            Vector2 pos = new Vector2(MAINMENUBUTTONLEFTBOUND, Config.BIG_BUTTON_SPACE);
             textArrayPos = new Vector2(pos.X, pos.Y);
 
-            spriteBatch.Draw(whitePixel, new Rectangle((int)textArrayPos.X - Config.TEXTFIELD_BORDER, (int)textArrayPos.Y - Config.TEXTFIELD_BORDER, 800 - (int)textArrayPos.X, (int)textArrayPos.Y + 2 * Config.TEXTFIELD_BORDER + NUM_ENTRIES * (MENULINESIZE + MENULINESPACE)), Config.TEXT_BOX_COLOR);
+            spriteBatch.Draw(whitePixel, new Rectangle((int)textArrayPos.X - Config.TEXTFIELD_BORDER, (int)textArrayPos.Y - Config.TEXTFIELD_BORDER, 800 - (int)textArrayPos.X, (int)textArrayPos.Y + 2 * Config.TEXTFIELD_BORDER + NUM_ENTRIES * (Config.LINE_SIZE + Config.BIG_LINE_SPACE)), Config.TEXT_BOX_COLOR);
 
             if (directoryarray != null)
                 for (int count = scrollpos; (count < scrollpos + NUM_ENTRIES) && (count < directoryarray.Length); count++)
                 {
-                    pos.Y = (count - scrollpos) * (MENULINESIZE + MENULINESPACE) + MENUENTRYSPACE;
+                    pos.Y = (count - scrollpos) * (Config.LINE_SIZE + Config.BIG_LINE_SPACE) + Config.SMALL_BUTTON_SPACE;
                     spriteBatch.DrawString(DEFAULT_FONT, directoryarray[count].Substring(directoryarray[count].LastIndexOf('\\') + 1), pos, Config.TEXT_COLOR);
                 }
 
-            pos.Y = NUM_ENTRIES * (MENULINESIZE + MENULINESPACE) + 3 * MENUENTRYSPACE + MENUENTRYSIZE_Y;
+            pos.Y = NUM_ENTRIES * (Config.LINE_SIZE + Config.BIG_LINE_SPACE) + 3 * Config.SMALL_BUTTON_SPACE + (int)Config.SMALL_BUTTON.X;
             spriteBatch.Draw(LoadNewMap, pos, Color.White);
             LoadMapPos = new Vector2(pos.X, pos.Y);
 
-            pos.Y += MAINMENUENTRYSPACE + MAINMENUENTRYSIZE_Y;
+            pos.Y += Config.BIG_BUTTON_SPACE + (int)Config.BIG_BUTTON.Y;
             spriteBatch.Draw(Back, pos, Color.White);
             BackPos = new Vector2(pos.X, pos.Y);
 
@@ -523,47 +512,47 @@ namespace paintRacer
             MapPicPos = new Vector2(MAPLEFTBOUND);
 
             //Text
-            Vector2 pos = new Vector2(CREATEMENUBUTTONLEFTBOUND, MENUENTRYSPACE);
+            Vector2 pos = new Vector2(CREATEMENUBUTTONLEFTBOUND, Config.SMALL_BUTTON_SPACE);
 
-            spriteBatch.Draw(whitePixel, new Rectangle((int)pos.X - Config.TEXTFIELD_BORDER, (int)pos.Y - Config.TEXTFIELD_BORDER, 800 - (int)pos.X, 2 * MENULINESIZE + MENULINESPACE + 2 * Config.TEXTFIELD_BORDER), Config.TEXT_BOX_COLOR);
+            spriteBatch.Draw(whitePixel, new Rectangle((int)pos.X - Config.TEXTFIELD_BORDER, (int)pos.Y - Config.TEXTFIELD_BORDER, 800 - (int)pos.X, 2 * Config.LINE_SIZE + Config.BIG_LINE_SPACE + 2 * Config.TEXTFIELD_BORDER), Config.TEXT_BOX_COLOR);
 
             spriteBatch.DrawString(DEFAULT_FONT, "Color-File: " + FileName, pos, Config.TEXT_COLOR);
             fileNamePos = new Vector2(pos.X, pos.Y);
 
-            pos.Y += MENULINESIZE + MENULINESPACE;
+            pos.Y += Config.LINE_SIZE + Config.BIG_LINE_SPACE;
             spriteBatch.DrawString(DEFAULT_FONT, "SW-File: " + FileNameSW, pos, Config.TEXT_COLOR);
             fileNameSWPos = new Vector2(pos.X, pos.Y);
 
             //Buttons
-            pos.Y += MENULINESIZE + MENULINESPACE + Config.TEXTFIELD_BORDER;
+            pos.Y += Config.LINE_SIZE + Config.BIG_LINE_SPACE + Config.TEXTFIELD_BORDER;
             spriteBatch.Draw(LoadMap, pos, Color.White);
             LoadMapPos = new Vector2(pos.X, pos.Y);
 
-            pos.Y += MENUENTRYSIZE_Y + MENUENTRYSPACE;
+            pos.Y += (int)Config.SMALL_BUTTON.X + Config.SMALL_BUTTON_SPACE;
             spriteBatch.Draw(CheckPoint, pos, Color.White);
             CheckPointPos = new Vector2(pos.X, pos.Y);
 
             remCheckPointPos = new Vector2(pos.X, pos.Y);
-            remCheckPointPos.X += MENUENTRYSIZE_X + MENUENTRYSPACE;
+            remCheckPointPos.X += (int)Config.SMALL_BUTTON.X + Config.SMALL_BUTTON_SPACE;
             spriteBatch.Draw(remCheckPoint, remCheckPointPos, Color.White);
 
-            pos.Y += MENUENTRYSIZE_Y + MENUENTRYSPACE;
+            pos.Y += (int)Config.SMALL_BUTTON.X + Config.SMALL_BUTTON_SPACE;
             spriteBatch.Draw(Start, pos, Color.White);
             StartPos = new Vector2(pos.X, pos.Y);
 
-            pos.Y += MENUENTRYSIZE_Y + MENUENTRYSPACE;
+            pos.Y += (int)Config.SMALL_BUTTON.X + Config.SMALL_BUTTON_SPACE;
             spriteBatch.Draw(Finish, pos, Color.White);
             FinishPos = new Vector2(pos.X, pos.Y);
 
-            pos.Y += MENUENTRYSIZE_Y + MENUENTRYSPACE;
+            pos.Y += (int)Config.SMALL_BUTTON.X + Config.SMALL_BUTTON_SPACE;
             spriteBatch.Draw(whitePixel, new Rectangle((int)pos.X - Config.TEXTFIELD_BORDER, (int)pos.Y - Config.TEXTFIELD_BORDER, 800 - (int)pos.X, 480 - (int)pos.Y), Config.TEXT_BOX_COLOR);
             spriteBatch.DrawString(DEFAULT_FONT, Info(), pos, Config.TEXT_COLOR);
 
             CreatePos = new Vector2(MAPLEFTBOUND, 2 * MAPLEFTBOUND + MAPSIZE);
             spriteBatch.Draw(Create, CreatePos, Color.White);
 
-            BackPos = new Vector2(MAPLEFTBOUND + MENUENTRYSIZE_X + MENUENTRYSPACE, CreatePos.Y);
-            spriteBatch.Draw(Back, new Rectangle((int)BackPos.X, (int)BackPos.Y, MENUENTRYSIZE_X, MENUENTRYSIZE_Y), Color.White);
+            BackPos = new Vector2(MAPLEFTBOUND + (int)Config.SMALL_BUTTON.X + Config.SMALL_BUTTON_SPACE, CreatePos.Y);
+            spriteBatch.Draw(Back, new Rectangle((int)BackPos.X, (int)BackPos.Y, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.X), Color.White);
 
             spriteBatch.End();
         }
