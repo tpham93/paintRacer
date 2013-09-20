@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-//using paintRacer.gameStates;
+using paintRacer.gameStates;
 
 namespace paintRacer
 {
@@ -191,7 +191,10 @@ namespace paintRacer
                             tmpGameStateElement = null;
                             gameStateElement.Load(Content);
                             break;
+                        case EGameStates.Credits:
 
+                            gameStateElement = new Credits();
+                            break;
                         case EGameStates.CarSelection:
                             // not required if CarSelectionSingleplayer or CarSelectionMultiplayer is set before
                             if (gameState != EGameStates.CarSelectionSingleplayer && gameState != EGameStates.CarSelectionMultiplayer)

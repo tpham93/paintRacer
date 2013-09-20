@@ -22,10 +22,6 @@ namespace paintRacer
             /// </summary>
             MainMenu,
             /// <summary>
-            /// load a knowen map
-            /// </summary>
-            LoadSavedMap,
-            /// <summary>
             /// load a new map
             /// </summary>
             LoadNewMap
@@ -90,9 +86,9 @@ namespace paintRacer
         //some textures and positions
         private Texture2D whitePixel;
         private Texture2D LoadNewMap;
-        private Vector2 LoadNewMapPos;
-        private Texture2D ChooseMap;
-        private Vector2 ChooseMapPos;
+        //private Vector2 LoadNewMapPos;
+        //private Texture2D ChooseMap;
+        //private Vector2 ChooseMapPos;
         private Texture2D Back;
         private Vector2 BackPos;
         private Texture2D LoadMap;
@@ -110,6 +106,7 @@ namespace paintRacer
         private Texture2D MapPic;
         private Texture2D MapPicSW;
         private Vector2 MapPicPos;
+        private Texture2D bgPic;
 
         private Vector2 textArrayPos;
         private Vector2 fileNamePos;
@@ -123,11 +120,12 @@ namespace paintRacer
 
         private const int MAPSIZE = 350;
         private const int MAPLEFTBOUND = 25;
-        private const int MAINMENUBUTTONLEFTBOUND = 100;
+        private const int MAINMENUBUTTONLEFTBOUND = 500;
         private const int LOADMENUBUTTONLEFTBOUND = 200;
         private const int CREATEMENUBUTTONLEFTBOUND = MAPSIZE + MAPLEFTBOUND + 25;
         private Color DEFAULT_COLOR = Color.Black;
         private SpriteFont DEFAULT_FONT;
+        private const int TEXTFIELDBORDER = 5;
 
         GraphicsDevice graphicsDevice;
 
@@ -186,6 +184,7 @@ namespace paintRacer
             Finish = Helper.loadImage(@"Content\loadMenu\Finish.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));
             remCheckPoint = Helper.loadImage(@"Content\loadmenu\Remove.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));
             Create = Helper.loadImage(@"Content\loadmenu\Create.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));
+            bgPic = Helper.loadImage("Content/track.png");
         }
 
         /// <summary>
@@ -200,73 +199,12 @@ namespace paintRacer
             {
                 case EMainState.LoadNewMap:
                     return UpdateLoadNewMap(gameTime);
-                case EMainState.LoadSavedMap:
-                    return UpdateLoadSavedMap(gameTime);
                 case EMainState.MainMenu:
                     return UpdateMainMenu(gameTime);
                 default:
                     return UpdateMainMenu(gameTime);
             }
 
-        }
-
-        /// <summary>
-        /// Update if load a saved map
-        /// </summary>
-        /// <param name="gameTime"></param>
-        /// the gameTime
-        /// <returns>the next gamestate - EGameState</returns>
-        private EGameStates UpdateLoadSavedMap(GameTime gameTime)
-        {
-            MouseState mouseState = Mouse.GetState();
-
-            timeSpace += gameTime.ElapsedGameTime;
-            if (mouseState.LeftButton == ButtonState.Pressed && timeSpace > Helper.TIMEBETWEENKEYS)
-            {
-                if ((mouseState.X > BackPos.X) && (mouseState.X < BackPos.X + MENUENTRYSIZE_X) && (mouseState.Y > BackPos.Y) && (mouseState.Y < BackPos.Y + MENUENTRYSIZE_Y))
-                {
-                    mainState = EMainState.MainMenu;
-                    scrollpos = 0;
-                }
-                for (int count = 0; count < NUM_ENTRIES; ++count)
-                {
-                    int offset = count * (MENULINESIZE + MENULINESPACE);
-                    if ((mouseState.X > textArrayPos.X) && (mouseState.Y > textArrayPos.Y + offset) && (mouseState.Y < textArrayPos.Y + offset + MENULINESIZE))
-                    {
-                        try
-                        {
-                            Global.map = XmlLoad.parseMapConfig(directoryarray[count + scrollpos]); 
-                            scrollpos = 0;
-                            timeSpace = new TimeSpan();
-                            return nextState;
-                        }
-                        catch
-                        {
-                            return EGameStates.LoadMenu;
-                        }
-                    }
-                }
-            }
-
-            timeSpace += gameTime.ElapsedGameTime;
-
-            if (timeSpace > Helper.TIMEBETWEENKEYS)
-            {
-                timeSpace = new TimeSpan();
-                KeyboardState keyboartState = Keyboard.GetState();
-                if (keyboartState.IsKeyDown(Keys.Down))
-                {
-                    ++scrollpos;
-                    scrollpos = scrollpos >= directoryarray.Length ? directoryarray.Length - 1 : scrollpos;
-                }
-                else if (keyboartState.IsKeyDown(Keys.Up))
-                {
-                    --scrollpos;
-                    scrollpos = scrollpos < 0 ? 0 : scrollpos;
-                }
-            }
-
-            return EGameStates.LoadMenu;
         }
 
         /// <summary>
@@ -293,10 +231,39 @@ namespace paintRacer
                     mainState = EMainState.LoadNewMap;
                 }
 
-                else if ((mouse.X > ChooseMapPos.X) && (mouse.X < ChooseMapPos.X + MAINMENUENTRYSIZE_X) && (mouse.Y > ChooseMapPos.Y) && (mouse.Y < ChooseMapPos.Y + MAINMENUENTRYSIZE_Y))
+                for (int count = 0; count < NUM_ENTRIES; ++count)
                 {
-                    timeSpace = new TimeSpan();
-                    mainState = EMainState.LoadSavedMap;
+                    int offset = count * (MENULINESIZE + MENULINESPACE);
+                    if ((mouse.X > textArrayPos.X) && (mouse.Y > textArrayPos.Y + offset) && (mouse.Y < textArrayPos.Y + offset + MENULINESIZE))
+                    {
+                        try
+                        {
+                            Global.map = XmlLoad.parseMapConfig(directoryarray[count + scrollpos]);
+                            scrollpos = 0;
+                            timeSpace = new TimeSpan();
+                            return nextState;
+                        }
+                        catch
+                        {
+                            return EGameStates.LoadMenu;
+                        }
+                    }
+                }
+            }
+
+            if (timeSpace > Helper.TIMEBETWEENKEYS)
+            {
+                timeSpace = new TimeSpan();
+                KeyboardState keyboartState = Keyboard.GetState();
+                if (keyboartState.IsKeyDown(Keys.Down))
+                {
+                    ++scrollpos;
+                    scrollpos = scrollpos >= directoryarray.Length ? directoryarray.Length - 1 : scrollpos;
+                }
+                else if (keyboartState.IsKeyDown(Keys.Up))
+                {
+                    --scrollpos;
+                    scrollpos = scrollpos < 0 ? 0 : scrollpos;
                 }
             }
 
@@ -485,13 +452,14 @@ namespace paintRacer
         /// the spriteBatch to draw in
         public void Draw(Microsoft.Xna.Framework.GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
+            spriteBatch.Begin();
+            spriteBatch.Draw(bgPic, new Vector2(0, 0), Color.White);
+            spriteBatch.End();
+
             switch (mainState)
             {
                 case EMainState.LoadNewMap:
                     DrawLoadNewMap(gameTime, spriteBatch);
-                    break;
-                case EMainState.LoadSavedMap:
-                    DrawLoadSavedMap(gameTime, spriteBatch);
                     break;
                 case EMainState.MainMenu:
                     DrawMainMenu(gameTime, spriteBatch);
@@ -514,33 +482,9 @@ namespace paintRacer
             spriteBatch.Begin();
 
             Vector2 pos = new Vector2(MAINMENUBUTTONLEFTBOUND, MAINMENUENTRYSPACE);
-            spriteBatch.Draw(ChooseMap, pos, Color.White);
-            ChooseMapPos = new Vector2(pos.X, pos.Y);
-
-            pos.Y += MAINMENUENTRYSPACE + MAINMENUENTRYSIZE_Y;
-            spriteBatch.Draw(LoadNewMap, pos, Color.White);
-            LoadMapPos = new Vector2(pos.X, pos.Y);
-
-            pos.Y += MAINMENUENTRYSPACE + MAINMENUENTRYSIZE_Y;
-            spriteBatch.Draw(Back, pos, Color.White);
-            BackPos = new Vector2(pos.X, pos.Y);
-
-            spriteBatch.End();
-        }
-
-        /// <summary>
-        /// Draw function for the window to load a map
-        /// </summary>
-        /// <param name="gameTime"></param>
-        /// the gameTime
-        /// <param name="spriteBatch"></param>
-        /// the spriteBatch to draw in
-        private void DrawLoadSavedMap(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            spriteBatch.Begin();
-
-            Vector2 pos = new Vector2(LOADMENUBUTTONLEFTBOUND, MENUENTRYSPACE);
             textArrayPos = new Vector2(pos.X, pos.Y);
+
+            spriteBatch.Draw(whitePixel, new Rectangle((int)textArrayPos.X - TEXTFIELDBORDER, (int)textArrayPos.Y - TEXTFIELDBORDER, 800 - (int)textArrayPos.X, (int)textArrayPos.Y + 2 * TEXTFIELDBORDER + NUM_ENTRIES * (MENULINESIZE + MENULINESPACE)), Color.Moccasin);
 
             if (directoryarray != null)
                 for (int count = scrollpos; (count < scrollpos + NUM_ENTRIES) && (count < directoryarray.Length); count++)
@@ -550,6 +494,10 @@ namespace paintRacer
                 }
 
             pos.Y = NUM_ENTRIES * (MENULINESIZE + MENULINESPACE) + 3 * MENUENTRYSPACE + MENUENTRYSIZE_Y;
+            spriteBatch.Draw(LoadNewMap, pos, Color.White);
+            LoadMapPos = new Vector2(pos.X, pos.Y);
+
+            pos.Y += MAINMENUENTRYSPACE + MAINMENUENTRYSIZE_Y;
             spriteBatch.Draw(Back, pos, Color.White);
             BackPos = new Vector2(pos.X, pos.Y);
 
@@ -588,6 +536,9 @@ namespace paintRacer
 
             //Text
             Vector2 pos = new Vector2(CREATEMENUBUTTONLEFTBOUND, MENUENTRYSPACE);
+
+            spriteBatch.Draw(whitePixel, new Rectangle((int)pos.X - TEXTFIELDBORDER, (int)pos.Y - TEXTFIELDBORDER, 800 - (int)pos.X, 2 * MENULINESIZE + MENULINESPACE + 2 * TEXTFIELDBORDER), Color.Moccasin);
+
             spriteBatch.DrawString(DEFAULT_FONT, "Color-File: " + FileName, pos, DEFAULT_COLOR);
             fileNamePos = new Vector2(pos.X, pos.Y);
 
@@ -596,7 +547,7 @@ namespace paintRacer
             fileNameSWPos = new Vector2(pos.X, pos.Y);
 
             //Buttons
-            pos.Y += MENULINESIZE + MENULINESPACE;
+            pos.Y += MENULINESIZE + MENULINESPACE + TEXTFIELDBORDER;
             spriteBatch.Draw(LoadMap, pos, Color.White);
             LoadMapPos = new Vector2(pos.X, pos.Y);
 
@@ -617,6 +568,7 @@ namespace paintRacer
             FinishPos = new Vector2(pos.X, pos.Y);
 
             pos.Y += MENUENTRYSIZE_Y + MENUENTRYSPACE;
+            spriteBatch.Draw(whitePixel, new Rectangle((int)pos.X - TEXTFIELDBORDER, (int)pos.Y - TEXTFIELDBORDER, 800 - (int)pos.X, 480 - (int)pos.Y), Color.Moccasin);
             spriteBatch.DrawString(DEFAULT_FONT, Info(), pos, DEFAULT_COLOR);
 
             CreatePos = new Vector2(MAPLEFTBOUND, 2 * MAPLEFTBOUND + MAPSIZE);
