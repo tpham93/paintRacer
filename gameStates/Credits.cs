@@ -36,7 +36,8 @@ namespace paintRacer.gameStates
                            "     > commons.wikimedia.org/wiki/...", "         File:11_Renault_JP.jpg",
                            "     > commons.wikimedia.org/wiki/...", "         File:Toyota_F1_Canada_2006.jpg",
                            "     > commons.wikimedia.org/wiki/...", "         File:Fale_F1_Monza_2004_176.jpg",
-                           "     > commons.wikimedia.org/wiki/...", "         File:Grid_girls_F1.jpg", "",
+                           "     > commons.wikimedia.org/wiki/...", "         File:Grid_girls_F1.jpg",
+                           "     > commons.wikimedia.org/wiki/...", "         File:23_Renault_JP.jpg", "",
                            "Dessigned in an Acagamics lecture"};
 
         public void Load(Microsoft.Xna.Framework.Content.ContentManager content)

@@ -563,16 +563,16 @@ namespace paintRacer
             {
                 case ECreatState.Nothing:
                     return "Load a Map and its black-and-\nwhite-dublicate:\n" +
-                            "black   - road\n" +
+                            "white   - road\n" +
                             "greay   - offroad\n" +
-                            "white   - object";
+                            "black   - object";
                 case ECreatState.EditFileNameColor:
                     return "Enter the name of the color-\npicture.";
                 case ECreatState.EditFileNameSW:
                     return "Enter the name of the black-and-\nwhite-picture:\n" +
-                            "black   - road\n" +
+                            "white   - road\n" +
                             "greay   - offroad\n" +
-                            "white   - object";
+                            "black   - object";
                 case ECreatState.SetCheckPoint_I:
                     return "Set a checkpoint:\n" +
                             "A checkpoint are two points on both \nsides of the road.\n" +
