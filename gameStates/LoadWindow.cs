@@ -176,16 +176,16 @@ namespace paintRacer
             DEFAULT_FONT = content.Load<SpriteFont>(@"font");
 
             //load Textures
-            whitePixel = Helper.loadImage("OneWithePixel.png");
-            LoadNewMap = Helper.loadImage("loadMenu/LoadNewMap.png", new Rectangle(0, 0, MAINMENUENTRYSIZE_X, MAINMENUENTRYSIZE_Y));
-            ChooseMap = Helper.loadImage("loadMenu/ChooseMap.png", new Rectangle(0, 0, MAINMENUENTRYSIZE_X, MAINMENUENTRYSIZE_Y));
-            Back = Helper.loadImage("loadMenu/Back.png", new Rectangle(0, 0, MAINMENUENTRYSIZE_X, MAINMENUENTRYSIZE_Y));
-            LoadMap = Helper.loadImage("loadMenu/Load.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));
-            CheckPoint = Helper.loadImage("loadMenu/Checkpoint.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));
-            Start = Helper.loadImage("loadMenu/Start.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));
-            Finish = Helper.loadImage("loadMenu/Finish.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));
-            remCheckPoint = Helper.loadImage("loadmenu/Remove.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));
-            Create = Helper.loadImage("loadmenu/Create.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));
+            whitePixel = Helper.loadImage(@"Content\OneWithePixel.png");
+            LoadNewMap = Helper.loadImage(@"Content\loadMenu\LoadNewMap.png", new Rectangle(0, 0, MAINMENUENTRYSIZE_X, MAINMENUENTRYSIZE_Y));
+            ChooseMap = Helper.loadImage(@"Content\loadMenu\ChooseMap.png", new Rectangle(0, 0, MAINMENUENTRYSIZE_X, MAINMENUENTRYSIZE_Y));
+            Back = Helper.loadImage(@"Content\loadMenu\Back.png", new Rectangle(0, 0, MAINMENUENTRYSIZE_X, MAINMENUENTRYSIZE_Y));
+            LoadMap = Helper.loadImage(@"Content\loadMenu\Load.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));
+            CheckPoint = Helper.loadImage(@"Content\loadMenu\Checkpoint.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));
+            Start = Helper.loadImage(@"Content\loadMenu\Start.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));
+            Finish = Helper.loadImage(@"Content\loadMenu\Finish.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));
+            remCheckPoint = Helper.loadImage(@"Content\loadmenu\Remove.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));
+            Create = Helper.loadImage(@"Content\loadmenu\Create.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));
         }
 
         /// <summary>
@@ -233,17 +233,17 @@ namespace paintRacer
                     int offset = count * (MENULINESIZE + MENULINESPACE);
                     if ((mouseState.X > textArrayPos.X) && (mouseState.Y > textArrayPos.Y + offset) && (mouseState.Y < textArrayPos.Y + offset + MENULINESIZE))
                     {
-                        //try
+                        try
                         {
                             Global.map = XmlLoad.parseMapConfig(directoryarray[count + scrollpos]); 
                             scrollpos = 0;
                             timeSpace = new TimeSpan();
                             return nextState;
                         }
-                        //catch
-                        //{
-                        //    return EGameStates.LoadMenu;
-                        //}
+                        catch
+                        {
+                            return EGameStates.LoadMenu;
+                        }
                     }
                 }
             }

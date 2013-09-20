@@ -60,7 +60,7 @@ namespace paintRacer
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            Console.Out.WriteLine(Window.ClientBounds);
             GameState = EGameStates.Menue;
             //Initializes Level and Player with test textures
             //level = new Level(MAP_PIC, Level.MapType.rawImage);
@@ -74,8 +74,6 @@ namespace paintRacer
             Config.setKeys(keys);
 
             //scene = new Scene(level, players, GraphicsDevice.Viewport, Config.getKeys());
-            
-
 
             // TODO: use this.Content to load your game content here
         }
@@ -150,11 +148,7 @@ namespace paintRacer
                             }
                             else
                             {
-
-                                Player[] players = new Player[1];
-                                players[0] = new Player("Player 1",Helper.loadImage("testcar.png"), Color.Blue, (Global.map.CheckPoints.Length)/2);
-
-                                gameStateElement = new Singleplayer(GraphicsDevice, players, Global.map);
+                                gameStateElement = new Singleplayer(GraphicsDevice, Global.players, Global.map);
                                 gameStateElement.Load(Content);
                             }
                             tmpGameStateElement = null;
@@ -167,12 +161,7 @@ namespace paintRacer
                             }
                             else
                             {
-
-                                Player[] players = new Player[2];
-                                players[0] = new Player("Player 1",Helper.loadImage("testcar.png"), Color.Blue, (Global.map.CheckPoints.Length)/2);
-                                players[1] = new Player("Player 2",Helper.loadImage("testcar.png"), Color.Red, (Global.map.CheckPoints.Length)/2);
-
-                                gameStateElement = new Multiplayer(GraphicsDevice,players,Global.map);
+                                gameStateElement = new Multiplayer(GraphicsDevice,Global.players,Global.map);
                                 gameStateElement.Load(Content);
                             }
                             tmpGameStateElement = null;
@@ -193,16 +182,32 @@ namespace paintRacer
                             }
                             break;
                         case EGameStates.LoadMenuSinglePlayer:
-                            gameStateElement = new LoadWindow(GraphicsDevice, EGameStates.SinglePlayer);
+                            gameStateElement = new LoadWindow(GraphicsDevice, EGameStates.CarSelectionSingleplayer);
                             tmpGameStateElement = null;
                             gameStateElement.Load(Content);
-                            value = EGameStates.LoadMenu;
                             break;
                         case EGameStates.LoadMenuMultiplayer:
-                            gameStateElement = new LoadWindow(GraphicsDevice, EGameStates.MultiPlayer);
+                            gameStateElement = new LoadWindow(GraphicsDevice, EGameStates.CarSelectionMultiplayer);
                             tmpGameStateElement = null;
                             gameStateElement.Load(Content);
-                            value = EGameStates.LoadMenu;
+                            break;
+
+                        case EGameStates.CarSelection:
+                            // not required if CarSelectionSingleplayer or CarSelectionMultiplayer is set before
+                            if (gameState != EGameStates.CarSelectionSingleplayer && gameState != EGameStates.CarSelectionMultiplayer)
+                            {
+                                throw new Exception("impossible state reached!");
+                            }
+                            break;
+                        case EGameStates.CarSelectionSingleplayer:
+                            gameStateElement = new CarSelection(EGameStates.SinglePlayer);
+                            tmpGameStateElement = null;
+                            gameStateElement.Load(Content);
+                            break;
+                        case EGameStates.CarSelectionMultiplayer:
+                            gameStateElement = new CarSelection(EGameStates.MultiPlayer);
+                            tmpGameStateElement = null;
+                            gameStateElement.Load(Content);
                             break;
                     }
                     gameState = value;

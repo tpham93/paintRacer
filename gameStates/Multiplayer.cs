@@ -22,17 +22,17 @@ namespace paintRacer
         //String MAP_PIC = "test2.png";
         //String MAP_PIC_SW = "test2SW.png";
         //Vector2 start_pos = new Vector2(1535, 550);
-        Vector2[] check_points;// = new Vector2[1];
+        //Vector2[] check_points;// = new Vector2[1];
 
         //Member of Scene.cs
         Map level;
         private Player[] players;
-        Viewport defaultView;
-        Viewport[] viewports;
+        //Viewport defaultView;
+        //Viewport[] viewports;
 
         Scene scene;
 
-        float rotation = 0.0f;
+        //float rotation = 0.0f;
 
         GraphicsDevice graphicsDevice;
 
@@ -56,8 +56,8 @@ namespace paintRacer
 
             int distance = 40;
             Vector2 offset = new Vector2((float)(distance*Math.Cos(map.StartRotation)), -(float)(distance*Math.Sin(map.StartRotation)));
-            players[0].setPosition(map.Start + offset);
-            players[1].setPosition(map.Start + new Vector2(-offset.X, -offset.Y));
+            players[0].setPosition(map.Start - offset);
+            players[1].setPosition(map.Start + offset);
 
             players[0].setRotation(map.StartRotation);
             players[1].setRotation(map.StartRotation);

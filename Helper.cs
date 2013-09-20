@@ -697,7 +697,7 @@ namespace paintRacer
             }
         }
 
-        internal static Vector2[] resizeV2Array(Vector2[] array, int n)
+        public static Vector2[] resizeV2Array(Vector2[] array, int n)
         {
             if (array != null)
             {
@@ -710,6 +710,19 @@ namespace paintRacer
                 return result;
             }
             return null;
+        }
+
+        public static Texture2D genRectangleTexture(int width, int height,Color color)
+        {
+            Texture2D output = new Texture2D(graphicsDevice, width, height);
+
+            Color[] pixel = new Color[width * height];
+            for (int i = 0; i < pixel.Length; ++i)
+            {
+                pixel[i] = color;
+            }
+            output.SetData<Color>(pixel);
+            return output;
         }
     }
 }
