@@ -237,12 +237,12 @@ namespace paintRacer
                     if ((mouse.X > textArrayPos.X) && (mouse.Y > textArrayPos.Y + offset) && (mouse.Y < textArrayPos.Y + offset + MENULINESIZE))
                     {
                         //try
-                        {
+                        //{
                             Global.map = XmlLoad.parseMapConfig(directoryarray[count + scrollpos]);
                             scrollpos = 0;
                             timeSpace = new TimeSpan();
                             return nextState;
-                        }
+                        //}
                         //catch
                         //{
                         //    return EGameStates.LoadMenu;
