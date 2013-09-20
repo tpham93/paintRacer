@@ -162,12 +162,12 @@ namespace paintRacer
             LoadNewMap = Helper.loadImage(@"Content\loadMenu\LoadNewMap.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));
             //ChooseMap = Helper.loadImage(@"Content\loadMenu\ChooseMap.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));
             Back = Helper.loadImage(@"Content\loadMenu\Back.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));
-            LoadMap = Helper.loadImage(@"Content\loadMenu\Load.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.X));
-            CheckPoint = Helper.loadImage(@"Content\loadMenu\Checkpoint.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.X));
-            Start = Helper.loadImage(@"Content\loadMenu\Start.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.X));
-            Finish = Helper.loadImage(@"Content\loadMenu\Finish.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.X));
-            remCheckPoint = Helper.loadImage(@"Content\loadmenu\Remove.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.X));
-            Create = Helper.loadImage(@"Content\loadmenu\Create.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.X));
+            LoadMap = Helper.loadImage(@"Content\loadMenu\Load.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.Y));
+            CheckPoint = Helper.loadImage(@"Content\loadMenu\Checkpoint.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.Y));
+            Start = Helper.loadImage(@"Content\loadMenu\Start.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.Y));
+            Finish = Helper.loadImage(@"Content\loadMenu\Finish.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.Y));
+            remCheckPoint = Helper.loadImage(@"Content\loadmenu\Remove.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.Y));
+            Create = Helper.loadImage(@"Content\loadmenu\Create.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.Y));
             bgPic = Helper.loadImage("Content/track.png");
         }
 
@@ -270,7 +270,7 @@ namespace paintRacer
                 {
                     createState = ECreatState.EditFileNameSW;
                 }
-                else if ((mouseState.X > LoadMapPos.X) && (mouseState.X < LoadMapPos.X + (int)Config.SMALL_BUTTON.X) && (mouseState.Y > LoadMapPos.Y) && (mouseState.Y < LoadMapPos.Y + (int)Config.SMALL_BUTTON.X))
+                else if ((mouseState.X > LoadMapPos.X) && (mouseState.X < LoadMapPos.X + (int)Config.SMALL_BUTTON.X) && (mouseState.Y > LoadMapPos.Y) && (mouseState.Y < LoadMapPos.Y + (int)Config.SMALL_BUTTON.Y))
                 {
                     createState = ECreatState.Nothing;
                     try
@@ -283,24 +283,24 @@ namespace paintRacer
                         return EGameStates.LoadMenu;
                     }
                 }
-                else if ((mouseState.X > CheckPointPos.X) && (mouseState.X < CheckPointPos.X + (int)Config.SMALL_BUTTON.X) && (mouseState.Y > CheckPointPos.Y) && (mouseState.Y < CheckPointPos.Y + (int)Config.SMALL_BUTTON.X))
+                else if ((mouseState.X > CheckPointPos.X) && (mouseState.X < CheckPointPos.X + (int)Config.SMALL_BUTTON.X) && (mouseState.Y > CheckPointPos.Y) && (mouseState.Y < CheckPointPos.Y + (int)Config.SMALL_BUTTON.Y))
                 {
                     createState = ECreatState.SetCheckPoint_I;
                 }
-                else if ((mouseState.X > remCheckPointPos.X) && (mouseState.X < remCheckPointPos.X + (int)Config.SMALL_BUTTON.X) && (mouseState.Y > remCheckPointPos.Y) && (mouseState.Y < remCheckPointPos.Y + (int)Config.SMALL_BUTTON.X))
+                else if ((mouseState.X > remCheckPointPos.X) && (mouseState.X < remCheckPointPos.X + (int)Config.SMALL_BUTTON.X) && (mouseState.Y > remCheckPointPos.Y) && (mouseState.Y < remCheckPointPos.Y + (int)Config.SMALL_BUTTON.Y))
                 {
                     Helper.resizeV2Array(checkPoints, -2);
                     createState = ECreatState.Nothing;
                 }
-                else if ((mouseState.X > StartPos.X) && (mouseState.X < StartPos.X + (int)Config.SMALL_BUTTON.X) && (mouseState.Y > StartPos.Y) && (mouseState.Y < StartPos.Y + (int)Config.SMALL_BUTTON.X))
+                else if ((mouseState.X > StartPos.X) && (mouseState.X < StartPos.X + (int)Config.SMALL_BUTTON.X) && (mouseState.Y > StartPos.Y) && (mouseState.Y < StartPos.Y + (int)Config.SMALL_BUTTON.Y))
                 {
                     createState = ECreatState.SetStartPoint_I;
                 }
-                else if ((mouseState.X > FinishPos.X) && (mouseState.X < FinishPos.X + (int)Config.SMALL_BUTTON.X) && (mouseState.Y > FinishPos.Y) && (mouseState.Y < FinishPos.Y + (int)Config.SMALL_BUTTON.X))
+                else if ((mouseState.X > FinishPos.X) && (mouseState.X < FinishPos.X + (int)Config.SMALL_BUTTON.X) && (mouseState.Y > FinishPos.Y) && (mouseState.Y < FinishPos.Y + (int)Config.SMALL_BUTTON.Y))
                 {
                     createState = ECreatState.SetFinish_I;
                 }
-                else if ((mouseState.X > CreatePos.X) && (mouseState.X < CreatePos.X + (int)Config.SMALL_BUTTON.X) && (mouseState.Y > CreatePos.Y) && (mouseState.Y < CreatePos.Y + (int)Config.SMALL_BUTTON.X))
+                else if ((mouseState.X > CreatePos.X) && (mouseState.X < CreatePos.X + (int)Config.SMALL_BUTTON.X) && (mouseState.Y > CreatePos.Y) && (mouseState.Y < CreatePos.Y + (int)Config.SMALL_BUTTON.Y))
                 {
                     try
                     {
@@ -321,7 +321,7 @@ namespace paintRacer
                         return EGameStates.LoadMenu;
                     }
                 }
-                else if ((mouseState.X > BackPos.X) && (mouseState.X < BackPos.X + (int)Config.SMALL_BUTTON.X) && (mouseState.Y > BackPos.Y) && (mouseState.Y < BackPos.Y + (int)Config.SMALL_BUTTON.X))
+                else if ((mouseState.X > BackPos.X) && (mouseState.X < BackPos.X + (int)Config.SMALL_BUTTON.X) && (mouseState.Y > BackPos.Y) && (mouseState.Y < BackPos.Y + (int)Config.SMALL_BUTTON.Y))
                 {
                     MapPic = null;
                     MapPicSW = null;
@@ -528,7 +528,7 @@ namespace paintRacer
             spriteBatch.Draw(LoadMap, pos, Color.White);
             LoadMapPos = new Vector2(pos.X, pos.Y);
 
-            pos.Y += (int)Config.SMALL_BUTTON.X + Config.SMALL_BUTTON_SPACE;
+            pos.Y += (int)Config.SMALL_BUTTON.Y + Config.SMALL_BUTTON_SPACE;
             spriteBatch.Draw(CheckPoint, pos, Color.White);
             CheckPointPos = new Vector2(pos.X, pos.Y);
 
@@ -536,15 +536,15 @@ namespace paintRacer
             remCheckPointPos.X += (int)Config.SMALL_BUTTON.X + Config.SMALL_BUTTON_SPACE;
             spriteBatch.Draw(remCheckPoint, remCheckPointPos, Color.White);
 
-            pos.Y += (int)Config.SMALL_BUTTON.X + Config.SMALL_BUTTON_SPACE;
+            pos.Y += (int)Config.SMALL_BUTTON.Y + Config.SMALL_BUTTON_SPACE;
             spriteBatch.Draw(Start, pos, Color.White);
             StartPos = new Vector2(pos.X, pos.Y);
 
-            pos.Y += (int)Config.SMALL_BUTTON.X + Config.SMALL_BUTTON_SPACE;
+            pos.Y += (int)Config.SMALL_BUTTON.Y + Config.SMALL_BUTTON_SPACE;
             spriteBatch.Draw(Finish, pos, Color.White);
             FinishPos = new Vector2(pos.X, pos.Y);
 
-            pos.Y += (int)Config.SMALL_BUTTON.X + Config.SMALL_BUTTON_SPACE;
+            pos.Y += (int)Config.SMALL_BUTTON.Y + Config.SMALL_BUTTON_SPACE + Config.TEXTFIELD_BORDER;
             spriteBatch.Draw(whitePixel, new Rectangle((int)pos.X - Config.TEXTFIELD_BORDER, (int)pos.Y - Config.TEXTFIELD_BORDER, 800 - (int)pos.X, 480 - (int)pos.Y), Config.TEXT_BOX_COLOR);
             spriteBatch.DrawString(DEFAULT_FONT, Info(), pos, Config.TEXT_COLOR);
 
@@ -552,7 +552,7 @@ namespace paintRacer
             spriteBatch.Draw(Create, CreatePos, Color.White);
 
             BackPos = new Vector2(MAPLEFTBOUND + (int)Config.SMALL_BUTTON.X + Config.SMALL_BUTTON_SPACE, CreatePos.Y);
-            spriteBatch.Draw(Back, new Rectangle((int)BackPos.X, (int)BackPos.Y, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.X), Color.White);
+            spriteBatch.Draw(Back, new Rectangle((int)BackPos.X, (int)BackPos.Y, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.Y), Color.White);
 
             spriteBatch.End();
         }

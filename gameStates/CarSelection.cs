@@ -51,9 +51,10 @@ namespace paintRacer
 
         int nameIndex;
 
+        Texture2D bgPic;
+
         public CarSelection(EGameStates nextGamestate)
         {
-
             const int fileListWidth = 300;
             const int fileListHeight = 200;
 
@@ -107,6 +108,7 @@ namespace paintRacer
 
         public void Load(ContentManager content)
         {
+            bgPic = Helper.loadImage(@"Content\car_box.png");
             finishButtonTexture = Helper.loadImage(@"Content\loadMenu\Finish.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));
             spriteFont = content.Load<SpriteFont>(@"font");
             fontHeight = (int)spriteFont.MeasureString("0").Y;
@@ -200,6 +202,9 @@ namespace paintRacer
         {
 
             spriteBatch.Begin();
+
+            spriteBatch.Draw(bgPic, new Vector2(0, 0), Color.White);
+
             {
                 spriteBatch.Draw(fileListBackground, fileListRectangle, Color.White);
                 spriteBatch.Draw(selectedTextureBackground, selectedTextureBackgroundRectangle, Color.White);

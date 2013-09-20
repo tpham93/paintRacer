@@ -9,7 +9,7 @@ namespace paintRacer
     class Config
     {
         //consts for game and GUI
-        public static readonly Color TEXT_BOX_COLOR = Color.Moccasin;
+        public static readonly Color TEXT_BOX_COLOR = Color.Moccasin * 0.8f;
         public const int TEXTFIELD_BORDER = 5;
         public static readonly Color TEXT_COLOR = Color.Black;
         public const int BIG_BUTTON_X = 187;
