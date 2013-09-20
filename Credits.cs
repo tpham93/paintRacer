@@ -16,7 +16,7 @@ namespace paintRacer.gameStates
 
         public void Load(Microsoft.Xna.Framework.Content.ContentManager content)
         {
-            bgPic = Helper.loadImage("Content/credits.png");
+            bgPic = Helper.loadImage(@"Content\credits.png");
         }
 
         public EGameStates Update(Microsoft.Xna.Framework.GameTime gameTime)
@@ -27,8 +27,7 @@ namespace paintRacer.gameStates
         public void Draw(Microsoft.Xna.Framework.GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
-            if (bgPic != null)
-                spriteBatch.Draw(bgPic, new Vector2(0, 0), Color.White);
+            spriteBatch.Draw(bgPic, new Vector2(0, 0), Color.White);
             spriteBatch.End();
         }
 

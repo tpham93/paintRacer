@@ -192,8 +192,8 @@ namespace paintRacer
                             gameStateElement.Load(Content);
                             break;
                         case EGameStates.Credits:
-
                             gameStateElement = new Credits();
+                            gameStateElement.Load(Content);
                             break;
                         case EGameStates.CarSelection:
                             // not required if CarSelectionSingleplayer or CarSelectionMultiplayer is set before
