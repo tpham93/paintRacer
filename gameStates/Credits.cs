@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace paintRacer.gameStates
+namespace paintRacer
 {
     class Credits : IGameStateElements
     {
@@ -63,17 +63,18 @@ namespace paintRacer.gameStates
 
             if (timeSpace > Config.TIME_BETWEEN_SAME_EVENT)
             {
-                timeSpace = new TimeSpan();
                 KeyboardState keyboartState = Keyboard.GetState();
                 if (keyboartState.IsKeyDown(Keys.Down))
                 {
                     ++scroll;
                     scroll = scroll >= output.Length ? output.Length - 1 : scroll;
+                    timeSpace = new TimeSpan();
                 }
                 else if (keyboartState.IsKeyDown(Keys.Up))
                 {
                     --scroll;
                     scroll = scroll < 0 ? 0 : scroll;
+                    timeSpace = new TimeSpan();
                 }
             }
 

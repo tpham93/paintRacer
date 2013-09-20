@@ -42,8 +42,8 @@ namespace paintRacer
         Texture2D finishButtonTexture;
         Rectangle finishButtonRectangle;
 
-        const int MENUENTRYSIZE_X = Config.SMALL_BUTTON_X;
-        const int MENUENTRYSIZE_Y = Config.SMALL_BUTTON_Y;
+        Texture2D backButtonTexture;
+        Rectangle backButtonRectangle;
 
         readonly Color[] playerColors;
 
@@ -53,7 +53,7 @@ namespace paintRacer
 
         Texture2D bgPic;
 
-        public CarSelection(EGameStates nextGamestate)
+        public CarSelection(EGameStates previousGamestate, EGameStates nextGamestate)
         {
             const int fileListWidth = 300;
             const int fileListHeight = 200;
@@ -97,7 +97,8 @@ namespace paintRacer
             Point selectedTextureCenterPoint = selectedTextureBackgroundRectangle.Center;
             selectedTextureBackgroundMiddlePosition = new Vector2(selectedTextureCenterPoint.X, selectedTextureCenterPoint.Y);
             fileListViewport = new Viewport(fileListRectangle);
-            finishButtonRectangle = new Rectangle(50, 390, MENUENTRYSIZE_X, MENUENTRYSIZE_Y);
+            finishButtonRectangle = new Rectangle(50, 390, Config.SMALL_BUTTON_X, Config.SMALL_BUTTON_Y);
+            backButtonRectangle = new Rectangle(fileListRectangle.Right - Config.SMALL_BUTTON_X, finishButtonRectangle.Y, Config.SMALL_BUTTON_X, Config.SMALL_BUTTON_Y);
 
             playerColors = new Color[] { Color.Blue, Color.Red };
 
@@ -109,7 +110,8 @@ namespace paintRacer
         public void Load(ContentManager content)
         {
             bgPic = Helper.loadImage(@"Content\car_box.png");
-            finishButtonTexture = Helper.loadImage(@"Content\loadMenu\Finish.png", new Rectangle(0, 0, MENUENTRYSIZE_X, MENUENTRYSIZE_Y));
+            finishButtonTexture = Helper.loadImage(@"Content\loadMenu\Finish.png", new Rectangle(0, 0, Config.SMALL_BUTTON_X, Config.SMALL_BUTTON_Y));
+            backButtonTexture = Helper.loadImage(@"Content\loadMenu\Back.png", new Rectangle(0, 0, Config.SMALL_BUTTON_X, Config.SMALL_BUTTON_Y));
             spriteFont = content.Load<SpriteFont>(@"font");
             fontHeight = (int)spriteFont.MeasureString("0").Y;
             for (int i = 0; i < nameRectangles.Length; ++i)
@@ -124,9 +126,6 @@ namespace paintRacer
         {
             if (timeBetweenKeyPress < Config.TIME_BETWEEN_SAME_EVENT)
                 timeBetweenKeyPress += gameTime.ElapsedGameTime;
-
-
-
             MouseState mouseState = Mouse.GetState();
             int newScrollValue = mouseState.ScrollWheelValue;
             if (newScrollValue != scrollValue)
@@ -138,7 +137,6 @@ namespace paintRacer
 
                 scrollValue = mouseState.ScrollWheelValue;
             }
-
             if (nameIndex != -1)
             {
                 KeyboardState keyboardState = Keyboard.GetState();
@@ -193,6 +191,10 @@ namespace paintRacer
                         return nextGamestate;
                     }
                 }
+                else if (backButtonRectangle.Contains(mouseposition))
+                {
+                    return EGameStates.LoadMenu;
+                }
             }
 
             return EGameStates.CarSelection;
@@ -203,12 +205,13 @@ namespace paintRacer
 
             spriteBatch.Begin();
 
-            spriteBatch.Draw(bgPic, new Vector2(0, 0), Color.White);
+            spriteBatch.Draw(bgPic, new Vector2(), Color.White);
 
             {
                 spriteBatch.Draw(fileListBackground, fileListRectangle, Color.White);
                 spriteBatch.Draw(selectedTextureBackground, selectedTextureBackgroundRectangle, Color.White);
                 spriteBatch.Draw(finishButtonTexture, finishButtonRectangle, Color.White);
+                spriteBatch.Draw(backButtonTexture, backButtonRectangle, Color.White);
                 if (selectedTexture != null)
                 {
                     spriteBatch.Draw(selectedTexture, selectedTextureBackgroundMiddlePosition, null, Color.White, 0, new Vector2(selectedTexture.Bounds.Center.X, selectedTexture.Bounds.Center.Y), 1, SpriteEffects.None, 0);
@@ -225,7 +228,6 @@ namespace paintRacer
                 {
                     spriteBatch.Draw(nameBackground, new Rectangle(nameRectangles[i].X - nameViewport.X, nameRectangles[i].Y - nameViewport.Y, nameRectangles[i].Width, nameRectangles[i].Height), Color.White);
                     spriteBatch.DrawString(spriteFont, "Player " + (i + 1) + ":" + names[i], new Vector2(nameRectangles[i].X, nameRectangles[i].Y - nameViewport.Y), Config.TEXT_COLOR);
-                    //spriteBatch.DrawString(spriteFont, names[i], new Vector2(nameRectangles[i].X - nameViewport.X, nameRectangles[i].Y - nameViewport.Y), Config.TEXT_COLOR);
                 }
             }
             spriteBatch.End();

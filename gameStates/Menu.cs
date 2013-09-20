@@ -18,6 +18,7 @@ namespace paintRacer
         Texture2D selectionPointerTexture;
         // array of rectangle to show menuentries
         Texture2D[] menuEntrieTexture;
+        Rectangle[] menuEntryRectangles;
         //bgcolor
         Texture2D backgound;
         // index of selected entry
@@ -25,27 +26,44 @@ namespace paintRacer
         // time between keypress (max = Config.TIME_BETWEEN_SAME_EVENT))
         TimeSpan timeBetweenKeyPress;
 
+        TimeSpan mouseInactiveTime;
+
+        Point mousePosition;
+
         // constants___________________________________________
         const int SELECTIONPOINTERSIZE_X = 100;    //size of marker
         const int SELECTIONPOINTERSIZE_Y = 50;    //size of marker
         const int MENUENTRYNUM = 5;
 
         // variables used as constants
-        Vector2 MENUSTARTPOS = new Vector2(50, Config.BIG_BUTTON_SPACE);   //"pointer" on first menuentry
-        Color MENUENTRYCOLOR = Color.White;  //menuentrycolor
-        Color MENUSELECTIONPOINTERCOLOR = Color.Green;
+        static readonly Point MENUSTARTPOS = new Point(50, Config.BIG_BUTTON_SPACE);   //"pointer" on first menuentry
+        static readonly Color MENUENTRYCOLOR = Color.White;  //menuentrycolor
+        static readonly Color MENUSELECTIONPOINTERCOLOR = Color.Green;
 
         const Keys SELECT_UP = Keys.Up;
         const Keys SELECT_DOWN = Keys.Down;
         const Keys SELECT_ENTRY = Keys.Enter;
 
         //_____________________________________________________
+
+        public Menu()
+        {
+            menuEntryRectangles = new Rectangle[5];
+            Point tmpPoint = MENUSTARTPOS;
+            for (int i = 0; i < menuEntryRectangles.Length; ++i)
+            {
+                menuEntryRectangles[i] = new Rectangle(tmpPoint.X, tmpPoint.Y, Config.BIG_BUTTON_X, Config.BIG_BUTTON_Y);
+                tmpPoint.Y += Config.BIG_BUTTON_Y + Config.BIG_BUTTON_SPACE;
+            }
+            mouseInactiveTime = new TimeSpan(0, 0, 1);
+        }
+
         public void Load(Microsoft.Xna.Framework.Content.ContentManager content)
         {
             // geneart all rectangles
             backgound = Helper.loadImage("Content/start.png");
             selectionPointerTexture = Helper.loadImage("Content/menu/car.png", new Rectangle(0, 0, SELECTIONPOINTERSIZE_X, SELECTIONPOINTERSIZE_Y));
-            menuEntrieTexture = new Texture2D[5];                            //array-size shuld be 5
+            menuEntrieTexture = new Texture2D[5];                                                                                                              //array-size shuld be 5
             menuEntrieTexture[0] = Helper.loadImage(@"Content\menu\singlePlayer.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));//first menuentry
             menuEntrieTexture[1] = Helper.loadImage(@"Content\menu\multyPlayer.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y)); //2nd menuentry
             menuEntrieTexture[2] = Helper.loadImage(@"Content\menu\highscore.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));   //3rd menuentry
@@ -56,12 +74,27 @@ namespace paintRacer
 
             //initialize timeBetweenKeyPress
             timeBetweenKeyPress = Config.TIME_BETWEEN_SAME_EVENT;
+
+            MouseState mouseState = Mouse.GetState();
+            mousePosition = new Point(mouseState.X, mouseState.Y);
+            for (int i = 0; i < menuEntryRectangles.Length; ++i)
+            {
+                if (menuEntryRectangles[i].Contains(mousePosition))
+                {
+                    selectedEntry = i;
+                    break;
+                }
+            }
         }
 
         public EGameStates Update(GameTime gameTime)
         {
+            MouseState mouseState = Mouse.GetState();
+            Point newMousePosition = new Point(mouseState.X, mouseState.Y);
+
             if (timeBetweenKeyPress >= Config.TIME_BETWEEN_SAME_EVENT)
             {
+
                 KeyboardState keyboardState = Keyboard.GetState();
                 if (keyboardState.IsKeyDown(SELECT_UP))
                 {
@@ -73,36 +106,73 @@ namespace paintRacer
                     selectedEntry = (selectedEntry + 1) % MENUENTRYNUM;
                     timeBetweenKeyPress = new TimeSpan();
                 }
+
                 if (keyboardState.IsKeyDown(SELECT_ENTRY))
                 {
-                    switch (selectedEntry)
-                    {
-                        case 0:
-                            //Singleplayer
-                            return EGameStates.LoadMenuSinglePlayer;
-                        case 1:
-                            //Multiplayer
-                            return EGameStates.LoadMenuMultiplayer;
-                        case 2:
-                            //Highscore
-                            break;
-                        case 3:
-                            //Credits
-                            return EGameStates.Credits;
-                        case 4:
-                            //Exit
-                            return EGameStates.Close;
-                        default:
-                            Console.WriteLine("FOO!! This is bad. \ndefault in Menu-switch-case");
-                            break;
-                    }
+                    return getNextGamestate(selectedEntry);
                 }
             }
             else
             {
                 timeBetweenKeyPress += gameTime.ElapsedGameTime;
             }
+
+            if (mouseInactiveTime < new TimeSpan())
+            {
+                if (mouseState.LeftButton == ButtonState.Pressed)
+                {
+                    for (int i = 0; i < menuEntryRectangles.Length; ++i)
+                    {
+                        if (menuEntryRectangles[i].Contains(mousePosition))
+                        {
+                            selectedEntry = i;
+                            return getNextGamestate(i);
+                        }
+                    }
+                }
+                else if (mousePosition != newMousePosition)
+                {
+                    for (int i = 0; i < menuEntryRectangles.Length; ++i)
+                    {
+                        if (menuEntryRectangles[i].Contains(newMousePosition))
+                        {
+                            selectedEntry = i;
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                mouseInactiveTime -= gameTime.ElapsedGameTime;
+            }
+            mousePosition = newMousePosition;
+
             return EGameStates.Menue;
+        }
+
+        private EGameStates getNextGamestate(int index)
+        {
+            switch (selectedEntry)
+            {
+                case 0:
+                    //Singleplayer
+                    return EGameStates.LoadMenuSinglePlayer;
+                case 1:
+                    //Multiplayer
+                    return EGameStates.LoadMenuMultiplayer;
+                case 2:
+                    //Highscore
+                    return EGameStates.HightScore;
+                case 3:
+                    //Credits
+                    return EGameStates.Credits;
+                case 4:
+                    //Exit
+                    return EGameStates.Close;
+                default:
+                    throw new Exception("FOO!! This is bad. \ndefault in Menu-switch-case");
+            }
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)

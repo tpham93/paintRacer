@@ -230,17 +230,18 @@ namespace paintRacer
 
             if (timeSpace > Config.TIME_BETWEEN_SAME_EVENT)
             {
-                timeSpace = new TimeSpan();
                 KeyboardState keyboartState = Keyboard.GetState();
                 if (keyboartState.IsKeyDown(Keys.Down))
                 {
                     ++scrollpos;
                     scrollpos = scrollpos >= directoryarray.Length ? directoryarray.Length - 1 : scrollpos;
+                    timeSpace = new TimeSpan();
                 }
                 else if (keyboartState.IsKeyDown(Keys.Up))
                 {
                     --scrollpos;
                     scrollpos = scrollpos < 0 ? 0 : scrollpos;
+                    timeSpace = new TimeSpan();
                 }
             }
 
@@ -312,7 +313,6 @@ namespace paintRacer
                         Directory.CreateDirectory(@"saved_maps\" + mapName);
                         Global.map = new Map(MapPic, MapPicSW, @"saved_maps\" + mapName, points, StartPosDirection[0], Physic.calculateRotation(StartPosDirection[1] - StartPosDirection[0]));
                         XMLSave.saveMap(@"saved_maps\" + mapName, Global.map);
-                        //Console.Out.WriteLine("Saved!");
                         return nextState;
                     }
                     catch
@@ -334,7 +334,7 @@ namespace paintRacer
                 }
                 else if ((mouseState.X > MapPicPos.X) && (mouseState.X < MapPicPos.X + MAPSIZE) && (mouseState.Y > MapPicPos.Y) && (mouseState.Y < MapPicPos.Y + MAPSIZE))
                 {
-                    Vector2 relativePos = new Vector2(mouseState.X,mouseState.Y) - MapPicPos;
+                    Vector2 relativePos = new Vector2(mouseState.X, mouseState.Y) - MapPicPos;
 
                     switch (createState)
                     {
@@ -461,15 +461,16 @@ namespace paintRacer
             Vector2 pos = new Vector2(MAINMENUBUTTONLEFTBOUND, Config.BIG_BUTTON_SPACE);
             textArrayPos = new Vector2(pos.X, pos.Y);
 
-            spriteBatch.Draw(whitePixel, new Rectangle((int)textArrayPos.X - Config.TEXTFIELD_BORDER, (int)textArrayPos.Y - Config.TEXTFIELD_BORDER, 800 - (int)textArrayPos.X, (int)textArrayPos.Y + 2 * Config.TEXTFIELD_BORDER + NUM_ENTRIES * (Config.LINE_SIZE + Config.BIG_LINE_SPACE)), Config.TEXT_BOX_COLOR);
+            spriteBatch.Draw(whitePixel, new Rectangle((int)textArrayPos.X - Config.TEXTFIELD_BORDER, (int)textArrayPos.Y - Config.TEXTFIELD_BORDER, 800 - (int)textArrayPos.X, /*2 * Config.TEXTFIELD_BORDER*/ + NUM_ENTRIES * (Config.LINE_SIZE + Config.BIG_LINE_SPACE) - Config.BIG_LINE_SPACE), Config.TEXT_BOX_COLOR);
 
             if (directoryarray != null)
+            {
                 for (int count = scrollpos; (count < scrollpos + NUM_ENTRIES) && (count < directoryarray.Length); count++)
                 {
                     pos.Y = (count - scrollpos) * (Config.LINE_SIZE + Config.BIG_LINE_SPACE) + Config.SMALL_BUTTON_SPACE;
                     spriteBatch.DrawString(DEFAULT_FONT, directoryarray[count].Substring(directoryarray[count].LastIndexOf('\\') + 1), pos, Config.TEXT_COLOR);
                 }
-
+            }
             pos.Y = NUM_ENTRIES * (Config.LINE_SIZE + Config.BIG_LINE_SPACE) + 3 * Config.SMALL_BUTTON_SPACE + (int)Config.SMALL_BUTTON.X;
             spriteBatch.Draw(LoadNewMap, pos, Color.White);
             LoadMapPos = new Vector2(pos.X, pos.Y);
@@ -591,7 +592,7 @@ namespace paintRacer
                 case ECreatState.SetFinish_II:
                     return "The finish is defind by two points \non both sides of the road:\n" +
                             "Click in the map to set the second \none.";
-                case ECreatState.Error :
+                case ECreatState.Error:
                     return "ERROR";
                 default:
                     return "I can't help you!";

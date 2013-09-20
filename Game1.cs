@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using paintRacer.gameStates;
 
 namespace paintRacer
 {
@@ -60,7 +59,6 @@ namespace paintRacer
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            Console.Out.WriteLine(Window.ClientBounds);
             GameState = EGameStates.Menue;
             //Initializes Level and Player with test textures
             //level = new Level(MAP_PIC, Level.MapType.rawImage);
@@ -122,7 +120,7 @@ namespace paintRacer
             base.Draw(gameTime);
         }
 
-        
+
 
         internal EGameStates GameState
         {
@@ -161,7 +159,7 @@ namespace paintRacer
                             }
                             else
                             {
-                                gameStateElement = new Multiplayer(GraphicsDevice,Global.players,Global.map);
+                                gameStateElement = new Multiplayer(GraphicsDevice, Global.players, Global.map);
                                 gameStateElement.Load(Content);
                             }
                             tmpGameStateElement = null;
@@ -176,7 +174,12 @@ namespace paintRacer
                             break;
                         case EGameStates.LoadMenu:
                             // not required if LoadMenuSinglePlayer or LoadMenuMultiplayer is set before
-                            if (gameState != EGameStates.LoadMenuMultiplayer && gameState != EGameStates.LoadMenuSinglePlayer)
+                            if (gameState == EGameStates.CarSelection)
+                            {
+                                gameStateElement = tmpGameStateElement;
+                                tmpGameStateElement = null;
+                            }
+                            else if (gameState != EGameStates.LoadMenuMultiplayer && gameState != EGameStates.LoadMenuSinglePlayer)
                             {
                                 throw new Exception("impossible state reached!");
                             }
@@ -203,13 +206,13 @@ namespace paintRacer
                             }
                             break;
                         case EGameStates.CarSelectionSingleplayer:
-                            gameStateElement = new CarSelection(EGameStates.SinglePlayer);
-                            tmpGameStateElement = null;
+                            tmpGameStateElement = gameStateElement;
+                            gameStateElement = new CarSelection(gameState, EGameStates.SinglePlayer);
                             gameStateElement.Load(Content);
                             break;
                         case EGameStates.CarSelectionMultiplayer:
-                            gameStateElement = new CarSelection(EGameStates.MultiPlayer);
-                            tmpGameStateElement = null;
+                            tmpGameStateElement = gameStateElement;
+                            gameStateElement = new CarSelection(gameState, EGameStates.MultiPlayer);
                             gameStateElement.Load(Content);
                             break;
                     }
