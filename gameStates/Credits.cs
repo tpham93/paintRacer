@@ -21,9 +21,6 @@ namespace paintRacer.gameStates
         private TimeSpan timeSpace;
 
         private const int LINENUM = 20;
-        private const int LINESIZE = Config.LINE_SIZE + Config.SMALL_LINE_SPACE;
-        private const int BUTTONSIZE_X = (int)Config.SMALL_BUTTON.X;
-        private const int BUTTONSIZE_Y = (int)Config.SMALL_BUTTON.Y;
 
         string[] output = {"CREDITS", 
                            "=======", "",
@@ -46,7 +43,7 @@ namespace paintRacer.gameStates
         {
             bgPic = Helper.loadImage("Content/credits.png");
             pixel = Helper.loadImage("Content/OneWithePixel.png");
-            back = Helper.loadImage("Content/loadMenu/back.png", new Rectangle(0, 0, BUTTONSIZE_X, BUTTONSIZE_Y));
+            back = Helper.loadImage("Content/loadMenu/back.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.Y));
 
             font = content.Load<SpriteFont>(@"font");
 
@@ -58,7 +55,7 @@ namespace paintRacer.gameStates
             timeSpace += gameTime.ElapsedGameTime;
 
             MouseState mouse = Mouse.GetState();
-            if (mouse.LeftButton == ButtonState.Pressed && timeSpace > Config.TIME_BETWEEN_SAME_EVENT && (mouse.X > backPos.X) && (mouse.X < backPos.X + BUTTONSIZE_X) && (mouse.Y > backPos.Y) && (mouse.Y < backPos.Y + BUTTONSIZE_Y))
+            if (mouse.LeftButton == ButtonState.Pressed && timeSpace > Config.TIME_BETWEEN_SAME_EVENT && (mouse.X > backPos.X) && (mouse.X < backPos.X + (int)Config.SMALL_BUTTON.X) && (mouse.Y > backPos.Y) && (mouse.Y < backPos.Y + (int)Config.SMALL_BUTTON.Y))
             {
                 return EGameStates.Menue;
             }
@@ -93,7 +90,7 @@ namespace paintRacer.gameStates
             for (int count = scroll; count-scroll < LINENUM && count < output.Length; ++count)
             {
                 spriteBatch.DrawString(font, output[count], textpos, Config.TEXT_COLOR);
-                textpos.Y += LINESIZE;
+                textpos.Y += Config.LINE_SIZE + Config.SMALL_LINE_SPACE;
             }
 
             backPos = new Vector2(50, 410);

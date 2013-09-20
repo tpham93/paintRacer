@@ -115,7 +115,7 @@ namespace paintRacer
 
         public EGameStates Update(GameTime gameTime)
         {
-            if (timeBetweenKeyPress < Helper.TIMEBETWEENKEYS)
+            if (timeBetweenKeyPress < Config.TIME_BETWEEN_SAME_EVENT)
                 timeBetweenKeyPress += gameTime.ElapsedGameTime;
 
 
@@ -136,7 +136,7 @@ namespace paintRacer
             {
                 KeyboardState keyboardState = Keyboard.GetState();
                 string input = Helper.KeyToChar(Keyboard.GetState(), gameTime);
-                if (timeBetweenKeyPress > Helper.TIMEBETWEENKEYS)
+                if (timeBetweenKeyPress > Config.TIME_BETWEEN_SAME_EVENT)
                 {
                     if (keyboardState.IsKeyDown(Keys.Back) && names[nameIndex].Length > 0)
                     {
