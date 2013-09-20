@@ -8,5 +8,6 @@ namespace paintRacer
     class Global
     {
         public static Map map;
+        public static Player[] players;
     }
 }
