@@ -76,7 +76,7 @@ namespace paintRacer
         private ECreatState createState;
 
         private string[] directoryarray;
-        private string FileName = "";
+        private string fileName = "";
         private string FileNameSW = "";
 
         private int scrollpos = 0;
@@ -153,7 +153,7 @@ namespace paintRacer
         {
             mainState = EMainState.MainMenu;
 
-            directoryarray = Directory.GetDirectories("saved_maps");
+            directoryarray = Directory.GetDirectories(@"saved_maps\").Where(file => File.Exists(file + @"\map.xml")).ToArray<string>();
 
             DEFAULT_FONT = content.Load<SpriteFont>(@"font");
 
@@ -276,7 +276,7 @@ namespace paintRacer
                     createState = ECreatState.Nothing;
                     try
                     {
-                        MapPic = Helper.loadImage("map_pictures\\" + FileName);
+                        MapPic = Helper.loadImage("map_pictures\\" + fileName);
                         MapPicSW = Helper.loadImage("map_pictures\\" + FileNameSW);
                     }
                     catch
@@ -308,7 +308,7 @@ namespace paintRacer
                         Vector2[] points = Helper.resizeV2Array(checkPoints, 2);
                         points[points.Length - 2] = FinishPoints[0];
                         points[points.Length - 1] = FinishPoints[1];
-                        string[] addressParts = FileName.Split(new char[] { '\\', '/', '.' });
+                        string[] addressParts = fileName.Split(new char[] { '\\', '/', '.' });
                         string mapName = XMLSave.getDirectoryName(addressParts[addressParts.Length - 2]);
                         Directory.CreateDirectory(@"saved_maps\" + mapName);
                         Global.map = new Map(MapPic, MapPicSW, @"saved_maps\" + mapName, points, StartPosDirection[0], Physic.calculateRotation(StartPosDirection[1] - StartPosDirection[0]));
@@ -377,9 +377,9 @@ namespace paintRacer
                 KeyboardState keyboardState = Keyboard.GetState();
                 if (timeSpace > Config.TIME_BETWEEN_SAME_EVENT)
                 {
-                    if (keyboardState.IsKeyDown(Keys.Back) && FileName.Length > 0)
+                    if (keyboardState.IsKeyDown(Keys.Back) && fileName.Length > 0)
                     {
-                        FileName = FileName.Substring(0, FileName.Length - 1);
+                        fileName = fileName.Substring(0, fileName.Length - 1);
                         timeSpace = new TimeSpan();
                     }
                     else
@@ -387,7 +387,7 @@ namespace paintRacer
                         string input = Helper.KeyToChar(keyboardState, gameTime);
                         if (!input.Equals(""))
                         {
-                            FileName += input;
+                            fileName += input;
                             timeSpace = new TimeSpan();
                         }
                     }
@@ -517,7 +517,7 @@ namespace paintRacer
 
             spriteBatch.Draw(whitePixel, new Rectangle((int)pos.X - Config.TEXTFIELD_BORDER, (int)pos.Y - Config.TEXTFIELD_BORDER, 800 - (int)pos.X, 2 * Config.LINE_SIZE + Config.BIG_LINE_SPACE + 2 * Config.TEXTFIELD_BORDER), Config.TEXT_BOX_COLOR);
 
-            spriteBatch.DrawString(DEFAULT_FONT, "Color-File: " + FileName, pos, Config.TEXT_COLOR);
+            spriteBatch.DrawString(DEFAULT_FONT, "Color-File: " + fileName, pos, Config.TEXT_COLOR);
             fileNamePos = new Vector2(pos.X, pos.Y);
 
             pos.Y += Config.LINE_SIZE + Config.BIG_LINE_SPACE;

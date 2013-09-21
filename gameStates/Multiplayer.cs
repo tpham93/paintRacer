@@ -16,7 +16,7 @@ namespace paintRacer
     class Multiplayer : IGameStateElements
     {
         //const
-        public const int LAPS = 3;
+        //public const int LAPS = 3;
 
         //Must be in Loadfunction
         //String MAP_PIC = "test2.png";

@@ -6,10 +6,15 @@ using System.Text.RegularExpressions;
 
 namespace paintRacer
 {
-    class HighscoreElement
+    class HighscoreElement : IComparable<HighscoreElement>
     {
         private TimeSpan time;
         private string name;
+
+        public string Name
+        {
+            get { return name; }
+        }
 
         public HighscoreElement(string highscoreElementData)
         {
@@ -28,6 +33,11 @@ namespace paintRacer
             return "name=" + name + " time=" + (int)time.TotalMilliseconds;
         }
 
+        public string getFormattedTimeString()
+        {
+            return string.Format("{0:00}:{1:00}:{2:00}", (int)time.TotalMinutes, time.Seconds, time.Milliseconds);
+        }
+
         public static bool operator <(HighscoreElement h1, HighscoreElement h2)
         {
             return h1.time < h2.time;
@@ -35,6 +45,11 @@ namespace paintRacer
         public static bool operator >(HighscoreElement h1, HighscoreElement h2)
         {
             return h1.time > h2.time;
+        }
+
+        public int CompareTo(HighscoreElement other)
+        {
+            return (int)(this.time.TotalMilliseconds - other.time.TotalMilliseconds);
         }
     }
 }

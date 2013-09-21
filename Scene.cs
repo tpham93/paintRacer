@@ -25,7 +25,7 @@ namespace paintRacer
         }
 
         private ERaceState raceState;
-        public TimeSpan startTime, raceTime;
+        public TimeSpan startTime, raceTime, lightTime;
 
         private Map level;
         private Player[] players;
@@ -49,6 +49,7 @@ namespace paintRacer
         {
             startTime = new TimeSpan();
             raceTime = new TimeSpan();
+            lightTime = new TimeSpan();
             raceState = ERaceState.LightOff;
 
             lightOff = Helper.loadImage(@"Content\light\Ampel_aus.png");
@@ -62,7 +63,7 @@ namespace paintRacer
 
             pixel = Helper.loadImage(@"Content\OneWithePixel.png");
             Font = content.Load<SpriteFont>(@"font");
-            
+
             this.level = level;
 
             playerCount = Math.Min(players.Length, keys.GetLength(0));
@@ -92,27 +93,31 @@ namespace paintRacer
 
         public void Update(GameTime gameTime, KeyboardState keyboardState)
         {
-            int lightTackt = 700;
+            int lightTakt = 700;
 
             //before start
             if (raceState == ERaceState.LightOff || raceState == ERaceState.Ready_I || raceState == ERaceState.Ready_II || raceState == ERaceState.Ready_III || raceState == ERaceState.Ready_IV || raceState == ERaceState.Ready_V || raceState == ERaceState.Go)
             {
                 startTime += gameTime.ElapsedGameTime;
 
-                if (startTime > new TimeSpan(0, 0, 0, 0, ((int)raceState + 1) * lightTackt))
-                {   
+                if (startTime > new TimeSpan(0, 0, 0, 0, ((int)raceState + 1) * lightTakt))
+                {
                     ++raceState;
                 }
             }
 
             //in race
-            if (raceState == ERaceState.Go || raceState == ERaceState.Race || raceState == ERaceState.EndOff || raceState == ERaceState.EndOn)
+            if (raceState == ERaceState.EndOff || raceState == ERaceState.EndOn || ((players[0].lap > Config.MAXLAPCOUNT) || (players.Length > 1 && players[1].lap > Config.MAXLAPCOUNT)))
+            {
+                lightTime += gameTime.ElapsedGameTime;
+                if (((int)lightTime.TotalMilliseconds / lightTakt) % 2 == 0)
+                    raceState = ERaceState.EndOff;
+                if (((int)lightTime.TotalMilliseconds / lightTakt) % 2 > 0)
+                    raceState = ERaceState.EndOn;
+            }
+            if (raceState == ERaceState.Go || raceState == ERaceState.Race)
             {
                 raceTime += gameTime.ElapsedGameTime;
-                if (((players[0].lap > Multiplayer.LAPS) || (players.Length > 1 && players[1].lap > Multiplayer.LAPS)) && ((int)raceTime.TotalMilliseconds / lightTackt) % 2 == 0)
-                    raceState = ERaceState.EndOff;
-                if (((players[0].lap > Multiplayer.LAPS) || (players.Length > 1 && players[1].lap > Multiplayer.LAPS)) && ((int)raceTime.TotalMilliseconds / lightTackt) % 2 > 0)
-                    raceState = ERaceState.EndOn;
             }
 
 
@@ -123,11 +128,9 @@ namespace paintRacer
                 for (int j = 0; j < keys.GetLength(1); j++)
                 {
                     pressedKeys[j] = keyboardState.IsKeyDown(keys[i, j]);
-                    //Console.WriteLine("pressedKeys " + j + " " + pressedKeys[j]); cecked
                 }
                 if (raceState == ERaceState.Go || raceState == ERaceState.Race)
                     players[i].Update(gameTime, pressedKeys);
-                //Physic.hasCollision(players[i].getPosition(), players[i].getCollisionData(), players[i].getRotation(), level.getMapData());
             }
         }
 
@@ -148,63 +151,63 @@ namespace paintRacer
                 // draw the protaginist on top
                 players[i].Draw(spriteBatch, spriteBatch.GraphicsDevice, viewports[i], players[i]);
                 //Physic.hasCollision(players[i].getPosition(), players[i].getCollisionData(), players[i].getRotation(), level.getMapData());
-                
+
                 //draw infos
                 spriteBatch.Begin();
 
                 //laps and time
-                spriteBatch.Draw(pixel, new Rectangle(0,0,800,50), Color.LightGray);
+                spriteBatch.Draw(pixel, new Rectangle(0, 0, 800, 50), Color.LightGray);
                 int RTmin = raceTime.Minutes;
                 int RTsek = raceTime.Seconds;
                 int RTmsek = raceTime.Milliseconds / 10;
                 int minTime = 0;
-                for (int j = 0; j < players[0].lap-1; ++j)
+                for (int j = 0; j < players[0].lap - 1; ++j)
                     minTime = Math.Min((minTime == 0 ? 1000000 : minTime), (int)players[0].times[j].TotalMilliseconds);
                 int LTsek = minTime / 1000;
                 int LTmsek = (minTime % 1000) / 10;
-                spriteBatch.DrawString(Font, "Lap: " + players[0].lap + " / " + Multiplayer.LAPS + "   " + RTmin + ":" + RTsek + "," + RTmsek + "  \nfastest Lap: " + LTsek + "," + LTmsek + "sek", new Vector2(5, 0), Color.Black);
+                spriteBatch.DrawString(Font, "Lap: " + Math.Min(players[0].lap,Config.MAXLAPCOUNT) + " / " + Config.MAXLAPCOUNT + "   " + RTmin + ":" + RTsek + "," + RTmsek + "  \nfastest Lap: " + LTsek + "," + LTmsek + "sek", new Vector2(5, 0), Color.Black);
                 if (players.Length > 1)
                 {
                     minTime = 0;
-                    for (int j = 0; j < players[1].lap-1; ++j)
+                    for (int j = 0; j < players[1].lap - 1; ++j)
                         minTime = Math.Min((minTime == 0 ? 1000000 : minTime), (int)players[1].times[j].TotalMilliseconds);
                     LTsek = minTime / 1000;
                     LTmsek = (minTime % 1000) / 10;
-                    spriteBatch.DrawString(Font, "Lap: " + players[1].lap + " / " + Multiplayer.LAPS + "   " + RTmin + ":" + RTsek + "," + RTmsek + "  \nfastest Lap: " + LTsek + "," + LTmsek + "sek", new Vector2(405, 0), Color.Black);
+                    spriteBatch.DrawString(Font, "Lap: " + Math.Min(players[1].lap, Config.MAXLAPCOUNT) + " / " + Config.MAXLAPCOUNT + "   " + RTmin + ":" + RTsek + "," + RTmsek + "  \nfastest Lap: " + LTsek + "," + LTmsek + "sek", new Vector2(405, 0), Color.Black);
                 }
 
                 //light
-                Vector2 pos = new Vector2 ((800-250)/2, 50);
+                Vector2 pos = new Vector2((800 - 250) / 2, 50);
                 switch (raceState)
                 {
-                    case ERaceState.LightOff :
+                    case ERaceState.LightOff:
                         spriteBatch.Draw(lightOff, pos, Color.White);
                         break;
-                    case ERaceState.Ready_I :
+                    case ERaceState.Ready_I:
                         spriteBatch.Draw(Red_I, pos, Color.White);
                         break;
-                    case ERaceState.Ready_II :
+                    case ERaceState.Ready_II:
                         spriteBatch.Draw(Red_II, pos, Color.White);
                         break;
-                    case ERaceState.Ready_III :
+                    case ERaceState.Ready_III:
                         spriteBatch.Draw(Red_III, pos, Color.White);
                         break;
-                    case ERaceState.Ready_IV :
+                    case ERaceState.Ready_IV:
                         spriteBatch.Draw(Red_IV, pos, Color.White);
                         break;
-                    case ERaceState.Ready_V :
+                    case ERaceState.Ready_V:
                         spriteBatch.Draw(Red_V, pos, Color.White);
                         break;
-                    case ERaceState.Go :
+                    case ERaceState.Go:
                         spriteBatch.Draw(Green, pos, Color.White);
                         break;
-                    case ERaceState.EndOff :
+                    case ERaceState.EndOff:
                         spriteBatch.Draw(lightOff, pos, Color.White);
                         break;
-                    case ERaceState.EndOn :
+                    case ERaceState.EndOn:
                         spriteBatch.Draw(Yellow, pos, Color.White);
                         break;
-                    default :
+                    default:
                         break;
                 }
 

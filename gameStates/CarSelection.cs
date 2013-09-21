@@ -17,7 +17,6 @@ namespace paintRacer
         EGameStates nextGamestate;
         SpriteFont spriteFont;
 
-        const int SPACE_Y = 5;
         int fontHeight;
 
         Player[] cars;
@@ -33,6 +32,7 @@ namespace paintRacer
         Rectangle selectedTextureBackgroundRectangle;
 
         int scrollValue;
+
         string[] files;
         Viewport fileListViewport;
         Texture2D fileListBackground;
@@ -117,9 +117,9 @@ namespace paintRacer
             for (int i = 0; i < nameRectangles.Length; ++i)
             {
                 names[i] = "";
-                nameRectangles[i] = new Rectangle(0, 40 + i * (SPACE_Y + fontHeight), nameBackground.Width, nameBackground.Height);
+                nameRectangles[i] = new Rectangle(0, 40 + i * (Config.TEXTFIELD_BORDER + fontHeight), nameBackground.Width, nameBackground.Height);
             }
-            nameViewport = new Viewport(50, 40, 300, (nameRectangles.Length - 1) * (SPACE_Y + fontHeight) + 40);
+            nameViewport = new Viewport(50, 40, 300, (nameRectangles.Length - 1) * (Config.TEXTFIELD_BORDER + fontHeight) + 40);
         }
 
         public EGameStates Update(GameTime gameTime)
@@ -132,7 +132,7 @@ namespace paintRacer
             {
                 int difference = newScrollValue - scrollValue;
                 fileOffset.Y += 10 * (difference / Math.Abs(difference));
-                int minOffsetY = -Math.Max(files.Length * (SPACE_Y + fontHeight) - fileListRectangle.Height, 0);
+                int minOffsetY = -Math.Max(files.Length * (Config.TEXTFIELD_BORDER + fontHeight) - fileListRectangle.Height, 0);
                 fileOffset.Y = Math.Max(minOffsetY, Math.Min(fileOffset.Y, 0));
 
                 scrollValue = mouseState.ScrollWheelValue;
@@ -173,7 +173,7 @@ namespace paintRacer
                 if (fileListViewport.Bounds.Contains(mouseposition))
                 {
                     int relativeHeight = mouseposition.Y - fileListRectangle.Y - (int)fileOffset.Y;
-                    int possiblePosition = (int)(relativeHeight / (double)(SPACE_Y + fontHeight));
+                    int possiblePosition = (int)(relativeHeight / (double)(Config.TEXTFIELD_BORDER + fontHeight));
                     if (possiblePosition >= 0 && possiblePosition < files.Length)
                     {
                         selectedTexture = Helper.loadImage(@"cars\" + files[possiblePosition]);
@@ -241,7 +241,7 @@ namespace paintRacer
                 {
                     string s = files[i];
                     spriteBatch.DrawString(spriteFont, s, tmpPos, Config.TEXT_COLOR);
-                    tmpPos.Y += spriteFont.MeasureString(s).Y + SPACE_Y;
+                    tmpPos.Y += spriteFont.MeasureString(s).Y + Config.TEXTFIELD_BORDER;
                 }
             }
             spriteBatch.End();

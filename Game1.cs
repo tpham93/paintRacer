@@ -43,8 +43,6 @@ namespace paintRacer
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
             //set static graphicsdevice in Helper
             Helper.Init(GraphicsDevice);
 
@@ -60,18 +58,9 @@ namespace paintRacer
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             GameState = EGameStates.Menue;
-            //Initializes Level and Player with test textures
-            //level = new Level(MAP_PIC, Level.MapType.rawImage);
-            //players = new Player[2];
-            //players[0] = new Player(Helper.loadImage("testcar.png"), Color.Blue);
-            //players[1] = new Player(Helper.loadImage("testcar.png"), Color.Red);
-            //players[0].setPosition(new Vector2(START_POS.X - 40, START_POS.Y));
-            //players[1].setPosition(new Vector2(START_POS.X + 40, START_POS.Y));
 
             Keys[,] keys = { { Keys.W, Keys.S, Keys.A, Keys.D, Keys.Q, Keys.E, Keys.F }, { Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Escape, Keys.Enter, Keys.Back } };
             Config.setKeys(keys);
-
-            //scene = new Scene(level, players, GraphicsDevice.Viewport, Config.getKeys());
 
             // TODO: use this.Content to load your game content here
         }
@@ -99,7 +88,6 @@ namespace paintRacer
             //Writes FPS to title
             this.Window.Title = "" + (int)(1 / (gameTime.ElapsedGameTime.TotalSeconds));
 
-            ///*
             GameState = gameStateElement.Update(gameTime);
 
             base.Update(gameTime);
@@ -112,8 +100,6 @@ namespace paintRacer
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-
-            //scene.Draw(spriteBatch, GraphicsDevice);
 
             gameStateElement.Draw(gameTime, spriteBatch);
 
@@ -166,8 +152,6 @@ namespace paintRacer
                             break;
                         case EGameStates.Pause:
                             tmpGameStateElement = gameStateElement;
-                            //gameStateElement = new Pause();
-                            //gameStateElement.Load(Content);
                             break;
                         case EGameStates.Close:
                             Exit();
@@ -213,6 +197,10 @@ namespace paintRacer
                         case EGameStates.CarSelectionMultiplayer:
                             tmpGameStateElement = gameStateElement;
                             gameStateElement = new CarSelection(gameState, EGameStates.MultiPlayer);
+                            gameStateElement.Load(Content);
+                            break;
+                        case EGameStates.HightScore:
+                            gameStateElement = new Highscore();
                             gameStateElement.Load(Content);
                             break;
                     }

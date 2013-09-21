@@ -18,7 +18,7 @@ namespace paintRacer
 
             Texture2D image = null;
             Texture2D swImage = null;
-            Highscore highscore = null;
+            HighscoreData highscore = null;
             Vector2[] checkPoints = null;
             Vector2 startpoint = new Vector2(-1, -1);
             float rotation = 0f;
@@ -37,7 +37,7 @@ namespace paintRacer
                             swImage = Helper.loadImage(directoryPath + '\\' + reader.GetAttribute("Address"));
                             break;
                         case "Highscore":
-                            highscore = new Highscore(directoryPath + '\\' + reader.GetAttribute("Address"));
+                            highscore = new HighscoreData(directoryPath + '\\' + reader.GetAttribute("Address"));
                             break;
                         case "Rotation":
                             rotation = Convert.ToSingle(reader.GetAttribute("Value").Replace('.', ','));
@@ -62,7 +62,7 @@ namespace paintRacer
 
             if (highscore == null)
             {
-                highscore = new Highscore(directoryPath + @"\highscore");
+                highscore = new HighscoreData(directoryPath + @"\highscore");
                 hasToBeUpdated = true;
             }
 

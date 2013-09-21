@@ -25,7 +25,7 @@ namespace paintRacer
         public const int SMALL_LINE_SPACE = 2;
         public static readonly TimeSpan TIME_BETWEEN_SAME_EVENT = new TimeSpan(0, 0, 0, 0, 150);
         public static readonly Color MAP_BACKGROUND_COLOR = Color.CornflowerBlue;
-        
+        public const int MAXLAPCOUNT = 3;
         // available Keys (Restructure as enum/map? Make more abstract to fit multiplayer?)
 
         public enum controlKeys

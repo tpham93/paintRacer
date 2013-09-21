@@ -13,7 +13,7 @@ namespace paintRacer
         Vector2[] checkPoints;
         Vector2 start;
         float startRotation;
-        Highscore highscore;
+        HighscoreData highscore;
 
         public EMapStates[,] Data
         {
@@ -39,7 +39,7 @@ namespace paintRacer
         {
             get { return swImage; }
         }
-        public Highscore Highscore
+        public HighscoreData Highscore
         {
             get { return highscore; }
             set { highscore = value; }
@@ -104,7 +104,7 @@ namespace paintRacer
         /// the rotation the cars start with
         /// </param>
         /// 
-        public Map(Texture2D image, Texture2D swImage, Highscore highscore, Vector2[] checkPoints, Vector2 startPoint, float startRotation)
+        public Map(Texture2D image, Texture2D swImage, HighscoreData highscore, Vector2[] checkPoints, Vector2 startPoint, float startRotation)
         {
             this.image = image;
             this.swImage = swImage;
@@ -151,7 +151,7 @@ namespace paintRacer
             this.checkPoints = checkPoints;
             this.start = startPoint;
             this.startRotation = startRotation;
-            this.highscore = new Highscore(directoryPath+@"\highscore");
+            this.highscore = new HighscoreData(directoryPath+@"\highscore");
         }
 
         ///// <summary>
