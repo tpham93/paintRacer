@@ -66,9 +66,6 @@ namespace paintRacer
         /// </returns>
         public static Speed calculateSpeed(GameTime gameTime, Player player, Vector2 driverInput, EMapStates[,] mapdata)
         {
-
-            //int collisionCount = hasCollision();
-
             int playerPosX = (int)player.getPosition().X;
             int playerPosY = (int)player.getPosition().Y;
 
@@ -115,14 +112,9 @@ namespace paintRacer
             //        v       =  v        +  ((      F         / m  )*                    t                       )
             float absNewSpeed = speed.abs + ((accelerationForce / MASS) * (float)gameTime.ElapsedGameTime.TotalSeconds);
 
-            //Console.WriteLine("speed: " +speed.abs);
-            //Console.WriteLine("speed+: " + ((accelerationForce/MASS)*(float)gameTime.ElapsedGameTime.TotalSeconds));
-            //Console.WriteLine("Newspeed: " + absNewSpeed);
-
             //rollFrictionForce = 0;
             //enrgie of car ( 1/2  *  m   *             v²           ) - (      F           *     v       *      t                                      )
             float energie = (1f / 2f * MASS * absNewSpeed * absNewSpeed) - (rollFrictionForce * Math.Abs(absNewSpeed) * (float)gameTime.ElapsedGameTime.TotalSeconds);
-            //Console.WriteLine("energie: " + energie);
 
             if (energie < 0f)
                 energie = 0f;
@@ -140,9 +132,6 @@ namespace paintRacer
             float totalStearingFactor = (float)(richtung * gameTime.ElapsedGameTime.Milliseconds * STEARING * Math.Log(Math.Abs(absNewSpeed) + 1));
             Vector2 newDirection = new Vector2(speed.direction.X + sideMove.X * totalStearingFactor, speed.direction.Y + sideMove.Y * totalStearingFactor);
             newDirection.Normalize();
-
-            //Console.WriteLine(absNewSpeed);
-
 
             Speed res = new Speed(newDirection, absNewSpeed);
 

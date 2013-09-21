@@ -111,8 +111,6 @@ namespace paintRacer
             {
                 spriteBatch.Draw(backgroundAreaTexture, mapListViewport.Bounds, Color.White);
                 spriteBatch.Draw(backgroundAreaTexture, highscoreViewRectangle, Color.White);
-                //spriteBatch.Draw(backgroundAreaTexture, nameViewport.Bounds, Color.White);
-                //spriteBatch.Draw(backgroundAreaTexture, timeRectangle, Color.Red);
                 spriteBatch.Draw(backButtonTexture, backButtonRectangle, Color.White);
             }
             spriteBatch.End();

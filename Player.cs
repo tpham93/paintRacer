@@ -26,11 +26,6 @@ namespace paintRacer
 
         private string name;
 
-        //What is the point of this Rectangle?! (Player is supposed to be drawn in the middle of the screen anyways, only width and height are required)
-        //Commented out for the time being
-        //      -> given size of the car specified by the map
-        //private Rectangle textureRectangle;
-
         //Going to be used to identify player in splitscreen/multiplayer play
         private Color color;
 
@@ -61,7 +56,6 @@ namespace paintRacer
             collisiondata = getCollisionData(texture);
             scene = null;
         }
-        //public static void Init()
 
         public void Update(GameTime gameTime, bool[] pressedKeys)
         {

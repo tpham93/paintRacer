@@ -84,12 +84,6 @@ namespace paintRacer
             highscoreEntries.Add(element);
             int index = highscoreEntries.Count - 1;
             highscoreEntries.Sort();
-            //while (index > 0 && highscoreEntries[index - 1] > highscoreEntries[index])
-            //{
-            //    HighscoreElement tmp = highscoreEntries[index];
-            //    highscoreEntries[index] = highscoreEntries[index - 1];
-            //    highscoreEntries[index - 1] = tmp;
-            //}
             if (highscoreEntries.Count > MAXHIGHSCORE_COUNT)
             {
                 highscoreEntries.RemoveRange(MAXHIGHSCORE_COUNT, highscoreEntries.Count - MAXHIGHSCORE_COUNT - 1);

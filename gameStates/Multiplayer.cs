@@ -15,20 +15,9 @@ namespace paintRacer
 {
     class Multiplayer : IGameStateElements
     {
-        //const
-        //public const int LAPS = 3;
-
-        //Must be in Loadfunction
-        //String MAP_PIC = "test2.png";
-        //String MAP_PIC_SW = "test2SW.png";
-        //Vector2 start_pos = new Vector2(1535, 550);
-        //Vector2[] check_points;// = new Vector2[1];
-
         //Member of Scene.cs
         Map level;
         private Player[] players;
-        //Viewport defaultView;
-        //Viewport[] viewports;
 
         Scene scene;
 

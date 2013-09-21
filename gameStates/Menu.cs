@@ -12,8 +12,6 @@ namespace paintRacer
     //ATTENTION!!! copy - paste!!! by Ludwig from Tuan
     class Menu : IGameStateElements
     {
-        // spritefont to draw text
-        //SpriteFont spriteFont;    //not used here
         // texture to show selected menuentry
         Texture2D selectionPointerTexture;
         // array of rectangle to show menuentries
@@ -69,8 +67,6 @@ namespace paintRacer
             menuEntrieTexture[2] = Helper.loadImage(@"Content\menu\highscore.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));   //3rd menuentry
             menuEntrieTexture[3] = Helper.loadImage(@"Content\menu\credits.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));     //4th menuentry
             menuEntrieTexture[4] = Helper.loadImage(@"Content\menu\beenden.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));     //5th menuentry
-            //load font
-            //spriteFont = content.Load<SpriteFont>("Arial");
 
             //initialize timeBetweenKeyPress
             timeBetweenKeyPress = Config.TIME_BETWEEN_SAME_EVENT;
@@ -193,11 +189,6 @@ namespace paintRacer
             tmpVect.X += (int)Config.BIG_BUTTON.X + Config.BIG_BUTTON_SPACE - 5;
             tmpVect.Y = MENUSTARTPOS.Y + (Config.BIG_BUTTON_SPACE + (int)Config.BIG_BUTTON.Y) * selectedEntry + ((int)Config.BIG_BUTTON.Y - SELECTIONPOINTERSIZE_Y) / 2;
             spriteBatch.Draw(selectionPointerTexture, tmpVect, MENUSELECTIONPOINTERCOLOR);
-
-
-            // draw caption
-            //spriteBatch.DrawString(spriteFont, "Menue", Vector2.Zero, Color.Black);
-            //spriteBatch.DrawString(spriteFont, "Arrows to change selection, Enter to select", new Vector2(0, 20), Color.Black);
 
             spriteBatch.End();
         }

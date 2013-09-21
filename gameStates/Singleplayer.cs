@@ -35,7 +35,6 @@ namespace paintRacer
             this.players = players;
 
             players[0].setPosition(map.Start);
-
             players[0].setRotation(map.StartRotation);
 
             level = map;

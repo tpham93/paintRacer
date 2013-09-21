@@ -86,9 +86,6 @@ namespace paintRacer
         //some textures and positions
         private Texture2D whitePixel;
         private Texture2D LoadNewMap;
-        //private Vector2 LoadNewMapPos;
-        //private Texture2D ChooseMap;
-        //private Vector2 ChooseMapPos;
         private Texture2D Back;
         private Vector2 BackPos;
         private Texture2D LoadMap;
@@ -160,7 +157,6 @@ namespace paintRacer
             //load Textures
             whitePixel = Helper.loadImage(@"Content\OneWithePixel.png");
             LoadNewMap = Helper.loadImage(@"Content\loadMenu\LoadNewMap.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));
-            //ChooseMap = Helper.loadImage(@"Content\loadMenu\ChooseMap.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));
             Back = Helper.loadImage(@"Content\loadMenu\Back.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));
             LoadMap = Helper.loadImage(@"Content\loadMenu\Load.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.Y));
             CheckPoint = Helper.loadImage(@"Content\loadMenu\Checkpoint.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.Y));
@@ -257,7 +253,6 @@ namespace paintRacer
         private EGameStates UpdateLoadNewMap(GameTime gameTime)
         {
             timeSpace += gameTime.ElapsedGameTime;
-            //Helper.timeSpan += gameTime.ElapsedGameTime;
             MouseState mouseState = Mouse.GetState();
 
             if (mouseState.LeftButton == ButtonState.Pressed && timeSpace > Config.TIME_BETWEEN_SAME_EVENT)

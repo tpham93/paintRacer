@@ -45,31 +45,6 @@ namespace paintRacer
             set { highscore = value; }
         }
 
-
-        ///// <summary>
-        ///// Struct to save maps (constructor for the prototype)
-        ///// </summary>
-        ///// 
-        ///// <param name="swImagePath">
-        ///// the location of the black white picture
-        ///// </param>
-        ///// 
-        ///// <param name="imagePath">
-        ///// the location of the picture
-        ///// </param>
-        ///// 
-        //public Map(string swImagePath, string imagePath)
-        //{
-        //    this.image = Helper.loadImage(imagePath);
-        //    swImage = Helper.loadImage(swImagePath);
-        //    this.data = MapReader.createDataFromSWImage(swImage);
-        //    checkPoints = new Vector2[0];
-        //    start = new Vector2(1535, 550);
-        //    startRotation = 0;
-        //}
-
-
-
         /// <summary>
         /// Struct to save maps
         /// </summary>
@@ -153,42 +128,6 @@ namespace paintRacer
             this.startRotation = startRotation;
             this.highscore = new HighscoreData(directoryPath+@"\highscore");
         }
-
-        ///// <summary>
-        ///// getter for the map-width
-        ///// </summary>
-        ///// 
-        ///// <returns>
-        ///// the width of the map
-        ///// </returns>
-        //public int getWidth()
-        //{
-        //    return this.image.Width;
-        //}
-
-        ///// <summary>
-        ///// getter for the map-height
-        ///// </summary>
-        ///// 
-        ///// <returns>
-        ///// the height of the map
-        ///// </returns>
-        //public int getHeight()
-        //{
-        //    return this.image.Height;
-        //}
-
-        ///// <summary>
-        ///// getter for the internal data
-        ///// </summary>
-        ///// 
-        ///// <returns>
-        ///// the internal data
-        ///// </returns>
-        //public EMapStates[,] getMapData()
-        //{
-        //    return data;
-        //}
 
         public void Draw(SpriteBatch spriteBatch, GraphicsDevice GraphicsDevice, Viewport viewport, Player player)
         {
