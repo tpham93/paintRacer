@@ -151,38 +151,76 @@ namespace paintRacer
             return (float)Math.Atan2(direction.X, -direction.Y);
         }
 
-        /**
-         * returns if the car passed a checkpoint
-         * 
-         * pointA & pointB - Vector2 :
-         * left and right of the checkpoint, the line will be between both
-         * 
-         * mid - Vector2 :
-         * middelpoint of the player
-         */
-        public static bool checkPoint(Vector2 pointA, Vector2 pointB, Vector2 mid)
+        ///**
+        // * returns if the car passed a checkpoint
+        // * 
+        // * pointA & pointB - Vector2 :
+        // * left and right of the checkpoint, the line will be between both
+        // * 
+        // * mid - Vector2 :
+        // * middelpoint of the player
+        // */
+        //public static bool checkPoint(Vector2 pointA, Vector2 pointB, Vector2 mid)
+        //{
+        //    const float diff = 1.000005f;
+
+        //    Vector2 ab = new Vector2(Math.Abs(pointA.X - pointB.X), Math.Abs(pointA.Y - pointB.Y));
+        //    Vector2 am = new Vector2(Math.Abs(pointA.X - mid.X), Math.Abs(pointA.Y - mid.Y));
+        //    Vector2 bm = new Vector2(Math.Abs(mid.X - pointB.X), Math.Abs(mid.Y - pointB.Y));
+
+        //    return (ab.LengthSquared() * diff >= am.LengthSquared() + bm.LengthSquared());
+        //}
+
+        public static Vector2 getCutPoint(Line l1, Line l2)
         {
-            float diff = 1.000005f;
+            bool l1Const = l1.isConstant();
+            bool l2Const = l2.isConstant();
+            float x = 0f;
+            if (l1Const)
+            {
+                x = l1.x;
+            }
+            else if (l2Const)
+            {
+                return getCutPoint(l2, l1);
+            }
+            else
+            {
+                x = (l2.c - l1.c) / (l1.m - l2.m);
+            }
+            float y = l2.calculate(x);
+            return new Vector2(x, y);
+        }
 
-            Vector2 ab = new Vector2(Math.Abs(pointA.X - pointB.X), Math.Abs(pointA.Y - pointB.Y));
-            Vector2 am = new Vector2(Math.Abs(pointA.X - mid.X), Math.Abs(pointA.Y - mid.Y));
-            Vector2 bm = new Vector2(Math.Abs(mid.X - pointB.X), Math.Abs(mid.Y - pointB.Y));
+        public static bool vectorCut(Vector2 c1, Vector2 c2, Vector2 p1, Vector2 p2)
+        {
+            Line l1 = new Line(c1, c2);
+            Line l2 = new Line(p1, p2);
 
-            if (ab.LengthSquared() * diff < am.LengthSquared() + bm.LengthSquared())
+            if (l1.m == l2.m)
+            {
                 return false;
-            return true;
+            }
+
+            if (l1.isConstant() && l2.isConstant())
+            {
+                return l1.x == l2.x;
+            }
+            Vector2 cutPoint = getCutPoint(l1, l2);
+            return (cutPoint - p1).LengthSquared() <= (p2 - p1).LengthSquared();
         }
 
-        /**
-         * returns a ROUNDED integer from a double (or float)
-         * 
-         * value - double :
-         * cast this value to integer by rounding
-         */
-        public static int roundCast(double value)
-        {
-            return (value > 0) ? ((int)(value * 10 + 5) / 10) : ((int)(value * 10 - 5) / 10);
-        }
+
+        ///**
+        // * returns a ROUNDED integer from a double (or float)
+        // * 
+        // * value - double :
+        // * cast this value to integer by rounding
+        // */
+        //public static int roundCast(double value)
+        //{
+        //    return (value > 0) ? ((int)(value * 10 + 5) / 10) : ((int)(value * 10 - 5) / 10);
+        //}
 
 
         /**
@@ -235,6 +273,56 @@ namespace paintRacer
                             }
                         }
                         else return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public static bool hasCollision(Player[] players)
+        {
+            if (players.Length <= 1)
+                return false;
+            // save cos & sin of rotation, to save redundance calculations
+            double rotationPlayer1Cos = Math.Cos(players[0].getRotation());
+            double rotationPlayer1Sin = Math.Sin(players[0].getRotation());
+
+            double invertRotationPlayer2Cos = Math.Cos(-players[1].getRotation());
+            double invertRotationPlayer2Sin = Math.Sin(-players[1].getRotation());
+
+            bool[,] playerCollisionData = players[1].getCollisionData();
+
+            // width & height of the player's car
+            int playerWidth = playerCollisionData.GetUpperBound(0);
+            int playerHeight = playerCollisionData.GetUpperBound(1);
+
+            // middle of the car
+            Vector2 middlePoint = new Vector2(playerWidth / 2f, playerHeight / 2f);
+
+            //Vector of the current position
+            Vector2 tmpVect = Vector2.Zero;
+            Vector2 mapPlayer1Position = Vector2.Zero;
+            Vector2 relativePlayer1Position = Vector2.Zero;
+            Vector2 rotatedRelativePlayer1Position = Vector2.Zero;
+            for (int x = 0; x < playerWidth; x++)
+            {
+                for (int y = 0; y < playerHeight; y++)
+                {
+                    if (playerCollisionData[x, y])
+                    {
+                        tmpVect.X = x - middlePoint.X;
+                        tmpVect.Y = y - middlePoint.Y;
+                        mapPlayer1Position = Helper.rotateVector2(tmpVect, rotationPlayer1Cos, rotationPlayer1Sin) + players[0].getPosition();
+
+                        relativePlayer1Position = mapPlayer1Position - players[1].getPosition();
+                        rotatedRelativePlayer1Position = Helper.rotateVector2(relativePlayer1Position, invertRotationPlayer2Cos, invertRotationPlayer2Sin) + middlePoint;
+                        if (rotatedRelativePlayer1Position.X >= 0 && rotatedRelativePlayer1Position.X < playerWidth && rotatedRelativePlayer1Position.Y >= 0 && rotatedRelativePlayer1Position.Y < playerHeight)
+                        {
+                            if (playerCollisionData[(int)rotatedRelativePlayer1Position.X, (int)rotatedRelativePlayer1Position.Y])
+                            {
+                                return true;
+                            }
+                        }
                     }
                 }
             }

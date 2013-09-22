@@ -725,5 +725,22 @@ namespace paintRacer
             output.SetData<Color>(pixel);
             return output;
         }
+
+        //public static Texture2D genCollisionTexture(bool[,] collisionData, Color color)
+        //{
+        //    int width = collisionData.GetUpperBound(0);
+        //    int height = collisionData.GetUpperBound(1);
+        //    Texture2D output = new Texture2D(graphicsDevice, width, height);
+
+        //    Color[] pixel = new Color[width * height];
+            
+        //    for (int y = 0; y < height; ++y)
+        //        for (int x = 0; x < width; ++x)
+        //    {
+        //        pixel[x + y * width] = (collisionData[x,y])?color:Color.Transparent;
+        //    }
+        //    output.SetData<Color>(pixel);
+        //    return output;
+        //}
     }
 }

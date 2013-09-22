@@ -90,7 +90,7 @@ namespace paintRacer
                 }
             }
         }
-
+        int collisions = 0;
         public void Update(GameTime gameTime, KeyboardState keyboardState)
         {
             int lightTakt = 700;
@@ -119,7 +119,6 @@ namespace paintRacer
             {
                 raceTime += gameTime.ElapsedGameTime;
             }
-
 
             for (int i = 0; i < playerCount; i++)
             {

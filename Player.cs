@@ -36,7 +36,7 @@ namespace paintRacer
         }
 
         //Inconsistency with Level (create with string or texture?)
-        public Player(string name,Texture2D texture, Color color, int numCheckPoints)
+        public Player(string name, Texture2D texture, Color color, int numCheckPoints)
         {
             this.name = name;
             times = new TimeSpan[Config.MAXLAPCOUNT];
@@ -52,14 +52,13 @@ namespace paintRacer
 
             this.texture = texture;
             this.color = color;
-
             collisiondata = getCollisionData(texture);
             scene = null;
         }
 
         public void Update(GameTime gameTime, bool[] pressedKeys)
         {
-            Vector2 driverInput=Vector2.Zero;
+            Vector2 driverInput = Vector2.Zero;
             if (pressedKeys[(int)Config.controlKeys.Up])
             {
                 driverInput.Y++;
@@ -76,20 +75,20 @@ namespace paintRacer
             {
                 driverInput.X++;
             }
-
+            Vector2 lastPosition = position;
             speed = Physic.calculateSpeed(gameTime, this, driverInput, scene.getLevel().Data);
             position = Physic.calculateNextPos(gameTime, position, speed);
             rotation = Physic.calculateRotation(speed.direction);
 
             int num;
-            for (num = 0; num < checkPoints.Length && checkPoints[num] == true; ++num);
+            for (num = 0; num < checkPoints.Length && checkPoints[num] == true; ++num) ;
             Vector2[] pointarray = scene.getLevel().CheckPoints;
             if (num == checkPoints.Length)
             {
                 for (int i = 0; i < checkPoints.Length; ++i)
                     checkPoints[i] = false;
                 times[lap - 1] = scene.raceTime;
-                for (int i = 0; i < lap-1; ++i)
+                for (int i = 0; i < lap - 1; ++i)
                 {
                     times[lap - 1] -= times[i];
                 }
@@ -103,8 +102,10 @@ namespace paintRacer
             }
             else if (2 * num + 1 < pointarray.Length)
             {
-                if (Physic.checkPoint(pointarray[2 * num], pointarray[2 * num + 1], this.position))
+                if (Physic.vectorCut(pointarray[2 * num], pointarray[2 * num + 1], lastPosition, position))
+                {
                     checkPoints[num] = true;
+                }
             }
         }
 
@@ -119,19 +120,19 @@ namespace paintRacer
             bool[,] collisionData = new bool[texture.Width, texture.Height];
 
             // iterate through the whole color information
-            for (int x = 0, pixelCounter = 0; x < texture.Width; x++)
-            {
-                for (int y = 0; y < texture.Height; y++, pixelCounter++)
+            for (int y = 0, pixelCounter = 0; y < texture.Height; y++)
+                for (int x = 0; x < texture.Width; x++, pixelCounter++)
                 {
-                    // set true if the color isn't fully transparent
-                    collisionData[x, y] = pixels[pixelCounter].A != 0;
+                    {
+                        // set true if the color isn't fully transparent
+                        collisionData[x, y] = pixels[pixelCounter].A != 0;
+                    }
                 }
-            }
             return collisionData;
         }
 
         ///If player is left null we consider this to be the protagonist of the current viewport, otherwise player is the position this is to be aligned on
-        public void Draw(SpriteBatch spriteBatch, GraphicsDevice GraphicsDevice, Viewport viewport, Player player=null)
+        public void Draw(SpriteBatch spriteBatch, GraphicsDevice GraphicsDevice, Viewport viewport, Player player = null)
         {
             //Assumes GraphicsDevice previously contained default Viewport
             Viewport defaultView = GraphicsDevice.Viewport;
@@ -140,9 +141,9 @@ namespace paintRacer
             GraphicsDevice.Viewport = viewport;
 
             spriteBatch.Begin();
-            
+
             //Player's rectangle size based on his texture size and origin currently in the center
-            if(player==null)
+            if (player == null)
             {
                 spriteBatch.Draw(texture, new Rectangle(viewport.Width / 2, viewport.Height / 2, texture.Width, texture.Height), null, color, 0, new Vector2((float)texture.Width / 2, (float)texture.Height / 2), SpriteEffects.None, 0);
             }
@@ -151,14 +152,14 @@ namespace paintRacer
                 //Player's draw position: center of the screen - other player's position (this is the point 0,0 on the map) + own position
 
                 //get the vector of the difference of bothe positions
-                Vector2 drawPosition =position-player.position;
+                Vector2 drawPosition = position - player.position;
                 //rotate the vector of the difference of both middlepoints by rotation of the other player
                 drawPosition = Helper.rotateVector2(drawPosition, -player.getRotation());
                 // set drawposition relativly to the middle of the viewport
                 drawPosition += new Vector2(viewport.Width / 2, viewport.Height / 2);
-                
+
                 // draw in the viewport, relativley to the rotation of the player
-                spriteBatch.Draw(texture, new Rectangle((int)drawPosition.X, (int)drawPosition.Y, texture.Width, texture.Height), null, color,rotation-player.getRotation(), new Vector2((float)texture.Width / 2, (float)texture.Height / 2), SpriteEffects.None, 0);
+                spriteBatch.Draw(texture, new Rectangle((int)drawPosition.X, (int)drawPosition.Y, texture.Width, texture.Height), null, color, rotation - player.getRotation(), new Vector2((float)texture.Width / 2, (float)texture.Height / 2), SpriteEffects.None, 0);
             }
 
             spriteBatch.End();
@@ -179,7 +180,7 @@ namespace paintRacer
 
         public void setPosition(Vector2 position)
         {
-            this.position=position;
+            this.position = position;
         }
 
         public float getRotation()
@@ -190,7 +191,7 @@ namespace paintRacer
         public void setRotation(float rotation)
         {
             speed.direction = new Vector2((float)Math.Sin(rotation), (float)Math.Cos(rotation + MathHelper.Pi));
-            this.rotation=rotation;
+            this.rotation = rotation;
         }
 
         public bool[,] getCollisionData()
