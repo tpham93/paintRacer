@@ -151,38 +151,76 @@ namespace paintRacer
             return (float)Math.Atan2(direction.X, -direction.Y);
         }
 
-        /**
-         * returns if the car passed a checkpoint
-         * 
-         * pointA & pointB - Vector2 :
-         * left and right of the checkpoint, the line will be between both
-         * 
-         * mid - Vector2 :
-         * middelpoint of the player
-         */
-        public static bool checkPoint(Vector2 pointA, Vector2 pointB, Vector2 mid)
+        ///**
+        // * returns if the car passed a checkpoint
+        // * 
+        // * pointA & pointB - Vector2 :
+        // * left and right of the checkpoint, the line will be between both
+        // * 
+        // * mid - Vector2 :
+        // * middelpoint of the player
+        // */
+        //public static bool checkPoint(Vector2 pointA, Vector2 pointB, Vector2 mid)
+        //{
+        //    const float diff = 1.000005f;
+
+        //    Vector2 ab = new Vector2(Math.Abs(pointA.X - pointB.X), Math.Abs(pointA.Y - pointB.Y));
+        //    Vector2 am = new Vector2(Math.Abs(pointA.X - mid.X), Math.Abs(pointA.Y - mid.Y));
+        //    Vector2 bm = new Vector2(Math.Abs(mid.X - pointB.X), Math.Abs(mid.Y - pointB.Y));
+
+        //    return (ab.LengthSquared() * diff >= am.LengthSquared() + bm.LengthSquared());
+        //}
+
+        public static Vector2 getCutPoint(Line l1, Line l2)
         {
-            float diff = 1.000005f;
+            bool l1Const = l1.isConstant();
+            bool l2Const = l2.isConstant();
+            float x = 0f;
+            if (l1Const)
+            {
+                x = l1.x;
+            }
+            else if (l2Const)
+            {
+                return getCutPoint(l2, l1);
+            }
+            else
+            {
+                x = (l2.c - l1.c) / (l1.m - l2.m);
+            }
+            float y = l2.calculate(x);
+            return new Vector2(x, y);
+        }
 
-            Vector2 ab = new Vector2(Math.Abs(pointA.X - pointB.X), Math.Abs(pointA.Y - pointB.Y));
-            Vector2 am = new Vector2(Math.Abs(pointA.X - mid.X), Math.Abs(pointA.Y - mid.Y));
-            Vector2 bm = new Vector2(Math.Abs(mid.X - pointB.X), Math.Abs(mid.Y - pointB.Y));
+        public static bool vectorCut(Vector2 c1, Vector2 c2, Vector2 p1, Vector2 p2)
+        {
+            Line l1 = new Line(c1, c2);
+            Line l2 = new Line(p1, p2);
 
-            if (ab.LengthSquared() * diff < am.LengthSquared() + bm.LengthSquared())
+            if (l1.m == l2.m)
+            {
                 return false;
-            return true;
+            }
+
+            if (l1.isConstant() && l2.isConstant())
+            {
+                return l1.x == l2.x;
+            }
+            Vector2 cutPoint = getCutPoint(l1, l2);
+            return (cutPoint - p1).LengthSquared() <= (p2 - p1).LengthSquared();
         }
 
-        /**
-         * returns a ROUNDED integer from a double (or float)
-         * 
-         * value - double :
-         * cast this value to integer by rounding
-         */
-        public static int roundCast(double value)
-        {
-            return (value > 0) ? ((int)(value * 10 + 5) / 10) : ((int)(value * 10 - 5) / 10);
-        }
+
+        ///**
+        // * returns a ROUNDED integer from a double (or float)
+        // * 
+        // * value - double :
+        // * cast this value to integer by rounding
+        // */
+        //public static int roundCast(double value)
+        //{
+        //    return (value > 0) ? ((int)(value * 10 + 5) / 10) : ((int)(value * 10 - 5) / 10);
+        //}
 
 
         /**

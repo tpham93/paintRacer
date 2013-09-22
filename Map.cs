@@ -42,7 +42,6 @@ namespace paintRacer
         public HighscoreData Highscore
         {
             get { return highscore; }
-            set { highscore = value; }
         }
 
         /// <summary>

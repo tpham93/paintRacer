@@ -74,11 +74,6 @@ namespace paintRacer
             textWriter.Close();
         }
 
-        public bool isInHighscore(HighscoreElement highscoreElement)
-        {
-            return highscoreEntries.Count < MAXHIGHSCORE_COUNT - 1 || highscoreElement < highscoreEntries[highscoreEntries.Count - 1];
-        }
-
         public void insertScore(HighscoreElement element)
         {
             highscoreEntries.Add(element);
