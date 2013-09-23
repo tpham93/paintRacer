@@ -173,6 +173,11 @@ namespace paintRacer
             this.scene = scene;
         }
 
+        public void setSpeed(Speed speed)
+        {
+            this.speed = speed;
+        }
+
         public Vector2 getPosition()
         {
             return position;

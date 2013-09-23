@@ -120,6 +120,10 @@ namespace paintRacer
                 raceTime += gameTime.ElapsedGameTime;
             }
 
+            //collision between cars
+            if (Physic.hasCollision(players))
+                Physic.CarKonflikt(players);
+
             for (int i = 0; i < playerCount; i++)
             {
                 //Splits up keys Array into separate Arrays for each player which contain whether a key was pressed or not (this is done to simplify the Update of each player)

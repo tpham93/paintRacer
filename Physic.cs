@@ -328,5 +328,15 @@ namespace paintRacer
             }
             return false;
         }
+
+
+        public static void CarKonflikt(Player[] players)
+        {
+            Vector2 dircetion = new Vector2((players[0].getSpeed().direction.X + players[1].getSpeed().direction.X) / 2, (players[0].getSpeed().direction.Y + players[1].getSpeed().direction.Y) / 2);
+            float absspeed = (players[0].getSpeed().abs + players[1].getSpeed().abs) / 2;
+            Speed speed = new Speed(dircetion, absspeed);
+            players[0].setSpeed(speed);
+            players[1].setSpeed(speed);
+        }
     }
 }
