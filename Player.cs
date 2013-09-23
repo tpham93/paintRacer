@@ -56,25 +56,9 @@ namespace paintRacer
             scene = null;
         }
 
-        public void Update(GameTime gameTime, bool[] pressedKeys)
+        public void Update(GameTime gameTime, Vector2 driverInput)
         {
-            Vector2 driverInput = Vector2.Zero;
-            if (pressedKeys[(int)Config.controlKeys.Up])
-            {
-                driverInput.Y++;
-            }
-            if (pressedKeys[(int)Config.controlKeys.Down])
-            {
-                driverInput.Y--;
-            }
-            if (pressedKeys[(int)Config.controlKeys.Left])
-            {
-                driverInput.X--;
-            }
-            if (pressedKeys[(int)Config.controlKeys.Right])
-            {
-                driverInput.X++;
-            }
+
             Vector2 lastPosition = position;
             speed = Physic.calculateSpeed(gameTime, this, driverInput, scene.getLevel().Data);
             position = Physic.calculateNextPos(gameTime, position, speed);
@@ -107,6 +91,28 @@ namespace paintRacer
                     checkPoints[num] = true;
                 }
             }
+        }
+
+        public static Vector2 getDriverInput(bool[] pressedKeys)
+        {
+            Vector2 driverInput = Vector2.Zero;
+            if (pressedKeys[(int)Config.controlKeys.Up])
+            {
+                driverInput.Y++;
+            }
+            if (pressedKeys[(int)Config.controlKeys.Down])
+            {
+                driverInput.Y--;
+            }
+            if (pressedKeys[(int)Config.controlKeys.Left])
+            {
+                driverInput.X--;
+            }
+            if (pressedKeys[(int)Config.controlKeys.Right])
+            {
+                driverInput.X++;
+            }
+            return driverInput;
         }
 
         /// get the pixels, which are used for the collision

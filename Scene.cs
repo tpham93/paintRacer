@@ -90,10 +90,11 @@ namespace paintRacer
                 }
             }
         }
-        int collisions = 0;
+
         public void Update(GameTime gameTime, KeyboardState keyboardState)
         {
             int lightTakt = 700;
+            Vector2[] driverInputs = new Vector2[playerCount];
 
             //before start
             if (raceState == ERaceState.LightOff || raceState == ERaceState.Ready_I || raceState == ERaceState.Ready_II || raceState == ERaceState.Ready_III || raceState == ERaceState.Ready_IV || raceState == ERaceState.Ready_V || raceState == ERaceState.Go)
@@ -121,10 +122,10 @@ namespace paintRacer
             }
 
             //collision between cars
-            if (Physic.hasCollision(players))
+            if (Physic.hasCollision(gameTime, players, driverInputs, level.Data))
                 Physic.CarKonflikt(players);
 
-            for (int i = 0; i < playerCount; i++)
+            for (int i = 0; i < playerCount; ++i)
             {
                 //Splits up keys Array into separate Arrays for each player which contain whether a key was pressed or not (this is done to simplify the Update of each player)
                 bool[] pressedKeys = new bool[keys.GetLength(1)];
@@ -132,8 +133,13 @@ namespace paintRacer
                 {
                     pressedKeys[j] = keyboardState.IsKeyDown(keys[i, j]);
                 }
+                driverInputs[i] = Player.getDriverInput(pressedKeys);
+            }
+
+            for (int i = 0; i < playerCount; i++)
+            {
                 if (raceState == ERaceState.Go || raceState == ERaceState.Race)
-                    players[i].Update(gameTime, pressedKeys);
+                    players[i].Update(gameTime, driverInputs[i]);
             }
         }
 
@@ -168,7 +174,7 @@ namespace paintRacer
                     minTime = Math.Min((minTime == 0 ? 1000000 : minTime), (int)players[0].times[j].TotalMilliseconds);
                 int LTsek = minTime / 1000;
                 int LTmsek = (minTime % 1000) / 10;
-                spriteBatch.DrawString(Font, "Lap: " + Math.Min(players[0].lap,Config.MAXLAPCOUNT) + " / " + Config.MAXLAPCOUNT + "   " + RTmin + ":" + RTsek + "," + RTmsek + "  \nfastest Lap: " + LTsek + "," + LTmsek + "sek", new Vector2(5, 0), Color.Black);
+                spriteBatch.DrawString(Font, "Lap: " + Math.Min(players[0].lap, Config.MAXLAPCOUNT) + " / " + Config.MAXLAPCOUNT + "   " + RTmin + ":" + RTsek + "," + RTmsek + "  \nfastest Lap: " + LTsek + "," + LTmsek + "sek", new Vector2(5, 0), Color.Black);
                 if (players.Length > 1)
                 {
                     minTime = 0;

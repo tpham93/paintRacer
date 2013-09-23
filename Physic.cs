@@ -279,18 +279,43 @@ namespace paintRacer
             return false;
         }
 
+        public static bool hasCollision(GameTime gameTime, Player[] players, Vector2[] driverInputs, EMapStates[,] mapdata)
+        {
+            Speed[] playerSpeeds = new Speed[players.Length];
+            Vector2[] newPositions = new Vector2[players.Length];
+            float[] newRotation = new float[players.Length];
+
+            for (int i = 0; i < playerSpeeds.Length; ++i)
+            {
+                playerSpeeds[i] = calculateSpeed(gameTime, players[i], driverInputs[i], mapdata);
+                newPositions[i] = calculateNextPos(gameTime, players[i].getPosition(), playerSpeeds[i]);
+                newRotation[i] = calculateRotation(playerSpeeds[i].direction);
+            }
+            return hasCollision(players[0].getCollisionData(), newPositions[0], newPositions[1], newRotation[0], newRotation[1]);
+        }
+
         public static bool hasCollision(Player[] players)
         {
+
             if (players.Length <= 1)
                 return false;
+
+            Vector2 player1Position = players[0].getPosition();
+            Vector2 player2Position = players[1].getPosition();
+
+            bool[,] playerCollisionData = players[0].getCollisionData();
+            return hasCollision(playerCollisionData,player1Position, player2Position, players[0].getRotation(),players[1].getRotation());
+        }
+
+        public static bool hasCollision(bool[,] playerCollisionData, Vector2 player1Position, Vector2 player2Position, float rotationPlayer1, float rotationPlayer2)
+        {
+
             // save cos & sin of rotation, to save redundance calculations
-            double rotationPlayer1Cos = Math.Cos(players[0].getRotation());
-            double rotationPlayer1Sin = Math.Sin(players[0].getRotation());
+            double rotationPlayer1Cos = Math.Cos(rotationPlayer1);
+            double rotationPlayer1Sin = Math.Sin(rotationPlayer1);
 
-            double invertRotationPlayer2Cos = Math.Cos(-players[1].getRotation());
-            double invertRotationPlayer2Sin = Math.Sin(-players[1].getRotation());
-
-            bool[,] playerCollisionData = players[1].getCollisionData();
+            double invertRotationPlayer2Cos = Math.Cos(-rotationPlayer2);
+            double invertRotationPlayer2Sin = Math.Sin(-rotationPlayer2);
 
             // width & height of the player's car
             int playerWidth = playerCollisionData.GetUpperBound(0);
@@ -312,9 +337,9 @@ namespace paintRacer
                     {
                         tmpVect.X = x - middlePoint.X;
                         tmpVect.Y = y - middlePoint.Y;
-                        mapPlayer1Position = Helper.rotateVector2(tmpVect, rotationPlayer1Cos, rotationPlayer1Sin) + players[0].getPosition();
+                        mapPlayer1Position = Helper.rotateVector2(tmpVect, rotationPlayer1Cos, rotationPlayer1Sin) + player1Position;
 
-                        relativePlayer1Position = mapPlayer1Position - players[1].getPosition();
+                        relativePlayer1Position = mapPlayer1Position - player2Position;
                         rotatedRelativePlayer1Position = Helper.rotateVector2(relativePlayer1Position, invertRotationPlayer2Cos, invertRotationPlayer2Sin) + middlePoint;
                         if (rotatedRelativePlayer1Position.X >= 0 && rotatedRelativePlayer1Position.X < playerWidth && rotatedRelativePlayer1Position.Y >= 0 && rotatedRelativePlayer1Position.Y < playerHeight)
                         {
