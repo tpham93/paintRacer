@@ -28,14 +28,11 @@ namespace paintRacer
             this.graphicsDevice = graphicsDevice;
         }
 
-        
+
         // constructor for the game, if finished the LoadWindow
         public Singleplayer(GraphicsDevice graphicsDevice, Player[] players, Map map)
         {
             this.players = players;
-
-            players[0].setPosition(map.Start);
-            players[0].setRotation(map.StartRotation);
 
             level = map;
 
@@ -44,11 +41,21 @@ namespace paintRacer
 
         public void Load(Microsoft.Xna.Framework.Content.ContentManager content)
         {
+            players[0].setPosition(level.Start);
+            players[0].setSpeed(new Speed());
+            players[0].setRotation(level.StartRotation);
             scene = new Scene(level, players, graphicsDevice.Viewport, Config.getKeys(), content);
         }
 
         public EGameStates Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
+            KeyboardState keyboardState = Keyboard.GetState();
+            Keys[,] keys = Config.getKeys();
+            if (keyboardState.IsKeyDown(keys[0, (int)Config.controlKeys.Pause]) || keyboardState.IsKeyDown(keys[1, (int)Config.controlKeys.Pause]))
+            {
+                return EGameStates.Pause;
+            }
+
             scene.Update(gameTime, Keyboard.GetState());
             return EGameStates.SinglePlayer;
         }
@@ -60,7 +67,13 @@ namespace paintRacer
 
         public void Unload()
         {
-            
+
+        }
+
+
+        public EGameStates getGameState()
+        {
+            return EGameStates.SinglePlayer;
         }
     }
 }

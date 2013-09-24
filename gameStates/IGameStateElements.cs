@@ -10,5 +10,6 @@ namespace paintRacer
         EGameStates Update(GameTime gameTime);
         void Draw(GameTime gameTime, SpriteBatch spriteBatch);
         void Unload();
+        EGameStates getGameState();
     }
 }

@@ -59,7 +59,7 @@ namespace paintRacer
             spriteBatch = new SpriteBatch(GraphicsDevice);
             GameState = EGameStates.Menue;
 
-            Keys[,] keys = { { Keys.W, Keys.S, Keys.A, Keys.D, Keys.Q, Keys.E, Keys.F }, { Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Escape, Keys.Enter, Keys.Back } };
+            Keys[,] keys = { { Keys.W, Keys.S, Keys.A, Keys.D, Keys.Escape, Keys.E}, { Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Back, Keys.Enter} };
             Config.setKeys(keys);
 
             // TODO: use this.Content to load your game content here
@@ -148,6 +148,8 @@ namespace paintRacer
                             break;
                         case EGameStates.Pause:
                             tmpGameStateElement = gameStateElement;
+                            gameStateElement = new Pause(tmpGameStateElement, Window.ClientBounds);
+                            gameStateElement.Load(Content);
                             break;
                         case EGameStates.Close:
                             Exit();

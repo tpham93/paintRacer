@@ -251,5 +251,11 @@ namespace paintRacer
         public void Unload()
         {
         }
+
+
+        public EGameStates getGameState()
+        {
+            return EGameStates.CarSelection;
+        }
     }
 }

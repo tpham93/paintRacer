@@ -281,11 +281,11 @@ namespace paintRacer
 
         public static bool hasCollision(GameTime gameTime, Player[] players, Vector2[] driverInputs, EMapStates[,] mapdata)
         {
-            Speed[] playerSpeeds = new Speed[players.Length];
-            Vector2[] newPositions = new Vector2[players.Length];
-            float[] newRotation = new float[players.Length];
+            Speed[] playerSpeeds = new Speed[2];
+            Vector2[] newPositions = new Vector2[2];
+            float[] newRotation = new float[2];
 
-            for (int i = 0; i < playerSpeeds.Length; ++i)
+            for (int i = 0; i < players.Length; ++i)
             {
                 playerSpeeds[i] = calculateSpeed(gameTime, players[i], driverInputs[i], mapdata);
                 newPositions[i] = calculateNextPos(gameTime, players[i].getPosition(), playerSpeeds[i]);
@@ -357,9 +357,10 @@ namespace paintRacer
 
         public static void CarKonflikt(Player[] players)
         {
-            Vector2 dircetion = new Vector2((players[0].getSpeed().direction.X + players[1].getSpeed().direction.X) / 2, (players[0].getSpeed().direction.Y + players[1].getSpeed().direction.Y) / 2);
-            float absspeed = (players[0].getSpeed().abs + players[1].getSpeed().abs) / 2;
-            Speed speed = new Speed(dircetion, absspeed);
+            Vector2 direction = new Vector2((players[0].getSpeed().direction.X + players[1].getSpeed().direction.X) / 2, (players[0].getSpeed().direction.Y + players[1].getSpeed().direction.Y) / 2);
+            float absSpeed = (players[0].getSpeed().abs + players[1].getSpeed().abs) / 2;
+            Speed speed = new Speed(direction, absSpeed);
+
             players[0].setSpeed(speed);
             players[1].setSpeed(speed);
         }

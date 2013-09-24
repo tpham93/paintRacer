@@ -197,5 +197,11 @@ namespace paintRacer
         {
 
         }
+
+
+        public EGameStates getGameState()
+        {
+            return EGameStates.Menue;
+        }
     }
 }

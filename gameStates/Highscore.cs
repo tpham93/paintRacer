@@ -166,5 +166,11 @@ namespace paintRacer
         {
 
         }
+
+
+        public EGameStates getGameState()
+        {
+            return EGameStates.HightScore;
+        }
     }
 }

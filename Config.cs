@@ -35,8 +35,7 @@ namespace paintRacer
             Left    =2,
             Right   =3,
             Pause   =4,
-            Select  =5,
-            Back    =6
+            Select  =5
         }
 
         // List -> playerid , 2nd dimension -> controlKeys value

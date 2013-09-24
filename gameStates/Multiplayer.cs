@@ -43,14 +43,6 @@ namespace paintRacer
         {
             this.players = players;
 
-            int distance = 40;
-            Vector2 offset = new Vector2((float)(distance*Math.Cos(map.StartRotation)), -(float)(distance*Math.Sin(map.StartRotation)));
-            players[0].setPosition(map.Start - offset);
-            players[1].setPosition(map.Start + offset);
-
-            players[0].setRotation(map.StartRotation);
-            players[1].setRotation(map.StartRotation);
-
             level = map;
 
             this.graphicsDevice = graphicsDevice;
@@ -58,11 +50,27 @@ namespace paintRacer
 
         public void Load(ContentManager content)
         {
+            const int distance = 40;
+            Vector2 offset = new Vector2((float)(distance * Math.Cos(level.StartRotation)), -(float)(distance * Math.Sin(level.StartRotation)));
+            players[0].setPosition(level.Start - offset);
+            players[1].setPosition(level.Start + offset);
+
+            players[0].setSpeed(new Speed());
+            players[1].setSpeed(new Speed());
+
+            players[0].setRotation(level.StartRotation);
+            players[1].setRotation(level.StartRotation);
             scene = new Scene(level, players, graphicsDevice.Viewport, Config.getKeys(), content);
         }
 
         public EGameStates Update(GameTime gameTime)
         {
+            KeyboardState keyboardState = Keyboard.GetState();
+            Keys[,] keys = Config.getKeys();
+            if (keyboardState.IsKeyDown(keys[0,(int)Config.controlKeys.Pause]) || keyboardState.IsKeyDown(keys[1,(int)Config.controlKeys.Pause]))
+            {
+                return EGameStates.Pause;
+            }
             scene.Update(gameTime, Keyboard.GetState());
             return EGameStates.MultiPlayer;
         }
@@ -75,6 +83,12 @@ namespace paintRacer
         public void Unload()
         {
 
+        }
+
+
+        public EGameStates getGameState()
+        {
+            return EGameStates.MultiPlayer;
         }
     }
 }
