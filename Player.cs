@@ -13,6 +13,7 @@ namespace paintRacer
 
         private Vector2 position;
 
+        int numCheckPoints;
         public Boolean[] checkPoints;
         public int lap;
         public TimeSpan[] times;
@@ -34,6 +35,11 @@ namespace paintRacer
         {
             return speed;
         }
+        //Getter for Name
+        public string getName()
+        {
+            return name;
+        }
 
         //Inconsistency with Level (create with string or texture?)
         public Player(string name, Texture2D texture, Color color, int numCheckPoints)
@@ -41,6 +47,7 @@ namespace paintRacer
             this.name = name;
             times = new TimeSpan[Config.MAXLAPCOUNT];
 
+            this.numCheckPoints = numCheckPoints;
             checkPoints = new Boolean[numCheckPoints];
             for (int i = 0; i < checkPoints.Length; ++i)
                 checkPoints[i] = false;
@@ -54,6 +61,18 @@ namespace paintRacer
             this.color = color;
             collisiondata = getCollisionData(texture);
             scene = null;
+        }
+
+        public void reset()
+        {
+            times = new TimeSpan[Config.MAXLAPCOUNT];
+            checkPoints = new Boolean[numCheckPoints];
+            for (int i = 0; i < checkPoints.Length; ++i)
+                checkPoints[i] = false;
+            lap = 1;
+            position = Vector2.Zero;
+            rotation = 0.0f;
+            speed = new Speed(new Vector2(0f, -1f), 0f);
         }
 
         public void Update(GameTime gameTime, Vector2 driverInput)
@@ -78,11 +97,6 @@ namespace paintRacer
                 }
 
                 ++lap;
-                if (lap == Config.MAXLAPCOUNT + 1)
-                {
-                    scene.getLevel().Highscore.insertScore(new HighscoreElement(name, scene.raceTime));
-                    scene.getLevel().Highscore.writeToFile();
-                }
             }
             else if (2 * num + 1 < pointarray.Length)
             {

@@ -38,6 +38,15 @@ namespace paintRacer
             return string.Format("{0:00}:{1:00}:{2:00}", (int)time.TotalMinutes, time.Seconds, time.Milliseconds);
         }
 
+        public static bool operator ==(HighscoreElement e1, HighscoreElement e2)
+        {
+            return e1.CompareTo(e2) == 0 && e1.name == e2.name;
+        }
+        public static bool operator !=(HighscoreElement e1, HighscoreElement e2)
+        {
+            return !(e1==e2);
+        }
+
         public int CompareTo(HighscoreElement other)
         {
             return (int)(this.time.TotalMilliseconds - other.time.TotalMilliseconds);

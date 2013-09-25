@@ -9,5 +9,6 @@ namespace paintRacer
     {
         public static Map map;
         public static Player[] players;
+        public static EvaluationData evaluationData;
     }
 }
