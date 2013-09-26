@@ -28,6 +28,7 @@ namespace paintRacer
 
         Texture2D backgroundAreaTexture;
         Texture2D backgroundImage;
+        Texture2D bgPic;
 
         SpriteFont spriteFont;
         int fontHeight;
@@ -65,6 +66,7 @@ namespace paintRacer
         {
             backgroundAreaTexture = Helper.genRectangleTexture(1, 1, Config.TEXT_BOX_COLOR);
             backButtonTexture = Helper.loadImage(@"Content\loadMenu\Back.png", new Rectangle(0, 0, Config.SMALL_BUTTON_X, Config.SMALL_BUTTON_Y));
+            bgPic = Helper.loadImage(@"Content\podest.png");
             spriteFont = content.Load<SpriteFont>("font");
             fontHeight = (int)spriteFont.MeasureString("0").Y;
         }
@@ -109,6 +111,7 @@ namespace paintRacer
         {
             spriteBatch.Begin();
             {
+                spriteBatch.Draw(bgPic, new Vector2(0, 0), Color.White);
                 spriteBatch.Draw(backgroundAreaTexture, mapListViewport.Bounds, Color.White);
                 spriteBatch.Draw(backgroundAreaTexture, highscoreViewRectangle, Color.White);
                 spriteBatch.Draw(backButtonTexture, backButtonRectangle, Color.White);

@@ -36,6 +36,8 @@ namespace paintRacer
 
         Texture2D backgroundAreaTexture;
 
+        Texture2D bgPic;
+
         Viewport gameInfoViewport;
 
 
@@ -84,6 +86,7 @@ namespace paintRacer
             this.content = content;
             spriteFont = content.Load<SpriteFont>("font");
             fontHeight = (int)spriteFont.MeasureString("0").Y;
+            bgPic = Helper.loadImage(@"Content\podest.png");
             backgroundAreaTexture = Helper.genRectangleTexture(1, 1, Config.TEXT_BOX_COLOR);
             buttonTextures[(int)ScreenButton.Restart] = Helper.loadImage(@"Content\evaluation\Restart.png");
             buttonTextures[(int)ScreenButton.Exit] = Helper.loadImage(@"Content\evaluation\Exit.png");
@@ -119,6 +122,8 @@ namespace paintRacer
         public void Draw(Microsoft.Xna.Framework.GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
+
+            spriteBatch.Draw(bgPic, new Vector2(0, 0), Color.White);
 
             for (int i = 0; i < buttonTextures.Length; ++i)
             {
