@@ -298,7 +298,7 @@ namespace paintRacer
                 }
                 else if ((mouseState.X > CreatePos.X) && (mouseState.X < CreatePos.X + (int)Config.SMALL_BUTTON.X) && (mouseState.Y > CreatePos.Y) && (mouseState.Y < CreatePos.Y + (int)Config.SMALL_BUTTON.Y))
                 {
-                    try
+                    //try
                     {
                         Vector2[] points = Helper.resizeV2Array(checkPoints, 2);
                         points[points.Length - 2] = FinishPoints[0];
@@ -310,11 +310,11 @@ namespace paintRacer
                         XMLSave.saveMap(@"saved_maps\" + mapName, Global.map);
                         return nextState;
                     }
-                    catch
-                    {
-                        createState = ECreatState.Error;
-                        return EGameStates.LoadMenu;
-                    }
+                    //catch
+                    //{
+                    //    createState = ECreatState.Error;
+                    //    return EGameStates.LoadMenu;
+                    //}
                 }
                 else if ((mouseState.X > BackPos.X) && (mouseState.X < BackPos.X + (int)Config.SMALL_BUTTON.X) && (mouseState.Y > BackPos.Y) && (mouseState.Y < BackPos.Y + (int)Config.SMALL_BUTTON.Y))
                 {

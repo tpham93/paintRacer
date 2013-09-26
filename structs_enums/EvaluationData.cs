@@ -8,13 +8,13 @@ namespace paintRacer
     struct EvaluationData
     {
         public HighscoreData highscore;
-        public string playerName;
+        public Player player;
         public TimeSpan time;
 
-        public EvaluationData(HighscoreData highscore, string playerName, TimeSpan time)
+        public EvaluationData(HighscoreData highscore, Player player, TimeSpan time)
         {
             this.highscore = highscore;
-            this.playerName = playerName;
+            this.player = player;
             this.time = time;
         }
     }

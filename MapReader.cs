@@ -39,12 +39,12 @@ namespace paintRacer
             {
                 int d_color = (colorData[i].B + colorData[i].G + colorData[i].R) / 3;
                 if (d_color <= ROAD_COLOR.Y && d_color >= ROAD_COLOR.X)
-                    result[i % height, i / height] = EMapStates.Road;
+                    result[i % width, i / width] = EMapStates.Road;
                 else if (d_color <= OFFROAD_COLOR.Y && d_color >= OFFROAD_COLOR.X)
-                    result[i % height, i / height] = EMapStates.Offroad;
+                    result[i % width, i / width] = EMapStates.Offroad;
                 else if (d_color <= OBJECT_COLOR.Y && d_color >= OBJECT_COLOR.X)
-                    result[i % height, i / height] = EMapStates.Object;
-                else result[i % height, i / height] = EMapStates.Default;
+                    result[i % width, i / width] = EMapStates.Object;
+                else result[i % width, i / width] = EMapStates.Default;
             }
             return result;
         }

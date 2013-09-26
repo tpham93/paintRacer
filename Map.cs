@@ -125,7 +125,8 @@ namespace paintRacer
             this.checkPoints = checkPoints;
             this.start = startPoint;
             this.startRotation = startRotation;
-            this.highscore = new HighscoreData(directoryPath+@"\highscore");
+            this.highscore = new HighscoreData(directoryPath + @"\highscore");
+            this.backgroundImage = Helper.genRectangleTexture(1, 1, Config.MAP_BACKGROUND_COLOR);
         }
 
         public void Draw(SpriteBatch spriteBatch, GraphicsDevice GraphicsDevice, Viewport viewport, Player player)

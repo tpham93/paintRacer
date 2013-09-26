@@ -72,7 +72,7 @@ namespace paintRacer
             if (!finished && scene.isFinished())
             {
                 finished = true;
-                Global.evaluationData = new EvaluationData(scene.getLevel().Highscore,scene.getFinishedPlayer().getName(),scene.raceTime);
+                Global.evaluationData = new EvaluationData(scene.getLevel().Highscore,scene.getFinishedPlayer(),scene.raceTime);
                 finishWaitTime = new TimeSpan(0, 0, 3);
             }
             else if (finished && finishWaitTime > new TimeSpan())

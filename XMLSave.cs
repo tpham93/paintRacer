@@ -13,13 +13,14 @@ namespace paintRacer
     {
         public static string getDirectoryName(string mapName)
         {
-            string mapPath = @"saved_maps\" + mapName;
+            string directoryName = @"saved_maps\";
+            string mapPath = directoryName + mapName;
             int i = 0;
             while (Directory.Exists(mapPath))
             {
-                mapPath = @"saved_maps\" + mapName + "_" + ++i;
-            }
-            return mapName + "_" + i;
+                mapPath = directoryName + mapName + "_" + ++i;
+            } 
+            return (i==0)?mapName:mapName+"_"+ i;
         }
 
         public static void saveMap(string directoryPath, Map map)

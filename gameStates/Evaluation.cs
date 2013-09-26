@@ -22,6 +22,8 @@ namespace paintRacer
 
         bool newHighScore;
 
+        Player player;
+
         Texture2D[] buttonTextures;
         Rectangle[] buttonRectangles;
 
@@ -34,6 +36,10 @@ namespace paintRacer
 
         Texture2D backgroundAreaTexture;
 
+        Viewport gameInfoViewport;
+
+
+        TimeSpan totalTime;
         HighscoreData highscoreData;
         SpriteFont spriteFont;
         int fontHeight;
@@ -44,9 +50,11 @@ namespace paintRacer
 
         public Evaluation(IGameStateElements previousGameStateElement, Rectangle screenDimensions, EvaluationData evaluationData)
         {
+            this.player = evaluationData.player;
             this.highscoreData = evaluationData.highscore;
+            this.totalTime = evaluationData.time;
             this.previousGameStateElement = previousGameStateElement;
-            newHighScore = highscoreData.insertScore(new HighscoreElement(evaluationData.playerName, evaluationData.time));
+            newHighScore = highscoreData.insertScore(new HighscoreElement(evaluationData.player.getName(), evaluationData.time));
             if (newHighScore)
                 highscoreData.writeToFile();
             Console.Out.WriteLine(newHighScore);
@@ -68,6 +76,7 @@ namespace paintRacer
             nameViewport = new Viewport(800 - highscoreNameListWidth - 50 - highscoreTimeListWidth, 50, highscoreNameListWidth, highscoreNameListHeight);
             timeRectangle = new Rectangle(800 - 50 - highscoreTimeListWidth, 50, highscoreTimeListWidth, highscoreTimeListHeight);
             highscoreViewRectangle = new Rectangle(nameViewport.Bounds.Left, nameViewport.Bounds.Top, timeRectangle.Right - nameViewport.Bounds.Left, timeRectangle.Height);
+            gameInfoViewport = new Viewport(50, 50, 2 * Config.SMALL_BUTTON_X + Config.SMALL_BUTTON_SPACE, 200);
         }
 
         public void Load(Microsoft.Xna.Framework.Content.ContentManager content)
@@ -115,34 +124,48 @@ namespace paintRacer
             {
                 spriteBatch.Draw(buttonTextures[i], buttonRectangles[i], Color.White);
                 spriteBatch.Draw(backgroundAreaTexture, highscoreViewRectangle, Color.White);
+                spriteBatch.Draw(backgroundAreaTexture, gameInfoViewport.Bounds, Color.White);
             }
 
             spriteBatch.End();
-
 
             Viewport tmp = spriteBatch.GraphicsDevice.Viewport;
 
             List<HighscoreElement> highscoreElements = highscoreData.HighscoreEntries;
             Vector2 tmpPos = new Vector2(timeRectangle.Left, timeRectangle.Top);
+
             spriteBatch.Begin();
-            {
                 for (int i = 0; i < highscoreElements.Count; ++i)
                 {
                     spriteBatch.DrawString(spriteFont, highscoreElements[i].getFormattedTimeString(), tmpPos, Config.TEXT_COLOR);
                     tmpPos.Y += fontHeight + Config.TEXTFIELD_BORDER;
                 }
-                spriteBatch.End();
+            spriteBatch.End();
 
-                spriteBatch.GraphicsDevice.Viewport = nameViewport;
+            spriteBatch.GraphicsDevice.Viewport = nameViewport;
+            tmpPos = Vector2.Zero;
 
-                tmpPos = Vector2.Zero;
+            spriteBatch.Begin();
+            for (int i = 0; i < highscoreElements.Count; ++i)
+            {
+                spriteBatch.DrawString(spriteFont, highscoreElements[i].Name, tmpPos, Config.TEXT_COLOR);
+                tmpPos.Y += fontHeight + Config.TEXTFIELD_BORDER;
+            }
+            spriteBatch.End();
 
-                spriteBatch.Begin();
-                for (int i = 0; i < highscoreElements.Count; ++i)
-                {
-                    spriteBatch.DrawString(spriteFont, highscoreElements[i].Name, tmpPos, Config.TEXT_COLOR);
-                    tmpPos.Y += fontHeight + Config.TEXTFIELD_BORDER;
-                }
+            spriteBatch.GraphicsDevice.Viewport = gameInfoViewport;
+            tmpPos = Vector2.Zero;
+
+            spriteBatch.Begin();
+            spriteBatch.DrawString(spriteFont, "Name: " + player.getName(), tmpPos, Config.TEXT_COLOR);
+            tmpPos.Y += Config.SMALL_LINE_SPACE + fontHeight;
+            spriteBatch.DrawString(spriteFont, "Time: " + "     " + string.Format("{0:00}:{1:00}:{2:000}", (int)totalTime.TotalMinutes, totalTime.Seconds, totalTime.Milliseconds), tmpPos, Config.TEXT_COLOR);
+            tmpPos.Y += Config.SMALL_LINE_SPACE + fontHeight;
+            TimeSpan[] lapTimes = player.times;
+            for (int i = 0; i < lapTimes.Length; ++i)
+            {
+                spriteBatch.DrawString(spriteFont, "    "+"Lap " + i + ": " + string.Format("{0:00}:{1:00}:{2:000}", (int)lapTimes[i].TotalMinutes, lapTimes[i].Seconds, lapTimes[i].Milliseconds), tmpPos, Config.TEXT_COLOR);
+                tmpPos.Y += fontHeight /*+ Config.SMALL_LINE_SPACE*/;
             }
             spriteBatch.End();
 
