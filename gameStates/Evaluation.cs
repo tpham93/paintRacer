@@ -37,6 +37,12 @@ namespace paintRacer
         Texture2D backgroundAreaTexture;
         Texture2D backgroundImage;
 
+        Texture2D newHighscoreTexture;
+        Rectangle newHighscoreRectangle;
+        Queue<Color> currentColor;
+        TimeSpan colorChangeTime;
+        TimeSpan colorChangeFrequency;
+
         Viewport gameInfoViewport;
 
 
@@ -78,6 +84,20 @@ namespace paintRacer
             nameViewport = new Viewport(800 - highscoreNameListWidth - 50 - highscoreTimeListWidth, 50, highscoreNameListWidth, highscoreNameListHeight);
             timeRectangle = new Rectangle(800 - 50 - highscoreTimeListWidth, 50, highscoreTimeListWidth, highscoreTimeListHeight);
             highscoreViewRectangle = new Rectangle(nameViewport.Bounds.Left, nameViewport.Bounds.Top, timeRectangle.Right - nameViewport.Bounds.Left, timeRectangle.Height);
+
+            newHighscoreRectangle = new Rectangle(50,50,285,45);
+
+            currentColor = new Queue<Color>();
+
+            currentColor.Enqueue(Color.Violet);
+            currentColor.Enqueue(Color.Blue);
+            currentColor.Enqueue(Color.Green);
+            currentColor.Enqueue(Color.Yellow);
+            currentColor.Enqueue(Color.Orange);
+            currentColor.Enqueue(Color.Red);
+
+            colorChangeFrequency = new TimeSpan(0, 0, 0,0, 500);
+            colorChangeTime = new TimeSpan(0, 0, 0,0, 500);
         }
 
         public void Load(Microsoft.Xna.Framework.Content.ContentManager content)
@@ -89,7 +109,7 @@ namespace paintRacer
             buttonTextures[(int)ScreenButton.Restart] = Helper.loadImage(@"Content\evaluation\Restart.png");
             buttonTextures[(int)ScreenButton.Exit] = Helper.loadImage(@"Content\evaluation\Exit.png");
             backgroundImage = Helper.loadImage(@"Content\podest.png");
-
+            newHighscoreTexture = Helper.loadImage(@"Content\evaluation\newHighscore.png");
 
             const int gameInfoWidth = 2 * Config.SMALL_BUTTON_X + Config.SMALL_BUTTON_SPACE;
             int gameInfoHeight = (int)(5*fontHeight) + 3* Config.SMALL_LINE_SPACE;
@@ -101,6 +121,17 @@ namespace paintRacer
         {
             MouseState mouseState = Mouse.GetState();
             Point newMousePosition = new Point(mouseState.X, mouseState.Y); ;
+            TimeSpan t0 = new TimeSpan();
+
+            if (colorChangeTime <= t0)
+            {
+                colorChangeTime = colorChangeFrequency;
+                currentColor.Enqueue(currentColor.Dequeue());
+            }
+            else if (colorChangeTime > t0)
+            {
+                colorChangeTime -= gameTime.ElapsedGameTime;
+            }
 
             if (mouseState.LeftButton == ButtonState.Pressed && mousePosition != newMousePosition)
             {
@@ -131,6 +162,12 @@ namespace paintRacer
             spriteBatch.Draw(backgroundImage, screenDimensions, Color.White);
             spriteBatch.Draw(backgroundAreaTexture, highscoreViewRectangle, Color.White);
             spriteBatch.Draw(backgroundAreaTexture, gameInfoViewport.Bounds, Color.White);
+
+            if (newHighScore)
+            {
+                spriteBatch.Draw(backgroundAreaTexture, newHighscoreRectangle, Color.White);
+                spriteBatch.Draw(newHighscoreTexture, newHighscoreRectangle, currentColor.Peek());
+            }
 
             for (int i = 0; i < buttonTextures.Length; ++i)
             {
