@@ -35,6 +35,7 @@ namespace paintRacer
         Rectangle highscoreViewRectangle;
 
         Texture2D backgroundAreaTexture;
+        Texture2D backgroundImage;
 
         Viewport gameInfoViewport;
 
@@ -50,6 +51,7 @@ namespace paintRacer
 
         public Evaluation(IGameStateElements previousGameStateElement, Rectangle screenDimensions, EvaluationData evaluationData)
         {
+            this.screenDimensions = screenDimensions;
             this.player = evaluationData.player;
             this.highscoreData = evaluationData.highscore;
             this.totalTime = evaluationData.time;
@@ -86,6 +88,7 @@ namespace paintRacer
             backgroundAreaTexture = Helper.genRectangleTexture(1, 1, Config.TEXT_BOX_COLOR);
             buttonTextures[(int)ScreenButton.Restart] = Helper.loadImage(@"Content\evaluation\Restart.png");
             buttonTextures[(int)ScreenButton.Exit] = Helper.loadImage(@"Content\evaluation\Exit.png");
+            backgroundImage = Helper.loadImage(@"Content\podest.png");
 
 
             const int gameInfoWidth = 2 * Config.SMALL_BUTTON_X + Config.SMALL_BUTTON_SPACE;
@@ -125,11 +128,13 @@ namespace paintRacer
         {
             spriteBatch.Begin();
 
+            spriteBatch.Draw(backgroundImage, screenDimensions, Color.White);
+            spriteBatch.Draw(backgroundAreaTexture, highscoreViewRectangle, Color.White);
+            spriteBatch.Draw(backgroundAreaTexture, gameInfoViewport.Bounds, Color.White);
+
             for (int i = 0; i < buttonTextures.Length; ++i)
             {
                 spriteBatch.Draw(buttonTextures[i], buttonRectangles[i], Color.White);
-                spriteBatch.Draw(backgroundAreaTexture, highscoreViewRectangle, Color.White);
-                spriteBatch.Draw(backgroundAreaTexture, gameInfoViewport.Bounds, Color.White);
             }
 
             spriteBatch.End();

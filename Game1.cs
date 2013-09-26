@@ -202,7 +202,7 @@ namespace paintRacer
                             gameStateElement.Load(Content);
                             break;
                         case EGameStates.Evaluation:
-                            gameStateElement = new Evaluation(gameStateElement,Window.ClientBounds, Global.evaluationData);
+                            gameStateElement = new Evaluation(gameStateElement,new Rectangle(0,0,Window.ClientBounds.Width,Window.ClientBounds.Height), Global.evaluationData);
                             gameStateElement.Load(Content);
                             break;
                     }
