@@ -588,7 +588,7 @@ namespace paintRacer
                     return "The finish is defind by two points \non both sides of the road:\n" +
                             "Click in the map to set the second \none.";
                 case ECreatState.Error:
-                    return "ERROR";
+                    return "ERROR\n";
                 default:
                     return "I can't help you!";
             }
