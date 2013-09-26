@@ -71,7 +71,7 @@ namespace paintRacer
 
             Speed speed = player.getSpeed();
 
-            if (playerPosX < 0 || playerPosY < 0 || playerPosX > mapdata.GetUpperBound(0) || playerPosX > mapdata.GetUpperBound(1))
+            if (playerPosX < 0 || playerPosY < 0 || playerPosX > mapdata.GetUpperBound(0) || playerPosY > mapdata.GetUpperBound(1))
                 return new Speed(speed.direction, 0f);
             EMapStates mapState = mapdata[playerPosX, playerPosY];
 
