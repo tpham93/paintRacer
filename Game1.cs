@@ -46,6 +46,8 @@ namespace paintRacer
             //set static graphicsdevice in Helper
             Helper.Init(GraphicsDevice);
 
+            this.Window.Title = "Paintracer";
+
             base.Initialize();
         }
 
@@ -82,7 +84,7 @@ namespace paintRacer
         protected override void Update(GameTime gameTime)
         {
             //Writes FPS to title
-            this.Window.Title = "" + (int)(1 / (gameTime.ElapsedGameTime.TotalSeconds));
+            //this.Window.Title = "" + (int)(1 / (gameTime.ElapsedGameTime.TotalSeconds));
 
             GameState = gameStateElement.Update(gameTime);
 

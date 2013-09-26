@@ -53,7 +53,7 @@ namespace paintRacer
                 menuEntryRectangles[i] = new Rectangle(tmpPoint.X, tmpPoint.Y, Config.BIG_BUTTON_X, Config.BIG_BUTTON_Y);
                 tmpPoint.Y += Config.BIG_BUTTON_Y + Config.BIG_BUTTON_SPACE;
             }
-            mouseInactiveTime = new TimeSpan(0, 0, 1);
+            mouseInactiveTime = new TimeSpan(0, 0, 0, 0, 200);
         }
 
         public void Load(Microsoft.Xna.Framework.Content.ContentManager content)
@@ -126,22 +126,24 @@ namespace paintRacer
                         }
                     }
                 }
-                else if (mousePosition != newMousePosition)
-                {
-                    for (int i = 0; i < menuEntryRectangles.Length; ++i)
-                    {
-                        if (menuEntryRectangles[i].Contains(newMousePosition))
-                        {
-                            selectedEntry = i;
-                            break;
-                        }
-                    }
-                }
             }
             else
             {
                 mouseInactiveTime -= gameTime.ElapsedGameTime;
             }
+
+            if (mousePosition != newMousePosition)
+            {
+                for (int i = 0; i < menuEntryRectangles.Length; ++i)
+                {
+                    if (menuEntryRectangles[i].Contains(newMousePosition))
+                    {
+                        selectedEntry = i;
+                        break;
+                    }
+                }
+            }
+
             mousePosition = newMousePosition;
 
             return EGameStates.Menue;
