@@ -1,4 +1,4 @@
-﻿namespace paintRacer 
+﻿namespace paintRacer
 {
     enum EGameStates
     {
@@ -13,7 +13,8 @@
         CarSelection,
         CarSelectionSingleplayer,
         CarSelectionMultiplayer,
-        Editor,
+        //Editor,
+        Evaluation,
         HightScore,
         Credits,
         Pause

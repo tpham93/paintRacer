@@ -143,6 +143,30 @@ namespace paintRacer
             }
         }
 
+        public bool isFinished()
+        {
+            for (int i = 0; i < players.Length; ++i)
+            {
+                if (players[i].lap > Config.MAXLAPCOUNT)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public Player getFinishedPlayer()
+        {
+            for (int i = 0; i < players.Length; ++i)
+            {
+                if (players[i].lap > Config.MAXLAPCOUNT)
+                {
+                    return players[i];
+                }
+            }
+            return null;
+        }
+
         public void Draw(SpriteBatch spriteBatch, GraphicsDevice GraphicsDevice)
         {
             for (int i = 0; i < players.Length; i++)

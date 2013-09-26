@@ -74,15 +74,26 @@ namespace paintRacer
             textWriter.Close();
         }
 
-        public void insertScore(HighscoreElement element)
+        public bool insertScore(HighscoreElement element)
         {
             highscoreEntries.Add(element);
             int index = highscoreEntries.Count - 1;
             highscoreEntries.Sort();
             if (highscoreEntries.Count > MAXHIGHSCORE_COUNT)
             {
-                highscoreEntries.RemoveRange(MAXHIGHSCORE_COUNT, highscoreEntries.Count - MAXHIGHSCORE_COUNT - 1);
+                highscoreEntries.RemoveRange(MAXHIGHSCORE_COUNT,highscoreEntries.Count - MAXHIGHSCORE_COUNT);
             }
+
+            Console.Out.WriteLine(highscoreEntries.Count);
+
+            for (int i = 0; i < highscoreEntries.Count; ++i)
+            {
+                if (element == highscoreEntries[i])
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

@@ -25,25 +25,17 @@ namespace paintRacer
 
         GraphicsDevice graphicsDevice;
 
-        //public Multiplayer(GraphicsDevice graphicsDevice)
-        //{
-        //    this.graphicsDevice = graphicsDevice;
+        bool finished;
+        TimeSpan finishWaitTime;
 
-        //    //Initializes Level and Player with test textures
-        //    //level = new Map(MAP_PIC_SW, MAP_PIC);
-        //    level = Global.map;
-        //    players = new Player[2];
-        //    players[0] = new Player(Helper.loadImage("testcar.png"), Color.Blue, (level.CheckPoints.Length)/2);
-        //    players[1] = new Player(Helper.loadImage("testcar.png"), Color.Red, (level.CheckPoints.Length)/2);
-        //    players[0].setPosition(new Vector2(level.Start.X - 40, level.Start.Y));
-        //    players[1].setPosition(new Vector2(level.Start.X + 40, level.Start.Y));
-        //}
         // constructor for the game, if finished the LoadWindow
         public Multiplayer(GraphicsDevice graphicsDevice, Player[] players, Map map)
         {
             this.players = players;
 
             level = map;
+
+            finished = false;
 
             this.graphicsDevice = graphicsDevice;
         }
@@ -52,15 +44,19 @@ namespace paintRacer
         {
             const int distance = 40;
             Vector2 offset = new Vector2((float)(distance * Math.Cos(level.StartRotation)), -(float)(distance * Math.Sin(level.StartRotation)));
+
+            foreach (Player p in players)
+            {
+                p.reset();
+                p.setSpeed(new Speed());
+                p.setRotation(level.StartRotation);
+            }
+
             players[0].setPosition(level.Start - offset);
             players[1].setPosition(level.Start + offset);
-
-            players[0].setSpeed(new Speed());
-            players[1].setSpeed(new Speed());
-
-            players[0].setRotation(level.StartRotation);
-            players[1].setRotation(level.StartRotation);
             scene = new Scene(level, players, graphicsDevice.Viewport, Config.getKeys(), content);
+
+            finished = false;
         }
 
         public EGameStates Update(GameTime gameTime)
@@ -72,6 +68,22 @@ namespace paintRacer
                 return EGameStates.Pause;
             }
             scene.Update(gameTime, Keyboard.GetState());
+
+            if (!finished && scene.isFinished())
+            {
+                finished = true;
+                Global.evaluationData = new EvaluationData(scene.getLevel().Highscore,scene.getFinishedPlayer().getName(),scene.raceTime);
+                finishWaitTime = new TimeSpan(0, 0, 3);
+            }
+            else if (finished && finishWaitTime > new TimeSpan())
+            {
+                finishWaitTime -= gameTime.ElapsedGameTime;
+            }
+            else if (finished && finishWaitTime < new TimeSpan())
+            {
+                return EGameStates.Evaluation;
+            }
+
             return EGameStates.MultiPlayer;
         }
 

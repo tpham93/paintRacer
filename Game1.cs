@@ -201,6 +201,10 @@ namespace paintRacer
                             gameStateElement = new Highscore();
                             gameStateElement.Load(Content);
                             break;
+                        case EGameStates.Evaluation:
+                            gameStateElement = new Evaluation(gameStateElement,Window.ClientBounds, Global.evaluationData);
+                            gameStateElement.Load(Content);
+                            break;
                     }
                     gameState = value;
                 }

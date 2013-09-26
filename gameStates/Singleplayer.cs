@@ -14,19 +14,13 @@ namespace paintRacer
         //Member of Scene.cs
         Map level;
         private Player[] players;
-        Viewport defaultView;
-        Viewport[] viewports;
 
         Scene scene;
 
-        float rotation = 0.0f;
-
         GraphicsDevice graphicsDevice;
 
-        public Singleplayer(GraphicsDevice graphicsDevice)
-        {
-            this.graphicsDevice = graphicsDevice;
-        }
+        bool finished;
+        TimeSpan finishWaitTime;
 
 
         // constructor for the game, if finished the LoadWindow
@@ -41,10 +35,15 @@ namespace paintRacer
 
         public void Load(Microsoft.Xna.Framework.Content.ContentManager content)
         {
-            players[0].setPosition(level.Start);
-            players[0].setSpeed(new Speed());
-            players[0].setRotation(level.StartRotation);
+            foreach (Player p in players)
+            {
+                p.reset();
+                p.setSpeed(new Speed());
+                p.setPosition(level.Start);
+                p.setRotation(level.StartRotation);
+            }
             scene = new Scene(level, players, graphicsDevice.Viewport, Config.getKeys(), content);
+            finished = false;
         }
 
         public EGameStates Update(Microsoft.Xna.Framework.GameTime gameTime)
@@ -57,6 +56,22 @@ namespace paintRacer
             }
 
             scene.Update(gameTime, Keyboard.GetState());
+
+            if (!finished && scene.isFinished())
+            {
+                finished = true;
+                Global.evaluationData = new EvaluationData(scene.getLevel().Highscore, scene.getFinishedPlayer().getName(), scene.raceTime);
+                finishWaitTime = new TimeSpan(0, 0, 3);
+            }
+            else if (finished && finishWaitTime > new TimeSpan())
+            {
+                finishWaitTime -= gameTime.ElapsedGameTime;
+            }
+            else if (finished && finishWaitTime < new TimeSpan())
+            {
+                return EGameStates.Evaluation;
+            }
+
             return EGameStates.SinglePlayer;
         }
 
