@@ -59,14 +59,14 @@ namespace paintRacer
         public void Load(Microsoft.Xna.Framework.Content.ContentManager content)
         {
             // geneart all rectangles
-            backgound = Helper.loadImage("Content/start.png");
-            selectionPointerTexture = Helper.loadImage("Content/menu/car.png", new Rectangle(0, 0, SELECTIONPOINTERSIZE_X, SELECTIONPOINTERSIZE_Y));
+            backgound = Helper.loadImage(@"Content\Backgrounds\start.png");
+            selectionPointerTexture = Helper.loadImage(@"Content\Etc\Cursor.png", new Rectangle(0, 0, SELECTIONPOINTERSIZE_X, SELECTIONPOINTERSIZE_Y));
             menuEntrieTexture = new Texture2D[5];                                                                                                              //array-size shuld be 5
-            menuEntrieTexture[0] = Helper.loadImage(@"Content\menu\singlePlayer.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));//first menuentry
-            menuEntrieTexture[1] = Helper.loadImage(@"Content\menu\multyPlayer.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y)); //2nd menuentry
-            menuEntrieTexture[2] = Helper.loadImage(@"Content\menu\highscore.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));   //3rd menuentry
-            menuEntrieTexture[3] = Helper.loadImage(@"Content\menu\credits.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));     //4th menuentry
-            menuEntrieTexture[4] = Helper.loadImage(@"Content\menu\beenden.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));     //5th menuentry
+            menuEntrieTexture[0] = Helper.loadImage(@"Content\Buttons\singlePlayer.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));//first menuentry
+            menuEntrieTexture[1] = Helper.loadImage(@"Content\Buttons\multyPlayer.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y)); //2nd menuentry
+            menuEntrieTexture[2] = Helper.loadImage(@"Content\Buttons\highscore.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));   //3rd menuentry
+            menuEntrieTexture[3] = Helper.loadImage(@"Content\Buttons\credits.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));     //4th menuentry
+            menuEntrieTexture[4] = Helper.loadImage(@"Content\Buttons\beenden.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));     //5th menuentry
 
             //initialize timeBetweenKeyPress
             timeBetweenKeyPress = Config.TIME_BETWEEN_SAME_EVENT;

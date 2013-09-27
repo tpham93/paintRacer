@@ -109,9 +109,9 @@ namespace paintRacer
 
         public void Load(ContentManager content)
         {
-            bgPic = Helper.loadImage(@"Content\car_box.png");
-            finishButtonTexture = Helper.loadImage(@"Content\loadMenu\Finish.png", new Rectangle(0, 0, Config.SMALL_BUTTON_X, Config.SMALL_BUTTON_Y));
-            backButtonTexture = Helper.loadImage(@"Content\loadMenu\Back.png", new Rectangle(0, 0, Config.SMALL_BUTTON_X, Config.SMALL_BUTTON_Y));
+            bgPic = Helper.loadImage(@"Content\Backgrounds\car_box.png");
+            finishButtonTexture = Helper.loadImage(@"Content\Buttons\Finish.png", new Rectangle(0, 0, Config.SMALL_BUTTON_X, Config.SMALL_BUTTON_Y));
+            backButtonTexture = Helper.loadImage(@"Content\Buttons\Back.png", new Rectangle(0, 0, Config.SMALL_BUTTON_X, Config.SMALL_BUTTON_Y));
             spriteFont = content.Load<SpriteFont>(@"font");
             fontHeight = (int)spriteFont.MeasureString("0").Y;
             for (int i = 0; i < nameRectangles.Length; ++i)

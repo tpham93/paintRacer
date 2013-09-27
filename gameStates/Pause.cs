@@ -46,9 +46,9 @@ namespace paintRacer
         {
             this.content = content;
             backgroundTexture = Helper.genRectangleTexture(1, 1, Color.Black * 0.75f);
-            buttonTextures[(int)ScreenButton.Continue] = Helper.loadImage(@"Content\pause\Continue.png");
-            buttonTextures[(int)ScreenButton.New_Game] = Helper.loadImage(@"Content\pause\Restart.png");
-            buttonTextures[(int)ScreenButton.Main_Menu] = Helper.loadImage(@"Content\pause\Exit.png");
+            buttonTextures[(int)ScreenButton.Continue] = Helper.loadImage(@"Content\Buttons\Continue.png");
+            buttonTextures[(int)ScreenButton.New_Game] = Helper.loadImage(@"Content\Buttons\Restart.png");
+            buttonTextures[(int)ScreenButton.Main_Menu] = Helper.loadImage(@"Content\Buttons\Exit.png");
         }
 
         public EGameStates Update(GameTime gameTime)

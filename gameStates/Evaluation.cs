@@ -105,10 +105,10 @@ namespace paintRacer
             spriteFont = content.Load<SpriteFont>("font");
             fontHeight = (int)spriteFont.MeasureString("0").Y;
             backgroundAreaTexture = Helper.genRectangleTexture(1, 1, Config.TEXT_BOX_COLOR);
-            buttonTextures[(int)ScreenButton.Restart] = Helper.loadImage(@"Content\evaluation\Restart.png");
-            buttonTextures[(int)ScreenButton.Exit] = Helper.loadImage(@"Content\evaluation\Exit.png");
-            backgroundImage = Helper.loadImage(@"Content\podest.png");
-            newHighscoreTexture = Helper.loadImage(@"Content\evaluation\newHighscore.png");
+            buttonTextures[(int)ScreenButton.Restart] = Helper.loadImage(@"Content\Buttons\Restart.png");
+            buttonTextures[(int)ScreenButton.Exit] = Helper.loadImage(@"Content\Buttons\Exit.png");
+            backgroundImage = Helper.loadImage(@"Content\Backgrounds\podest.png");
+            newHighscoreTexture = Helper.loadImage(@"Content\Etc\newHighscore.png");
 
             const int gameInfoWidth = 2 * Config.SMALL_BUTTON_X + Config.SMALL_BUTTON_SPACE;
             int gameInfoHeight = (int)(5*fontHeight) + 3* Config.SMALL_LINE_SPACE;

@@ -155,16 +155,16 @@ namespace paintRacer
             DEFAULT_FONT = content.Load<SpriteFont>(@"font");
 
             //load Textures
-            whitePixel = Helper.loadImage(@"Content\OneWithePixel.png");
-            LoadNewMap = Helper.loadImage(@"Content\loadMenu\LoadNewMap.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));
-            Back = Helper.loadImage(@"Content\loadMenu\Back.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));
-            LoadMap = Helper.loadImage(@"Content\loadMenu\Load.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.Y));
-            CheckPoint = Helper.loadImage(@"Content\loadMenu\Checkpoint.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.Y));
-            Start = Helper.loadImage(@"Content\loadMenu\Start.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.Y));
-            Finish = Helper.loadImage(@"Content\loadMenu\Finish.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.Y));
-            remCheckPoint = Helper.loadImage(@"Content\loadmenu\Remove.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.Y));
-            Create = Helper.loadImage(@"Content\loadmenu\Create.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.Y));
-            bgPic = Helper.loadImage("Content/track.png");
+            whitePixel = Helper.genRectangleTexture(1, 1, Color.White);
+            LoadNewMap = Helper.loadImage(@"Content\Buttons\LoadNewMap.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));
+            Back = Helper.loadImage(@"Content\Buttons\Back.png", new Rectangle(0, 0, (int)Config.BIG_BUTTON.X, (int)Config.BIG_BUTTON.Y));
+            LoadMap = Helper.loadImage(@"Content\Buttons\Load.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.Y));
+            CheckPoint = Helper.loadImage(@"Content\Buttons\Checkpoint.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.Y));
+            Start = Helper.loadImage(@"Content\Buttons\Start.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.Y));
+            Finish = Helper.loadImage(@"Content\Buttons\Finish.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.Y));
+            remCheckPoint = Helper.loadImage(@"Content\Buttons\Remove.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.Y));
+            Create = Helper.loadImage(@"Content\Buttons\Create.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.Y));
+            bgPic = Helper.loadImage(@"Content\Backgrounds\track.png");
         }
 
         /// <summary>
