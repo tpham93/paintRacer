@@ -33,11 +33,11 @@ namespace paintRacer
                            "------------",
                            "  - Ludwig Bedau",
                            "  - external sources:",
-                           "     > commons.wikimedia.org/wiki/...", "         File:11_Renault_JP.jpg",
-                           "     > commons.wikimedia.org/wiki/...", "         File:Toyota_F1_Canada_2006.jpg",
-                           "     > commons.wikimedia.org/wiki/...", "         File:Fale_F1_Monza_2004_176.jpg",
-                           "     > commons.wikimedia.org/wiki/...", "         File:Grid_girls_F1.jpg",
-                           "     > commons.wikimedia.org/wiki/...", "         File:23_Renault_JP.jpg", "",
+                           "     > commons.wikimedia.org/wiki/", "             11_Renault_JP.jpg",
+                           "     > commons.wikimedia.org/wiki/", "             Toyota_F1_Canada_2006.jpg",
+                           "     > commons.wikimedia.org/wiki/", "             Fale_F1_Monza_2004_176.jpg",
+                           "     > commons.wikimedia.org/wiki/", "             Grid_girls_F1.jpg",
+                           "     > commons.wikimedia.org/wiki/", "             23_Renault_JP.jpg", "",
                            "Designed in an Acagamics lecture"};
 
         int scrollvalue;
