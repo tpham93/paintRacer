@@ -359,27 +359,52 @@ namespace paintRacer
         {
             //max diff between the speed vector of players[0] and the vector from player[0] mid to player[1] mid
             float maxRotationDiff = (float)(0.1 * Math.PI);
-            Vector2 car0direction = players[0].getSpeed().direction;
-            car0direction = (players[0].getSpeed().abs < 0) ? new Vector2(-car0direction.X, -car0direction.Y) : car0direction;
-            Vector2 car1direction = players[1].getSpeed().direction;
-            car1direction = (players[1].getSpeed().abs < 1) ? new Vector2(-car1direction.X, -car1direction.Y) : car1direction;
+            Vector2[] carDirection = new Vector2[2];
+            carDirection[0] = players[0].getSpeed().direction;
+            carDirection[0] = (players[0].getSpeed().abs < 0) ? new Vector2(-carDirection[0].X, -carDirection[0].Y) : carDirection[0];
+            carDirection[1] = players[1].getSpeed().direction;
+            carDirection[1] = (players[1].getSpeed().abs < 1) ? new Vector2(-carDirection[1].X, -carDirection[1].Y) : carDirection[1];
             Vector2 carMidds_01 = new Vector2(players[1].getPosition().X - players[0].getPosition().X, players[1].getPosition().Y - players[0].getPosition().Y);
-            
-            if (Math.Abs(calculateRotation(car1direction) - calculateRotation(car0direction)) < maxRotationDiff)
+            float[] speeds = new float[2];
+            speeds[0] = players[0].getSpeed().abs;
+            speeds[1] = players[1].getSpeed().abs;
+
+            for (int n = 0; n < 2; ++n)
             {
-                if (Math.Abs(calculateRotation(carMidds_01) - calculateRotation(car0direction)) > maxRotationDiff)
-                {
-                    //car 1 crashed in car 0
-                    players[1].setSpeed(new Speed(players[1].getSpeed().direction, 0.8f * ((players[0].getSpeed().abs > players[1].getSpeed().abs) ? players[1].getSpeed().abs : players[0].getSpeed().abs)));
-                }
-                else
-                {
-                    //car 0 crashed in car 1
-                    players[0].setSpeed(new Speed(players[0].getSpeed().direction, 0.8f * ((players[1].getSpeed().abs > players[0].getSpeed().abs) ? players[0].getSpeed().abs : players[1].getSpeed().abs)));
-                }
+                carDirection[n].Normalize();
             }
 
-            if (Math.Abs(calculateRotation(carMidds_01) - calculateRotation(car0direction)) > maxRotationDiff)
+            
+            if (Math.Abs(calculateRotation(carDirection[1]) - calculateRotation(carDirection[0])) > Math.PI - maxRotationDiff)
+            {
+                float absspeed = (speeds[0] - speeds[1]) / 2;
+                players[0].setSpeed(new Speed(players[0].getSpeed().direction, -absspeed));
+                players[1].setSpeed(new Speed(players[1].getSpeed().direction, absspeed));
+                return;
+            }
+            if (Math.Abs(calculateRotation(carDirection[1]) - calculateRotation(carDirection[0])) < maxRotationDiff)
+            {
+                    Vector2 newdirection = new Vector2((carDirection[0].X + carDirection[1].X) / 2, (carDirection[0].Y + carDirection[1].Y) / 2);
+                    float absspeed = (speeds[0] + speeds[1]) / 2;
+                    
+                    foreach (Player player in players)
+                        player.setSpeed(new Speed(player.getSpeed().direction, absspeed));
+                    return;
+            }
+
+                //if (Math.Abs(calculateRotation(carMidds_01) - calculateRotation(carDirection[0])) > maxRotationDiff)
+                //{
+                //    //car 1 crashed in car 0
+                //    players[1].setSpeed(new Speed(players[1].getSpeed().direction, 0.8f * ((players[0].getSpeed().abs > players[1].getSpeed().abs) ? players[1].getSpeed().abs : players[0].getSpeed().abs)));
+                //}
+                //else
+                //{
+                //    //car 0 crashed in car 1
+                //    players[0].setSpeed(new Speed(players[0].getSpeed().direction, 0.8f * ((players[1].getSpeed().abs > players[0].getSpeed().abs) ? players[0].getSpeed().abs : players[1].getSpeed().abs)));
+                //}
+            //
+
+            if (Math.Abs(calculateRotation(carMidds_01) - calculateRotation(carDirection[0])) > maxRotationDiff)
             {
                 //car 1 crashed in car 0
                 players[1].setSpeed(new Speed(players[1].getSpeed().direction, -0.3f * players[1].getSpeed().abs));
