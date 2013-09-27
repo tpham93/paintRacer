@@ -378,8 +378,8 @@ namespace paintRacer
             if (Math.Abs(calculateRotation(carDirection[1]) - calculateRotation(carDirection[0])) > Math.PI - maxRotationDiff)
             {
                 float absspeed = (speeds[0] - speeds[1]) / 2;
-                players[0].setSpeed(new Speed(players[0].getSpeed().direction, absspeed));
-                players[1].setSpeed(new Speed(players[1].getSpeed().direction, -absspeed));
+                players[0].setSpeed(new Speed(players[0].getSpeed().direction, -absspeed));
+                players[1].setSpeed(new Speed(players[1].getSpeed().direction, absspeed));
                 return;
             }
             if (Math.Abs(calculateRotation(carDirection[1]) - calculateRotation(carDirection[0])) < maxRotationDiff)
