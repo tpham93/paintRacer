@@ -65,8 +65,8 @@ namespace paintRacer
         public void Load(Microsoft.Xna.Framework.Content.ContentManager content)
         {
             backgroundAreaTexture = Helper.genRectangleTexture(1, 1, Config.TEXT_BOX_COLOR);
-            backButtonTexture = Helper.loadImage(@"Content\loadMenu\Back.png", new Rectangle(0, 0, Config.SMALL_BUTTON_X, Config.SMALL_BUTTON_Y));
-            bgPic = Helper.loadImage(@"Content\podest.png");
+            backButtonTexture = Helper.loadImage(@"Content\Buttons\Back.png", new Rectangle(0, 0, Config.SMALL_BUTTON_X, Config.SMALL_BUTTON_Y));
+            bgPic = Helper.loadImage(@"Content\Backgrounds\podest.png");
             spriteFont = content.Load<SpriteFont>("font");
             fontHeight = (int)spriteFont.MeasureString("0").Y;
         }

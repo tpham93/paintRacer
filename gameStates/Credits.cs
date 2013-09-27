@@ -38,22 +38,41 @@ namespace paintRacer
                            "     > commons.wikimedia.org/wiki/...", "         File:Fale_F1_Monza_2004_176.jpg",
                            "     > commons.wikimedia.org/wiki/...", "         File:Grid_girls_F1.jpg",
                            "     > commons.wikimedia.org/wiki/...", "         File:23_Renault_JP.jpg", "",
-                           "Dessigned in an Acagamics lecture"};
+                           "Designed in an Acagamics lecture"};
+
+        int scrollvalue;
 
         public void Load(Microsoft.Xna.Framework.Content.ContentManager content)
         {
-            bgPic = Helper.loadImage("Content/credits.png");
-            pixel = Helper.loadImage("Content/OneWithePixel.png");
-            back = Helper.loadImage("Content/loadMenu/back.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.Y));
+            bgPic = Helper.loadImage(@"Content\Backgrounds\credits.png");
+            pixel = Helper.genRectangleTexture(1,1,Color.White);
+            back = Helper.loadImage(@"Content\Buttons\back.png", new Rectangle(0, 0, (int)Config.SMALL_BUTTON.X, (int)Config.SMALL_BUTTON.Y));
 
             font = content.Load<SpriteFont>(@"font");
 
             timeSpace = new TimeSpan();
+
+            scrollvalue = Mouse.GetState().ScrollWheelValue;
         }
 
         public EGameStates Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
             timeSpace += gameTime.ElapsedGameTime;
+
+            int newScrollValue = Mouse.GetState().ScrollWheelValue;
+
+            if (newScrollValue > scrollvalue)
+            {
+                scroll -= 3;
+                scroll = Math.Max(0, scroll);
+            }
+            else if (newScrollValue < scrollvalue)
+            {
+                scroll += 3;
+                scroll = Math.Min(output.Length - 20, scroll);
+            }
+
+            scrollvalue = newScrollValue;
 
             MouseState mouse = Mouse.GetState();
             if (mouse.LeftButton == ButtonState.Pressed && timeSpace > Config.TIME_BETWEEN_SAME_EVENT && (mouse.X > backPos.X) && (mouse.X < backPos.X + (int)Config.SMALL_BUTTON.X) && (mouse.Y > backPos.Y) && (mouse.Y < backPos.Y + (int)Config.SMALL_BUTTON.Y))
@@ -67,7 +86,7 @@ namespace paintRacer
                 if (keyboartState.IsKeyDown(Keys.Down))
                 {
                     ++scroll;
-                    scroll = scroll >= output.Length ? output.Length - 1 : scroll;
+                    scroll = scroll >= output.Length -20 ? output.Length - 20 : scroll;
                     timeSpace = new TimeSpan();
                 }
                 else if (keyboartState.IsKeyDown(Keys.Up))

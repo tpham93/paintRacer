@@ -52,16 +52,16 @@ namespace paintRacer
             lightTime = new TimeSpan();
             raceState = ERaceState.LightOff;
 
-            lightOff = Helper.loadImage(@"Content\light\Ampel_aus.png");
-            Red_I = Helper.loadImage(@"Content\light\Ampel_RI.png");
-            Red_II = Helper.loadImage(@"Content\light\Ampel_RII.png");
-            Red_III = Helper.loadImage(@"Content\light\Ampel_RIII.png");
-            Red_IV = Helper.loadImage(@"Content\light\Ampel_RIV.png");
-            Red_V = Helper.loadImage(@"Content\light\Ampel_RV.png");
-            Green = Helper.loadImage(@"Content\light\Ampel_Go.png");
-            Yellow = Helper.loadImage(@"Content\light\Ampel_End.png");
+            lightOff = Helper.loadImage(@"Content\Lights\Ampel_aus.png");
+            Red_I = Helper.loadImage(@"Content\Lights\Ampel_RI.png");
+            Red_II = Helper.loadImage(@"Content\Lights\Ampel_RII.png");
+            Red_III = Helper.loadImage(@"Content\Lights\Ampel_RIII.png");
+            Red_IV = Helper.loadImage(@"Content\Lights\Ampel_RIV.png");
+            Red_V = Helper.loadImage(@"Content\Lights\Ampel_RV.png");
+            Green = Helper.loadImage(@"Content\Lights\Ampel_Go.png");
+            Yellow = Helper.loadImage(@"Content\Lights\Ampel_End.png");
 
-            pixel = Helper.loadImage(@"Content\OneWithePixel.png");
+            pixel = Helper.genRectangleTexture(1, 1, Color.White);
             Font = content.Load<SpriteFont>(@"font");
 
             this.level = level;
