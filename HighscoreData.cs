@@ -84,8 +84,6 @@ namespace paintRacer
                 highscoreEntries.RemoveRange(MAXHIGHSCORE_COUNT,highscoreEntries.Count - MAXHIGHSCORE_COUNT);
             }
 
-            Console.Out.WriteLine(highscoreEntries.Count);
-
             for (int i = 0; i < highscoreEntries.Count; ++i)
             {
                 if (element == highscoreEntries[i])

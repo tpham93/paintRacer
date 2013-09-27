@@ -65,7 +65,6 @@ namespace paintRacer
             newHighScore = highscoreData.insertScore(new HighscoreElement(evaluationData.player.getName(), evaluationData.time));
             if (newHighScore)
                 highscoreData.writeToFile();
-            Console.Out.WriteLine(newHighScore);
             buttonTextures = new Texture2D[(int)ScreenButton.Undefined];
             buttonRectangles = new Rectangle[(int)ScreenButton.Undefined];
 
@@ -206,12 +205,12 @@ namespace paintRacer
             spriteBatch.Begin();
             spriteBatch.DrawString(spriteFont, "Name: " + player.getName(), tmpPos, Config.TEXT_COLOR);
             tmpPos.Y += Config.SMALL_LINE_SPACE + fontHeight;
-            spriteBatch.DrawString(spriteFont, "Time: " + "     " + string.Format("{0:00}:{1:00}:{2:000}", (int)totalTime.TotalMinutes, totalTime.Seconds, totalTime.Milliseconds), tmpPos, Config.TEXT_COLOR);
+            spriteBatch.DrawString(spriteFont, "Time: " + "     " + Config.getFormattedTimeString(totalTime), tmpPos, Config.TEXT_COLOR);
             tmpPos.Y += Config.SMALL_LINE_SPACE + fontHeight;
             TimeSpan[] lapTimes = player.times;
             for (int i = 0; i < lapTimes.Length; ++i)
             {
-                spriteBatch.DrawString(spriteFont, "    " + "Lap " + i + ": " + string.Format("{0:00}:{1:00}:{2:000}", (int)lapTimes[i].TotalMinutes, lapTimes[i].Seconds, lapTimes[i].Milliseconds), tmpPos, Config.TEXT_COLOR);
+                spriteBatch.DrawString(spriteFont, "    " + "Lap " + i + ": " + Config.getFormattedTimeString(lapTimes[i]), tmpPos, Config.TEXT_COLOR);
                 tmpPos.Y += fontHeight /*+ Config.SMALL_LINE_SPACE*/;
             }
             spriteBatch.End();

@@ -379,7 +379,6 @@ namespace paintRacer
                 }
             }
 
-            //Console.WriteLine((calculateRotation(carMidds_01) - calculateRotation(car0direction)) + " <-> " + maxRotationDiff);
             if (Math.Abs(calculateRotation(carMidds_01) - calculateRotation(car0direction)) > maxRotationDiff)
             {
                 //car 1 crashed in car 0

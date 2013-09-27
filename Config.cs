@@ -57,5 +57,9 @@ namespace paintRacer
                 }
             }
         }
+
+        public static string getFormattedTimeString(TimeSpan t){
+            return string.Format("{0:00}:{1:00}:{2:000}", (int)t.TotalMinutes, t.Seconds, t.Milliseconds);
+        }
     }
 }

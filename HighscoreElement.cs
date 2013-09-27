@@ -35,7 +35,7 @@ namespace paintRacer
 
         public string getFormattedTimeString()
         {
-            return string.Format("{0:00}:{1:00}:{2:000}", (int)time.TotalMinutes, time.Seconds, time.Milliseconds);
+            return Config.getFormattedTimeString(time);
         }
 
         public static bool operator ==(HighscoreElement e1, HighscoreElement e2)
