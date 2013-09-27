@@ -74,7 +74,7 @@ namespace paintRacer
             textWriter.Close();
         }
 
-        public bool insertScore(HighscoreElement element)
+        public int insertScore(HighscoreElement element)
         {
             highscoreEntries.Add(element);
             int index = highscoreEntries.Count - 1;
@@ -88,10 +88,10 @@ namespace paintRacer
             {
                 if (element == highscoreEntries[i])
                 {
-                    return true;
+                    return i;
                 }
             }
-            return false;
+            return -1;
         }
     }
 }

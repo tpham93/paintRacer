@@ -21,6 +21,7 @@ namespace paintRacer
         }
 
         bool newHighScore;
+        bool topTen;
 
         Player player;
 
@@ -38,7 +39,8 @@ namespace paintRacer
         Texture2D backgroundImage;
 
         Texture2D newHighscoreTexture;
-        Rectangle newHighscoreRectangle;
+        Texture2D topTenTexture;
+        Rectangle notificationRectangle;
         Queue<Color> currentColor;
         TimeSpan colorChangeTime;
         TimeSpan colorChangeFrequency;
@@ -62,7 +64,9 @@ namespace paintRacer
             this.highscoreData = evaluationData.highscore;
             this.totalTime = evaluationData.time;
             this.previousGameStateElement = previousGameStateElement;
-            newHighScore = highscoreData.insertScore(new HighscoreElement(evaluationData.player.getName(), evaluationData.time));
+            int place = highscoreData.insertScore(new HighscoreElement(evaluationData.player.getName(), evaluationData.time));
+            newHighScore = place == 0;
+            topTen = place > 0;
             if (newHighScore)
                 highscoreData.writeToFile();
             buttonTextures = new Texture2D[(int)ScreenButton.Undefined];
@@ -84,7 +88,7 @@ namespace paintRacer
             timeRectangle = new Rectangle(800 - 50 - highscoreTimeListWidth, 50, highscoreTimeListWidth, highscoreTimeListHeight);
             highscoreViewRectangle = new Rectangle(nameViewport.Bounds.Left, nameViewport.Bounds.Top, timeRectangle.Right - nameViewport.Bounds.Left, timeRectangle.Height);
 
-            newHighscoreRectangle = new Rectangle(50,50,285,45);
+            notificationRectangle = new Rectangle(50,50,285,45);
 
             currentColor = new Queue<Color>();
 
@@ -109,6 +113,7 @@ namespace paintRacer
             buttonTextures[(int)ScreenButton.Exit] = Helper.loadImage(@"Content\Buttons\Exit.png");
             backgroundImage = Helper.loadImage(@"Content\Backgrounds\podest.png");
             newHighscoreTexture = Helper.loadImage(@"Content\Etc\newHighscore.png");
+            topTenTexture = Helper.loadImage(@"Content\Etc\topTen.png");
 
             const int gameInfoWidth = 2 * Config.SMALL_BUTTON_X + Config.SMALL_BUTTON_SPACE;
             int gameInfoHeight = (int)(5*fontHeight) + 3* Config.SMALL_LINE_SPACE;
@@ -164,8 +169,13 @@ namespace paintRacer
 
             if (newHighScore)
             {
-                spriteBatch.Draw(backgroundAreaTexture, newHighscoreRectangle, Color.White);
-                spriteBatch.Draw(newHighscoreTexture, newHighscoreRectangle, currentColor.Peek());
+                spriteBatch.Draw(backgroundAreaTexture, notificationRectangle, Color.White);
+                spriteBatch.Draw(newHighscoreTexture, notificationRectangle, currentColor.Peek());
+            }
+            else if (topTen)
+            {
+                spriteBatch.Draw(backgroundAreaTexture, notificationRectangle, Color.White);
+                spriteBatch.Draw(topTenTexture, notificationRectangle, currentColor.Peek());
             }
 
             for (int i = 0; i < buttonTextures.Length; ++i)
